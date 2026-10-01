@@ -592,10 +592,12 @@
 
     <div class="card">
       <div class="form-group">
-        <label for="header-atividade">NATUREZA DA FISCALIZAÇÃO: *</label>
+        <label for="header-atividade">NATUREZA DA ATIVIDADE: *</label>
         <select id="header-atividade" onchange="atualizarCamposNatureza()">
           <option value="" selected>ESCOLHA UMA OPÇÃO</option>
           <option value="FISCALIZAÇÃO DE EMPRESA CREDENCIADA">FISCALIZAÇÃO DE EMPRESA CREDENCIADA</option>
+          <option value="FISCALIZAÇÃO DE PRIMEIRO CREDENCIAMENTO">FISCALIZAÇÃO DE PRIMEIRO CREDENCIAMENTO</option>
+          <option value="FISCALIZAÇÃO DE RENOVAÇÃO DE CREDENCIAMENTO">FISCALIZAÇÃO DE RENOVAÇÃO DE CREDENCIAMENTO</option>
           <option value="FISCALIZAÇÃO DE APURAÇÃO DE DENÚNCIA">FISCALIZAÇÃO DE APURAÇÃO DE DENÚNCIA</option>
           <option value="FISCALIZAÇÃO DE FORÇA TAREFA">FISCALIZAÇÃO DE FORÇA TAREFA</option>
           <option value="FISCALIZAÇÃO DE APOIO">FISCALIZAÇÃO DE APOIO</option>
@@ -702,7 +704,7 @@
 
     <div class="card" id="secao-relatorio-parcial">
       <div class="section-title">
-        <span>📋 RELATÓRIO PARCIAL (DIAS JÁ SALVOS)</span>
+        <span>📋 RELATÓRIO PARCIAL</span>
       </div>
       <div id="container-relatorio-parcial"></div>
     </div>
@@ -875,20 +877,19 @@
     }
 
     const defaultRecicladoras = [
-      { id: 'rec_1', nome: 'RECICLADORA GUANABARA' },
-      { id: 'rec_2', nome: 'ECO SIDERÚRGICA RJ' },
-      { id: 'rec_3', nome: 'METALÚRGICA & RECICLAGEM BRASIL' },
-      { id: 'rec_4', nome: 'SUCATAS E MATERIAIS RIO LTDA' }
+      { id: 'rec_1', nome: 'BAIXADAÇO' },
+      { id: 'rec_2', nome: 'JRD' },
+      { id: 'rec_3', nome: 'MELO' },
+      { id: 'rec_4', nome: 'RECICLA RIO' }
     ];
 
     const defaultVeiculos = [
-      { id: 'v_1', nome: 'CAMINHÃO TOCO' },
-      { id: 'v_2', nome: 'CAMINHÃO TRUCK (6X2)' },
-      { id: 'v_3', nome: 'CAMINHÃO BI-TRUCK (8X2)' },
-      { id: 'v_4', nome: 'CARRETA 2 EIXOS' },
-      { id: 'v_5', nome: 'CARRETA 3 EIXOS' },
-      { id: 'v_6', nome: 'CAMINHÃO ROLL-ON ROLL-OFF' },
-      { id: 'v_7', nome: 'CAMINHONETE OPERACIONAL' }
+      { id: 'v_1', nome: 'CAMINHÃO CAÇAMBA' },
+      { id: 'v_2', nome: 'CAMINHÃO GARRA' },
+      { id: 'v_3', nome: 'CAMINHÃO BI-TRUCK' },
+      { id: 'v_4', nome: 'CAMINHONETE OPERACIONAL' },
+      { id: 'v_5', nome: 'CARRETA 2 EIXOS' },
+      
     ];
 
     let recicladoras = JSON.parse(localStorage.getItem(STORAGE_KEYS.RECICLADORAS)) || defaultRecicladoras;
@@ -1191,7 +1192,7 @@
 
       const remainingSlots = 5 - currentImages.length;
       if (files.length > remainingSlots) {
-        mostrarAlertaAviso('LIMITE DE IMAGENS', `<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> VOCÊ PODE ADICIONAR MAIS NO MÁXIMO ${remainingSlots} IMAGEM(NS).`);
+        mostrarAlertaAviso('LIMITE DE IMAGENS', `<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> VOCÊ SÓ PODE ADICIONAR NO MÁXIMO <span class="text-red-500 font-bold">${remainingSlots} IMAGENS</span>.`);
       }
 
       const filesToProcess = files.slice(0, remainingSlots);
@@ -1309,10 +1310,10 @@
       const exibeEndereco = document.getElementById('grupo-endereco').style.display !== 'none';
 
       if (!dataHeader) { mostrarAlertaAviso('DATA OBRIGATÓRIA', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> INFORME A <span style="color:#dc2626; font-weight:bold;">"DATA DA OPERAÇÃO / CARGA"</span> ANTES DE CONTINUAR!', elData); return; }
-      if (!atividade) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE A <span style="color:#dc2626; font-weight:bold;">"NATUREZA DA FISCALIZAÇÃO"</span>!', elAtividade); return; }
+      if (!atividade) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE A <span style="color:#dc2626; font-weight:bold;">"NATUREZA DA ATIVIDADE"</span>!', elAtividade); return; }
       if (document.getElementById('grupo-apoio').style.display !== 'none' && !document.getElementById('header-apoio').value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O CAMPO <span style="color:#dc2626; font-weight:bold;">"APOIO À"</span>!', document.getElementById('header-apoio')); return; }
       if (exibeFase && !fase) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA A <span style="color:#dc2626; font-weight:bold;">"FASE DA FORÇA TAREFA"</span>!', elFase); return; }
-      if (!estabelecimento) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"ESTABELECIMENTO"</span>!', elEstabelecimento); return; }
+      if (!estabelecimento) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"EMPRESA / ESTABELECIMENTO"</span>!', elEstabelecimento); return; }
       if (exibeEndereco && !local) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"ENDEREÇO"</span>!', elLocal); return; }
       if (!recId) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE A <span style="color:#dc2626; font-weight:bold;">"RECICLADORA"</span>!', elRecicladora); return; }
       if (!veicId) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE O <span style="color:#dc2626; font-weight:bold;">"TIPO DE VEÍCULO"</span>!', elVeiculo); return; }
@@ -1538,7 +1539,7 @@
       Swal.fire({
         icon: 'success',
         title: 'RELATÓRIO PARCIAL SALVO!',
-        html: `As cargas do dia <b>${dataBR}</b> foram arquivadas no Relatório Parcial.<br>Selecione uma <b>nova data</b> para continuar apontando cargas.`,
+        html: `AS CARGAS DO DIA<b>${dataBR}</b> FORAM ADICIONADAS AO RELATÓRIO PARCIAL.<br>SELECIONE UM <b>NOVA DATA</b> PARA CONTINUAR REGISTRANDO AS CARGAS.`,
         confirmButtonColor: '#000000'
       });
     }
@@ -1670,10 +1671,10 @@
       const exibeEndereco = document.getElementById('grupo-endereco').style.display !== 'none';
       const { datasOrdenadas } = obterTodasAsCargasOrdenadas();
 
-      if (!elAtividade.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE A <span style="color:#dc2626; font-weight:bold;">"NATUREZA DA FISCALIZAÇÃO"</span>!', elAtividade); return false; }
+      if (!elAtividade.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE A <span style="color:#dc2626; font-weight:bold;">"NATUREZA DA ATIVIDADE"</span>!', elAtividade); return false; }
       if (document.getElementById('grupo-apoio').style.display !== 'none' && !document.getElementById('header-apoio').value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O CAMPO <span style="color:#dc2626; font-weight:bold;">"APOIO À"</span>!', document.getElementById('header-apoio')); return false; }
       if (exibeFase && !elFase.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA A <span style="color:#dc2626; font-weight:bold;">"FASE DA FORÇA TAREFA"</span>!', elFase); return false; }
-      if (!elEstabelecimento.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"ESTABELECIMENTO"</span>!', elEstabelecimento); return false; }
+      if (!elEstabelecimento.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"EMPRESA / ESTABELECIMENTO"</span>!', elEstabelecimento); return false; }
       if (exibeEndereco && !elLocal.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"ENDEREÇO"</span>!', elLocal); return false; }
 
       if (datasOrdenadas.length === 0) {
@@ -1859,7 +1860,7 @@
                 pdf.text(value, x + 3, yPos + 9);
             };
 
-            drawInfoBox(marginX, curY, cardWidth, 'NATUREZA DA FISCALIZAÇÃO:', atividade.toUpperCase());
+            drawInfoBox(marginX, curY, cardWidth, 'NATUREZA DA ATIVIDADE:', atividade.toUpperCase());
             curY += 13;
             if (document.getElementById('grupo-apoio').style.display !== 'none') {
                 drawInfoBox(marginX, curY, cardWidth, 'APOIO À:', apoio.toUpperCase());
@@ -2044,8 +2045,8 @@
               Swal.fire({
                   icon: 'success',
                   title: 'PDF GERADO COM SUCESSO!',
-                  html: `O arquivo foi adicionado ao histórico da página.<br><br>
-                         <b>PARA BAIXAR:</b> Utilize o botão "⬇️" no histórico de PDFs abaixo.`,
+                  html: `O ARQUIVO FOI ADICIONADO AO HISTÓRICO DA PÁGINA.<br><br>
+                         <b>PARA BAIXAR:</b> UTILIZE O BOTÃO "⬇️" NO HISTÓRICO DE PDFs ABAIXO.`,
                   confirmButtonColor: '#000000'
               }).then(() => {
                   limparAposGeracao();
@@ -2072,7 +2073,7 @@
             await navigator.share({
               files: [arquivo],
               title: nomeArquivo,
-              text: 'CONTROLE DE CARGAS - DETRAN RJ'
+              text: 'CONTROLE DE CARGAS'
             });
             return true;
           }
@@ -2094,15 +2095,15 @@
       const exibeEndereco = document.getElementById('grupo-endereco').style.display !== 'none';
       const { agrupadosPorData, datasOrdenadas } = obterTodasAsCargasOrdenadas();
 
-      let mensagem = `*RELATÓRIO DE CONTROLE DE CARGAS - DETRAN RJ*\n\n`;
-      mensagem += `🧐 *FISCALIZAÇÃO:* ${atividade}\n`;
+      let mensagem = `*RELATÓRIO DE CONTROLE DE CARGAS*\n\n`;
+      mensagem += `🧐 *NATUREZA DA ATIVIDADE:* ${atividade}\n`;
       if (document.getElementById('grupo-apoio').style.display !== 'none') {
           mensagem += `🤝 *APOIO À:* ${document.getElementById('header-apoio').value.toUpperCase()}\n`;
       }
       if (exibeFase) {
           mensagem += `🪖 *FASE DA FORÇA TAREFA:* ${fase}\n`;
       }
-      mensagem += `🏢 *ESTABELECIMENTO:* ${estabelecimento}\n`;
+      mensagem += `🏢 *EMPRESA / ESTABELECIMENTO:* ${estabelecimento}\n`;
       if (exibeEndereco) {
           mensagem += `📍 *ENDEREÇO:* ${local}\n`;
       }
@@ -2116,9 +2117,9 @@
         const dataBR = dataKey.split('-').reverse().join('/');
         mensagem += `📅 *DATA: ${dataBR}* (${cargas.length} Cargas)\n`;
         cargas.forEach((c, idx) => {
-          mensagem += `  *#${idx + 1}.* Recicladora: ${c.recicladora} | Veículo: ${c.tipoVeiculo} | Placa: ${c.placa} | Horário: ${c.chegada} às ${c.termino}\n`;
+          mensagem += `  *#${idx + 1}.* Recicladora: ${c.recicladora} | Veículo: ${c.tipoVeiculo} | Placa: ${c.placa} | Horário de chegada: ${c.chegada} | Horário de Recolhimento: ${c.inicio} às ${c.termino}\n\n`;
         });
-        mensagem += `\n`;
+        mensagem += `\n\n`;
       });
 
       window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`, '_blank');
@@ -2222,7 +2223,7 @@
         Swal.fire({
           icon: 'error',
           title: 'NÃO ENCONTRADO',
-          text: 'O PDF selecionado não foi encontrado no histórico.',
+          text: 'O PDF SELECIONADO NÃO FOI ENCONTRADO NO HISTÓRICO.',
           confirmButtonColor: '#000000'
         });
       }
