@@ -1899,7 +1899,7 @@
 
                 if (curY + 12 > pageHeight - 15) {
                     pdf.addPage();
-                    curY = 15;
+                    curY = 10;
                     cargasNaPaginaAtual = 0;
                 }
 
@@ -1918,7 +1918,7 @@
                     const limiteAtual = (pdf.internal.getNumberOfPages() === 1) ? 2 : 4;
                     if (cargasNaPaginaAtual >= limiteAtual) {
                         pdf.addPage();
-                        curY = 15;
+                        curY = 10;
                         cargasNaPaginaAtual = 0;
                     }
 
