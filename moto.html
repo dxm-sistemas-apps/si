@@ -326,7 +326,7 @@
                         <input type="text" id="e-mail-rep" placeholder="REPRESENTANTE OU EMPRESA" class="w-full p-2 border border-gray-300 rounded text-sm uppercase">
                     </div>
                 </div>
-                <p class="text-center font-bold text-xs uppercase tracking-wide mt-4 pt-2 border-t border-gray-300 text-black-700">Representante da Empresa</p>
+                <p class="text-center font-bold text-xs uppercase tracking-wide mt-4 pt-2 border-t border-gray-300 text-black-700">Representante da Empresa / ESTABELECIMENTO</p>
             </div>
         </section>
 
@@ -817,7 +817,7 @@ function validarFormulario(acaoSucesso = null) {
     }
     const grupoEstab = document.getElementById('grupo-estabelecimento');
     if (grupoEstab && grupoEstab.style.display !== 'none') {
-        campos.push({ id: 'info-nome', msg: 'ESTABELECIMENTO' });
+        campos.push({ id: 'info-nome', msg: 'EMPRESA / ESTABELECIMENTO' });
     }
     const grupoEndereco = document.getElementById('grupo-endereco');
     if (grupoEndereco && grupoEndereco.style.display !== 'none') {
@@ -858,9 +858,9 @@ function validarFormulario(acaoSucesso = null) {
         }
     }
 
-    if (isCanvasEmpty('sig-agente1')) { mostrarAlertaAviso('ASSINATURA FALTANDO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> A ASSINATURA DO <br><b style="font-size:18px; color:#E53935;">"AGENTE 1"</b> É OBRIGATÓRIA!', document.getElementById('sig-agente1')); return; }
-    if (isCanvasEmpty('sig-agente2')) { mostrarAlertaAviso('ASSINATURA FALTANDO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> A ASSINATURA DO <br><b style="font-size:18px; color:#E53935;">"AGENTE 2"</b> É OBRIGATÓRIA!', document.getElementById('sig-agente2')); return; }
-    if (isCanvasEmpty('sig-empresa')) { mostrarAlertaAviso('ASSINATURA FALTANDO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> A ASSINATURA DO <br><b style="font-size:18px; color:#e11d48;">"REPRESENTANTE DA EMPRESA"</b> É OBRIGATÓRIA!', document.getElementById('sig-empresa')); return; }
+    if (isCanvasEmpty('sig-agente1')) { mostrarAlertaAviso('ASSINATURA FALTANDO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> A ASSINATURA DO <br><b style="font-size:18px; color:#E53935;">"AGENTE"</b> É OBRIGATÓRIA!', document.getElementById('sig-agente1')); return; }
+    if (isCanvasEmpty('sig-agente2')) { mostrarAlertaAviso('ASSINATURA FALTANDO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> A ASSINATURA DO <br><b style="font-size:18px; color:#E53935;">"AGENTE"</b> É OBRIGATÓRIA!', document.getElementById('sig-agente2')); return; }
+    if (isCanvasEmpty('sig-empresa')) { mostrarAlertaAviso('ASSINATURA FALTANDO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> A ASSINATURA DO <br><b style="font-size:18px; color:#e11d48;">"REPRESENTANTE DA EMPRESA / ESTABELECIMENTO"</b> É OBRIGATÓRIA!', document.getElementById('sig-empresa')); return; }
 
     if (typeof acaoSucesso === 'function') {
         acaoSucesso();
@@ -1253,7 +1253,7 @@ function gerarPDFPersonalizado() {
                 sigY = 20;
             }
 
-            drawSig(61, sigY, sigWidth, 'REPRESENTANTE DA EMPRESA', 'sig-empresa', repFields);
+            drawSig(61, sigY, sigWidth, 'REPRESENTANTE DA EMPRESA / ESTABELECIMENTO', 'sig-empresa', repFields);
 
             const pdfDataUri = pdf.output('datauristring');
             const pdfBlob = pdf.output('blob');
@@ -1379,7 +1379,7 @@ function compartilharPDFWhatsApp() {
             : "EMPRESA COM DÉFICIT DE PEÇAS CADASTRADAS";
 
         let mensagem = `*ITENS DE RASTREABILIDADE - MOTO*\n\n`;
-        mensagem += `🧐 *FISCALIZAÇÃO:* ${natureza}\n`;
+        mensagem += `🧐 *NATUREZA DA ATIVIDADE:* ${natureza}\n`;
         if (document.getElementById('grupo-apoio').style.display !== 'none') {
             mensagem += `🤝 *APOIO À:* ${apoio}\n`;
         }
@@ -1387,7 +1387,7 @@ function compartilharPDFWhatsApp() {
             mensagem += `🪖 *FASE DA FORÇA TAREFA:* ${fase}\n`;
         }
         if (document.getElementById('grupo-estabelecimento').style.display !== 'none') {
-            mensagem += `🏢 *ESTABELECIMENTO:* ${nome}\n`;
+            mensagem += `🏢 *EMPRESA / ESTABELECIMENTO:* ${nome}\n`;
         }
         if (document.getElementById('grupo-endereco').style.display !== 'none') {
             mensagem += `📍 *ENDEREÇO:* ${endereco}\n`;
@@ -1405,8 +1405,8 @@ function compartilharPDFWhatsApp() {
             mensagem += `📊 *STATUS:* ${statusEmpresa}\n\n`;
         }
 
-        mensagem += `📞 *TELEFONE DO REPRESENTANTE DA EMPRESA:* ${telRep}\n`;
-        mensagem += `📧 *E-MAIL DO REPRESENTANTE DA EMPRESA:* ${emailRep}`;
+        mensagem += `📞 *TELEFONE DO REPRESENTANTE DA EMPRESA / ESTABELECIMENTO:* ${telRep}\n`;
+        mensagem += `📧 *E-MAIL DO REPRESENTANTE DA EMPRESA / ESTABELECIMENTO:* ${emailRep}`;
 
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`, '_blank');
     });
