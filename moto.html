@@ -1171,7 +1171,7 @@ function gerarPDFPersonalizado() {
                 styles: { lineWidth: 0.1, lineColor: [200, 200, 200] },
                 didParseCell: function(data) {
                     if (data.section === 'foot' && data.column.index === 1) {
-                        data.cell.styles.halign = 'right';
+                        data.cell.styles.halign = 'center';
                     }
                 }
             });
