@@ -173,7 +173,7 @@
 
         <section class="flex flex-col gap-4 mb-4 bg-gray-50 p-4 rounded-lg border border-gray-200">
             <div>
-                <label class="block text-xs font-bold uppercase text-black-600 mb-1">Natureza da Fiscalização:</label>
+                <label class="block text-xs font-bold uppercase text-black-600 mb-1">Natureza da ATIVIDADE:</label>
                 <select id="info-natureza" onchange="atualizarCamposNatureza()" class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-black focus:outline-none text-sm uppercase">
                     <option value="" selected>ESCOLHA UMA OPÇÃO</option>
                     <option value="FISCALIZAÇÃO DE EMPRESA CREDENCIADA">FISCALIZAÇÃO DE EMPRESA CREDENCIADA</option>
@@ -326,7 +326,7 @@
                         <input type="text" id="e-mail-rep" placeholder="REPRESENTANTE OU EMPRESA" class="w-full p-2 border border-gray-300 rounded text-sm uppercase">
                     </div>
                 </div>
-                <p class="text-center font-bold text-xs uppercase tracking-wide mt-4 pt-2 border-t border-gray-300 text-black-700">Representante da Empresa</p>
+                <p class="text-center font-bold text-xs uppercase tracking-wide mt-4 pt-2 border-t border-gray-300 text-black-700">Representante da Empresa / ESTABELECIMENTO</p>
             </div>
         </section>
 
@@ -855,19 +855,19 @@ function validarFormulario(acaoSucesso = null) {
 
     const modoPreenchimento = document.getElementById('tipo-preenchimento').value;
     if (!modoPreenchimento) {
-        mostrarAlertaAviso('MODO DE PREENCHIMENTO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> SELECIONE UM MODO DE PREENCHIMENTO DA TABELA!', document.getElementById('tipo-preenchimento'));
+        mostrarAlertaAviso('MODO DE PREENCHIMENTO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> ESCOLHA O <span class="text-red-500 font-bold">MODO DE PREENCHIMENTO DA TABELA!</span>', document.getElementById('tipo-preenchimento'));
         return;
     }
     
     const campos = [
-        { id: 'info-natureza', msg: 'NATUREZA DA FISCALIZAÇÃO' },
-        { id: 'info-data', msg: 'DATA DA CONTAGEM' },
-        { id: 'mat-agente1', msg: 'ID FUNCIONAL DO AGENTE 1' },
-        { id: 'mat-agente2', msg: 'ID FUNCIONAL DO AGENTE 2' },
-        { id: 'nome-rep', msg: 'NOME DO REPRESENTANTE DA EMPRESA' },
-        { id: 'cpf-rep', msg: 'CPF DO REPRESENTANTE DA EMPRESA' },
-        { id: 'tel-rep', msg: 'TELEFONE DO REPRESENTANTE DA EMPRESA' },
-        { id: 'e-mail-rep', msg: 'E-MAIL DO REPRESENTANTE OU DA EMPRESA' }
+        { id: 'info-natureza', msg: 'NATUREZA DA ATIVIDADE' },
+        { id: 'info-data', msg: 'DATA' },
+        { id: 'mat-agente1', msg: 'ID FUNCIONAL DO AGENTE' },
+        { id: 'mat-agente2', msg: 'ID FUNCIONAL DO AGENTE' },
+        { id: 'nome-rep', msg: 'NOME DO REPRESENTANTE DA EMPRESA / ESTABELECIMENTO' },
+        { id: 'cpf-rep', msg: 'CPF DO REPRESENTANTE DA EMPRESA / ESTABELECIMENTO' },
+        { id: 'tel-rep', msg: 'TELEFONE DO REPRESENTANTE DA EMPRESA / ESTABELECIMENTO' },
+        { id: 'e-mail-rep', msg: 'E-MAIL DO REPRESENTANTE OU DA EMPRESA / ESTABELECIMENTO' }
     ];
 
     const grupoFase = document.getElementById('grupo-fase-forca-tarefa');
@@ -917,9 +917,9 @@ function validarFormulario(acaoSucesso = null) {
         }
     }
 
-    if (isCanvasEmpty('sig-agente1')) { mostrarAlertaAviso('ASSINATURA FALTANDO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> A ASSINATURA DO <br><b style="font-size:18px; color:#E53935;">"AGENTE 1"</b> É OBRIGATÓRIA!', document.getElementById('sig-agente1')); return; }
-    if (isCanvasEmpty('sig-agente2')) { mostrarAlertaAviso('ASSINATURA FALTANDO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> A ASSINATURA DO <br><b style="font-size:18px; color:#E53935;">"AGENTE 2"</b> É OBRIGATÓRIA!', document.getElementById('sig-agente2')); return; }
-    if (isCanvasEmpty('sig-empresa')) { mostrarAlertaAviso('ASSINATURA FALTANDO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> A ASSINATURA DO <br><b style="font-size:18px; color:#e11d48;">"REPRESENTANTE DA EMPRESA"</b> É OBRIGATÓRIA!', document.getElementById('sig-empresa')); return; }
+    if (isCanvasEmpty('sig-agente1')) { mostrarAlertaAviso('ASSINATURA FALTANDO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> A ASSINATURA DO <br><b style="font-size:18px; color:#E53935;">"AGENTE"</b> É OBRIGATÓRIA!', document.getElementById('sig-agente1')); return; }
+    if (isCanvasEmpty('sig-agente2')) { mostrarAlertaAviso('ASSINATURA FALTANDO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> A ASSINATURA DO <br><b style="font-size:18px; color:#E53935;">"AGENTE"</b> É OBRIGATÓRIA!', document.getElementById('sig-agente2')); return; }
+    if (isCanvasEmpty('sig-empresa')) { mostrarAlertaAviso('ASSINATURA FALTANDO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> A ASSINATURA DO <br><b style="font-size:18px; color:#e11d48;">"REPRESENTANTE DA EMPRESA / ESTABELECIMENTO"</b> É OBRIGATÓRIA!', document.getElementById('sig-empresa')); return; }
 
     if (typeof acaoSucesso === 'function') {
         acaoSucesso();
@@ -946,7 +946,7 @@ function compartilharPDFWhatsApp() {
             ? "EMPRESA EM EVOLUÇÃO DE PEÇAS CADASTRADAS" 
             : "EMPRESA COM DÉFICIT DE PEÇAS CADASTRADAS";
 
-        let mensagem = `*ITENS DE RASTREABILIDADE - CAMINHÃO/ÔNIBUS*\n\n`;
+        let mensagem = `*ITENS DE RASTREABILIDADE DE CAMINHÃO/ÔNIBUS*\n\n`;
         mensagem += `🧐 *FISCALIZAÇÃO:* ${natureza}\n`;
         if (document.getElementById('grupo-apoio').style.display !== 'none') {
             mensagem += `🤝 *APOIO À:* ${apoio}\n`;
@@ -955,7 +955,7 @@ function compartilharPDFWhatsApp() {
             mensagem += `🪖 *FASE DA FORÇA TAREFA:* ${fase}\n`;
         }
         if (document.getElementById('grupo-estabelecimento').style.display !== 'none') {
-            mensagem += `🏢 *ESTABELECIMENTO:* ${nome}\n`;
+            mensagem += `🏢 *EMPRESSA / ESTABELECIMENTO:* ${nome}\n`;
         }
         if (document.getElementById('grupo-endereco').style.display !== 'none') {
             mensagem += `📍 *ENDEREÇO:* ${endereco}\n`;
@@ -973,8 +973,8 @@ function compartilharPDFWhatsApp() {
             mensagem += `📊 *STATUS:* ${statusEmpresa}\n\n`;
         }
 
-        mensagem += `📞 *TELEFONE DO REPRESENTANTE DA EMPRESA:* ${telRep}\n`;
-        mensagem += `📧 *E-MAIL DO REPRESENTANTE DA EMPRESA:* ${emailRep}`;
+        mensagem += `📞 *TELEFONE DO REPRESENTANTE DA EMPRESA / ESTABELECIMENTO:* ${telRep}\n`;
+        mensagem += `📧 *E-MAIL DO REPRESENTANTE DA EMPRESA / ESTABELECIMENTO:* ${emailRep}`;
 
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`, '_blank');
     });
@@ -1222,7 +1222,7 @@ function gerarPDFPersonalizado() {
                 pdf.text(value, x + 3, yPos + 9);
             };
 
-            drawInfoBox(14, y, 130, 'NATUREZA DA FISCALIZAÇÃO:', nomeNatu.toUpperCase());
+            drawInfoBox(14, y, 130, 'NATUREZA DA ATIVIDADE:', nomeNatu.toUpperCase());
             drawInfoBox(148, y, 48, 'DATA:', dataFormatada);
             y += 13;
             if (exibeApoio) {
@@ -1284,7 +1284,7 @@ function gerarPDFPersonalizado() {
                 styles: { lineWidth: 0.1, lineColor: [200, 200, 200] },
                 didParseCell: function(data) {
                     if (data.section === 'foot' && data.column.index === 1) {
-                        data.cell.styles.halign = 'right';
+                        data.cell.styles.halign = 'center';
                     }
                 }
             });
@@ -1357,7 +1357,7 @@ function gerarPDFPersonalizado() {
 
             sigY += boxHA + 8;
 
-            drawSig(61, sigY, sigWidth, 'REPRESENTANTE DA EMPRESA', 'sig-empresa', repFields);
+            drawSig(61, sigY, sigWidth, 'REPRESENTANTE DA EMPRESA / ESTABELECIMENTO', 'sig-empresa', repFields);
 
             const pdfDataUri = pdf.output('datauristring');
             const pdfBlob = pdf.output('blob');
