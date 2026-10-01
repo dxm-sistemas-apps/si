@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RELATÓRIO DE SUCATAS</title>
+  <title>CONTROLE DE SUCATAS</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -546,7 +546,7 @@
               <img id="appLogo" class="h-64 object-contain" alt="Logo DGAD">
           </div>
           <div>
-              <h1 class="font-bold text-base md:text-lg leading-tight uppercase">relatório de sucatas</h1>
+              <h1 class="font-bold text-base md:text-lg leading-tight uppercase">CONTROLE de sucatas</h1>
               <p class="text-xs text-blue-200 uppercase">sistema integrado - equipe operacional</p>
           </div>
       </div>
@@ -569,7 +569,7 @@
 
     <div class="card">
       <div class="form-group">
-        <label for="header-atividade">NATUREZA DA FISCALIZAÇÃO: *</label>
+        <label for="header-atividade">NATUREZA DA ATIVIDADE: *</label>
         <select id="header-atividade" onchange="atualizarCamposNatureza()">
           <option value="" selected>ESCOLHA UMA OPÇÃO</option>
           <option value="FISCALIZAÇÃO DE EMPRESA CREDENCIADA">FISCALIZAÇÃO DE EMPRESA CREDENCIADA</option>
@@ -681,7 +681,7 @@
     <div class="card no-print" id="secao-historico-pdf" style="margin-top: 16px;">
       <div class="pdf-history-header">
         <div class="section-title" style="margin-bottom: 0;">
-          <span>📄 PDF'S GERADOS - RELATÓRIO DE SUCATAS</span>
+          <span>📄 PDF'S GERADOS - CONTROLE DE SUCATAS</span>
         </div>
         <div class="pdf-search-wrapper" style="margin-top: 8px;">
           <span class="pdf-search-icon">🔍</span>
@@ -718,7 +718,7 @@
   </div>
 
   <script>
-    const LOGO_DGAD_SUPORTE = "sucata.png";
+    const LOGO_DGAD_SUPORTE = "apreensao.png";
 
     const STORAGE_KEYS = {
       HEADER: 'detran_header_data_sucata',
@@ -914,16 +914,16 @@
       { id: 'm_troller', nome: 'TROLLER', tipo: 'carro' },
       { id: 'm_volkswagen', nome: 'VOLKSWAGEN', tipo: 'carro' },
       { id: 'm_volvo', nome: 'VOLVO', tipo: 'carro' },
-      { id: 'm_bajaj', nome: 'BAJAJ - MOTOCICLETA', tipo: 'moto' },
-      { id: 'm_dafra', nome: 'DAFRA - MOTOCICLETA', tipo: 'moto' },
-      { id: 'm_kawasaki', nome: 'KAWASAKI - MOTOCICLETA', tipo: 'moto' },
-      { id: 'm_ktm', nome: 'KTM - MOTOCICLETA', tipo: 'moto' },
-      { id: 'm_royal_enfield', nome: 'ROYAL ENFIELD - MOTOCICLETA', tipo: 'moto' },
-      { id: 'm_hondamotos', nome: 'HONDA - MOTOCICLETA', tipo: 'moto' },
-      { id: 'm_shineray_motos', nome: 'SHINERAY - MOTOCICLETA', tipo: 'moto' },
-      { id: 'm_suzuki_motos', nome: 'SUZUKI - MOTOCICLETA', tipo: 'moto' },
-      { id: 'm_triumph', nome: 'TRIUMPH - MOTOCICLETA', tipo: 'moto' },
-      { id: 'm_yamaha', nome: 'YAMAHA - MOTOCICLETA', tipo: 'moto' }
+      { id: 'm_bajaj', nome: 'BAJAJ', tipo: 'moto' },
+      { id: 'm_dafra', nome: 'DAFRA', tipo: 'moto' },
+      { id: 'm_kawasaki', nome: 'KAWASAKI', tipo: 'moto' },
+      { id: 'm_ktm', nome: 'KTM', tipo: 'moto' },
+      { id: 'm_royal_enfield', nome: 'ROYAL ENFIELD', tipo: 'moto' },
+      { id: 'm_hondamotos', nome: 'HONDA', tipo: 'moto' },
+      { id: 'm_shineray_motos', nome: 'SHINERAY', tipo: 'moto' },
+      { id: 'm_suzuki_motos', nome: 'SUZUKI', tipo: 'moto' },
+      { id: 'm_triumph', nome: 'TRIUMPH', tipo: 'moto' },
+      { id: 'm_yamaha', nome: 'YAMAHA', tipo: 'moto' }
     ];
 
     const defaultModelos = [
@@ -1923,7 +1923,7 @@
 
       const remainingSlots = 5 - currentImages.length;
       if (files.length > remainingSlots) {
-        mostrarAlertaAviso('LIMITE DE IMAGENS', `<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> VOCÊ PODE ADICIONAR MAIS NO MÁXIMO ${remainingSlots} IMAGEM(NS).`);
+        mostrarAlertaAviso('LIMITE DE IMAGENS', `<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> VOCÊ SÓ PODE ADICIONAR NO MÁXIMO <span class="text-red-500 font-bold">${remainingSlots} IMAGENS</span>.`);
       }
 
       const filesToProcess = files.slice(0, remainingSlots);
@@ -2038,14 +2038,14 @@
       const exibeFase = document.getElementById('grupo-fase-forca-tarefa').style.display !== 'none';
       const exibeEndereco = document.getElementById('grupo-endereco').style.display !== 'none';
 
-      if (!atividade) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA A <span style="color:#dc2626; font-weight:bold;">"NATUREZA DA FISCALIZAÇÃO"</span>!', elAtividade); return; }
+      if (!atividade) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA A <span style="color:#dc2626; font-weight:bold;">"NATUREZA DA ATIVIDADE"</span>!', elAtividade); return; }
       if (document.getElementById('grupo-apoio').style.display !== 'none' && !document.getElementById('header-apoio').value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O CAMPO <span style="color:#dc2626; font-weight:bold;">"APOIO À"</span>!', document.getElementById('header-apoio')); return; }
       if (exibeFase && !fase) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA A <span style="color:#dc2626; font-weight:bold;">"FASE DA FORÇA TAREFA"</span>!', elFase); return; }
-      if (!estabelecimento) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"ESTABELECIMENTO"</span>!', elEstabelecimento); return; }
+      if (!estabelecimento) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"EMPRESA / ESTABELECIMENTO"</span>!', elEstabelecimento); return; }
       if (exibeEndereco && !local) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"ENDEREÇO"</span>!', elLocal); return; }
       if (!dataHeader) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE A <span style="color:#dc2626; font-weight:bold;">"DATA"</span>!', elData); return; }
       if (!montadoraId) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE A <span style="color:#dc2626; font-weight:bold;">"MONTADORA"</span>!', elMontadora); return; }
-      if (!modeloNome) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> ESCOLHA UM <span style="color:#dc2626; font-weight:bold;">"MODELO DO VEÍCULO"</span>!', elModeloSelect); return; }
+      if (!modeloNome) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE O <span style="color:#dc2626; font-weight:bold;">"MODELO DO VEÍCULO"</span>!', elModeloSelect); return; }
       if (!corId) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE A <span style="color:#dc2626; font-weight:bold;">"COR"</span>!', elCor); return; }
       if (hasPlate && !placa) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> INFORME A <span style="color:#dc2626; font-weight:bold;">"IDENTIFICAÇÃO"</span> DO VEÍCULO!', elPlaca); return; }
       if (currentImages.length === 0) { mostrarAlertaAviso('IMAGENS FALTANDO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> ADICIONE AO MENOS <span style="color:#dc2626; font-weight:bold;">1 IMAGEM</span> DA SUCATA!'); return; }
@@ -2255,10 +2255,10 @@
       const exibeFase = document.getElementById('grupo-fase-forca-tarefa').style.display !== 'none';
       const exibeEndereco = document.getElementById('grupo-endereco').style.display !== 'none';
 
-      if (!elAtividade.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA A <span style="color:#dc2626; font-weight:bold;">"NATUREZA DA FISCALIZAÇÃO"</span>!', elAtividade); return false; }
+      if (!elAtividade.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA A <span style="color:#dc2626; font-weight:bold;">"NATUREZA DA ATIVIDADE"</span>!', elAtividade); return false; }
       if (document.getElementById('grupo-apoio').style.display !== 'none' && !document.getElementById('header-apoio').value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O CAMPO <span style="color:#dc2626; font-weight:bold;">"APOIO À"</span>!', document.getElementById('header-apoio')); return false; }
       if (exibeFase && !elFase.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA A <span style="color:#dc2626; font-weight:bold;">"FASE DA FORÇA TAREFA"</span>!', elFase); return false; }
-      if (!elEstabelecimento.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"ESTABELECIMENTO"</span>!', elEstabelecimento); return false; }
+      if (!elEstabelecimento.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"EMPRESA / ESTABELECIMENTO"</span>!', elEstabelecimento); return false; }
       if (exibeEndereco && !elLocal.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"ENDEREÇO"</span>!', elLocal); return false; }
       if (!elData.value) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE A <span style="color:#dc2626; font-weight:bold;">"DATA"</span>!', elData); return false; }
 
@@ -2266,7 +2266,7 @@
         Swal.fire({
           icon: 'warning',
           title: 'LISTA VAZIA',
-          text: 'ATENÇÃO, NÃO HÁ NENHUMA SUCATA REGISTRADA PARA GERAR O PDF.',
+          text: '<span class="text-amber-500 font-bold">ATENÇÃO:</span>, NÃO HÁ NENHUMA SUCATA REGISTRADA PARA GERAR O PDF.',
           confirmButtonColor: '#000000'
         });
         return false;
@@ -2440,7 +2440,7 @@
                 pdf.text(value, x + 3, yPos + 9);
             };
 
-            drawInfoBox(marginX, curY, 130, 'NATUREZA DA FISCALIZAÇÃO:', atividade.toUpperCase());
+            drawInfoBox(marginX, curY, 130, 'NATUREZA DA ATIVIDADE:', atividade.toUpperCase());
             drawInfoBox(148, curY, 48, 'DATA:', dataBR);
             curY += 13;
             if (document.getElementById('grupo-apoio').style.display !== 'none') {
@@ -2451,7 +2451,7 @@
                 drawInfoBox(marginX, curY, cardWidth, 'FASE DA FORÇA TAREFA:', fase.toUpperCase());
                 curY += 13;
             }
-            drawInfoBox(marginX, curY, cardWidth, 'ESTABELECIMENTO:', estabelecimento.toUpperCase());
+            drawInfoBox(marginX, curY, cardWidth, 'EMPRESA / ESTABELECIMENTO:', estabelecimento.toUpperCase());
             curY += 13;
             if (exibeEndereco) {
                 drawInfoBox(marginX, curY, cardWidth, 'ENDEREÇO:', local.toUpperCase());
@@ -2462,7 +2462,7 @@
             pdf.setFont('helvetica', 'bold');
             pdf.setFontSize(11);
             pdf.setTextColor(0, 0, 0);
-            pdf.text('RELATÓRIO DE SUCATAS REGISTRADAS', pageWidth / 2, curY, { align: 'center' });
+            pdf.text('CONTROLE DE SUCATAS REGISTRADAS', pageWidth / 2, curY, { align: 'center' });
             curY += 7;
 
             const imgWidth = 32;
@@ -2610,8 +2610,8 @@
               Swal.fire({
                   icon: 'success',
                   title: 'PDF GERADO COM SUCESSO!',
-                  html: `O arquivo foi adicionado ao histórico da página.<br><br>
-                         <b>PARA BAIXAR:</b> Utilize o botão "⬇️" no histórico de PDFs abaixo.`,
+                  html: `O ARQUIVO FOI ADICIONADO AO HISTÓRICO DA PÁGINA.<br><br>
+                         <b>PARA BAIXAR:</b> UTILIZE O BOTÃO "⬇️" NO HISTÓRICO DE PDFs ABAIXO.`,
                   confirmButtonColor: '#000000'
               }).then(() => {
                   limparAposGeracao();
@@ -2638,7 +2638,7 @@
             await navigator.share({
               files: [arquivo],
               title: nomeArquivo,
-              text: 'RELATÓRIO DE SUCATAS'
+              text: 'CONTROLE DE SUCATAS'
             });
             return true;
           }
@@ -2659,15 +2659,15 @@
       const dataRaw = document.getElementById('header-data').value;
       const dataBR = dataRaw.split('-').reverse().join('/');
 
-      let mensagem = `*RELATÓRIO DE SUCATAS - DETRAN RJ*\n\n`;
-      mensagem += `🧐 *FISCALIZAÇÃO:* ${atividade}\n`;
+      let mensagem = `*CONTROLE DE SUCATAS*\n\n`;
+      mensagem += `🧐 *NATUREZA DA ATIVIDADE:* ${atividade}\n`;
       if (document.getElementById('grupo-apoio').style.display !== 'none') {
           mensagem += `🤝 *APOIO À:* ${document.getElementById('header-apoio').value.toUpperCase()}\n`;
       }
       if (document.getElementById('grupo-fase-forca-tarefa').style.display !== 'none') {
           mensagem += `🪖 *FASE DA FORÇA TAREFA:* ${fase}\n`;
       }
-      mensagem += `🏢 *ESTABELECIMENTO:* ${estabelecimento}\n`;
+      mensagem += `🏢 *EMPRESA / ESTABELECIMENTO:* ${estabelecimento}\n`;
       if (document.getElementById('grupo-endereco').style.display !== 'none') {
           mensagem += `📍 *ENDEREÇO:* ${local}\n`;
       }
