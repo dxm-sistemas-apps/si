@@ -269,7 +269,7 @@
                 <div class="bloco-assinatura flex flex-col justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg">
                     <div class="mb-3">
                         <label class="block text-xs font-bold uppercase text-black-500 mb-1">ASSINATURA DIGITAL:</label>
-                        <canvas id="sig-agente1" class="w-full h-[170px] bg-white border border-dashed border-gray-400 rounded pointer-events-none"></canvas>
+                        <canvas id="sig-agente1" class="w-full h-[250px] bg-white border border-dashed border-gray-400 rounded pointer-events-none"></canvas>
                         <div class="flex justify-between mt-1">
                             <button onclick="habilitarAssinatura('sig-agente1')" class="no-print text-xs text-blue-800 font-bold hover:underline">ASSINAR</button>
                             <button onclick="clearCanvas('sig-agente1')" class="no-print text-xs text-red-600 font-bold hover:underline">APAGAR ASSINATURA</button>
@@ -344,7 +344,7 @@
     <div class="card no-print max-w-4xl mx-auto mt-6" id="secao-historico-pdf">
       <div class="pdf-history-header">
         <div class="section-title" style="margin-bottom: 0;">
-          <span>📄 PDFs GERADOS - RASTREABILIDADE DE CAMINHÃO/ÔNIBUS</span>
+          <span>📄 PDF'S GERADOS - RASTREABILIDADE DE CAMINHÃO/ÔNIBUS</span>
         </div>
         <div class="pdf-search-wrapper" style="margin-top: 8px;">
           <span class="pdf-search-icon">🔍</span>
@@ -1022,7 +1022,7 @@ function renderizarGridPDFs() {
     }
 
     if (historico.length === 0) {
-        container.innerHTML = `<div class="pdf-empty-state">NENHUM PDF ENCONTRADO NO HISTÓRICO</div>`;
+        container.innerHTML = `<div class="pdf-empty-state">NENHUM PDF NO HISTÓRICO</div>`;
         return;
     }
 
@@ -1284,7 +1284,7 @@ function gerarPDFPersonalizado() {
                 styles: { lineWidth: 0.1, lineColor: [200, 200, 200] },
                 didParseCell: function(data) {
                     if (data.section === 'foot' && data.column.index === 1) {
-                        data.cell.styles.halign = 'center';
+                        data.cell.styles.halign = 'left';
                     }
                 }
             });
