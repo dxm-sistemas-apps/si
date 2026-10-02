@@ -1356,7 +1356,6 @@ function gerarPDFPersonalizado() {
             drawSig(108, sigY, sigWidth, 'AGENTE DO DETRAN RJ', 'sig-agente2', [{label: 'ID FUNCIONAL:', value: document.getElementById('mat-agente2').value}]);
 
             sigY += boxHA + 8;
-
             drawSig(61, sigY, sigWidth, 'REPRESENTANTE DA EMPRESA / ESTABELECIMENTO', 'sig-empresa', repFields);
 
             const pdfDataUri = pdf.output('datauristring');
@@ -1376,34 +1375,38 @@ function gerarPDFPersonalizado() {
                 dataUri: pdfDataUri
             });
 
-            // pdf.save(nomeArquivo);
-            const foiCompartilhado = await compartilharPDFGeradoWhatsApp(pdfBlob, nomeArquivo);
+            Swal.fire({
+                icon: 'success',
+                title: 'PDF GERADO COM SUCESSO!',
+                html: `<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI SALVO NO HISTÓRICO.<br><br>DESEJA ENVIAR PELO WHATSAPP AGORA?`,
+                showCancelButton: true,
+                confirmButtonColor: '#16a34a',
+                cancelButtonColor: '#000000',
+                confirmButtonText: '📲 COMPARTILHAR NO WHATSAPP',
+                cancelButtonText: 'CONCLUIR'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const compartilhou = await compartilharPDFGeradoWhatsApp(pdfBlob, nomeArquivo);
+                    if (!compartilhou) {
+                        baixarPDFHistorico(Date.now().toString());
+                        compartilharPDFWhatsApp();
+                    }
+                }
+                limparTabelaDireto();
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            });
 
-            Swal.close();
-
-if (foiCompartilhado) {
-    Swal.fire({
-        icon: 'success',
-        title: 'PDF GERADO E COMPARTILHADO!',
-        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DA PÁGINA.',
-        confirmButtonColor: '#000000'
-    }).then(() => {
-        limparTabelaDireto();
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    });
-} else {
-    Swal.fire({
-        icon: 'success',
-        title: 'PDF GERADO COM SUCESSO!',
-        html: `<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DA PÁGINA.<br><br>
-               <b>PARA BAIXAR:</b> UTILIZE O BOTÃO "⬇️" NO HISTÓRICO DE PDFS ABAIXO.`,
-        confirmButtonColor: '#000000'
-    }).then(() => {
-        limparTabelaDireto();
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        } catch (error) {
+            console.error('Erro ao gerar PDF:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'ERRO AO GERAR PDF',
+                text: 'ATENÇÃO, OCORREU UM PROBLEMA AO GERAR O PDF.',
+                confirmButtonColor: '#000000'
+            });
+        }
     });
 }
-
 function limparTabelaDireto() {
     localStorage.removeItem('rascunho_moto');
     dadosAgregadosPorModo = {
@@ -1444,17 +1447,19 @@ function limparTabelaDireto() {
 async function compartilharPDFGeradoWhatsApp(blob, nomeArquivo) {
     if (navigator.share && navigator.canShare) {
         const arquivo = new File([blob], nomeArquivo, { type: 'application/pdf' });
-        try {
-            if (navigator.canShare({ files: [arquivo] })) {
+        if (navigator.canShare({ files: [arquivo] })) {
+            try {
                 await navigator.share({
                     files: [arquivo],
                     title: nomeArquivo,
-                    text: 'PDF DE ITENS DE RASTREABILIDADE'
+                    text: 'Segue em anexo o arquivo de rastreabilidade (PDF).'
                 });
                 return true;
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    console.warn('Erro ao compartilhar arquivo:', err);
+                }
             }
-        } catch (error) {
-            console.warn('Compartilhamento abortado ou indisponível:', error);
         }
     }
     return false;
