@@ -269,7 +269,7 @@
                 <div class="bloco-assinatura flex flex-col justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg">
                     <div class="mb-3">
                         <label class="block text-xs font-bold uppercase text-black-500 mb-1">ASSINATURA DIGITAL:</label>
-                        <canvas id="sig-agente1" class="w-full h-[250px] bg-white border border-dashed border-gray-400 rounded pointer-events-none"></canvas>
+                        <canvas id="sig-agente1" class="w-full h-72 sm:h-52 bg-white border border-dashed border-gray-400 rounded pointer-events-none"></canvas>
                         <div class="flex justify-between mt-1">
                             <button onclick="habilitarAssinatura('sig-agente1')" class="no-print text-xs text-blue-800 font-bold hover:underline">ASSINAR</button>
                             <button onclick="clearCanvas('sig-agente1')" class="no-print text-xs text-red-600 font-bold hover:underline">APAGAR ASSINATURA</button>
@@ -285,7 +285,7 @@
                 <div class="bloco-assinatura flex flex-col justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg">
                     <div class="mb-3">
                         <label class="block text-xs font-bold uppercase text-black-500 mb-1">ASSINATURA DIGITAL:</label>
-                        <canvas id="sig-agente2" class="w-full h-[170px] bg-white border border-dashed border-gray-400 rounded pointer-events-none"></canvas>
+                        <canvas id="sig-agente2" class="w-full h-72 sm:h-52 bg-white border border-dashed border-gray-400 rounded pointer-events-none"></canvas>
                         <div class="flex justify-between mt-1">
                             <button onclick="habilitarAssinatura('sig-agente2')" class="no-print text-xs text-blue-800 font-bold hover:underline">ASSINAR</button>
                             <button onclick="clearCanvas('sig-agente2')" class="no-print text-xs text-red-600 font-bold hover:underline">APAGAR ASSINATURA</button>
@@ -302,7 +302,7 @@
             <div id="bloco-representante-empresa" class="bloco-assinatura w-full md:w-1/2 flex flex-col justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg mx-auto">
                 <div class="mb-3">
                     <label class="block text-xs font-bold uppercase text-black-500 mb-1">ASSINATURA DIGITAL:</label>
-                    <canvas id="sig-empresa" class="w-full h-[170px] bg-white border border-dashed border-gray-400 rounded pointer-events-none"></canvas>
+                    <canvas id="sig-empresa" class="w-full h-72 sm:h-52 bg-white border border-dashed border-gray-400 rounded pointer-events-none"></canvas>
                     <div class="flex justify-between mt-1">
                         <button onclick="habilitarAssinatura('sig-empresa')" class="no-print text-xs text-blue-800 font-bold hover:underline">ASSINAR</button>
                         <button onclick="clearCanvas('sig-empresa')" class="no-print text-xs text-red-600 font-bold hover:underline">APAGAR ASSINATURA</button>
@@ -1634,6 +1634,10 @@ window.addEventListener('resize', () => {
 });
 
 window.onload = () => {
+    canvases.forEach(id => { ajustarResolucaoCanvas(id); });
+    setTimeout(() => {
+        canvases.forEach(id => { ajustarResolucaoCanvas(id); });
+    }, 150);
     canvases.forEach(id => { ajustarResolucaoCanvas(id); });
 
     const rascunho = JSON.parse(localStorage.getItem('rascunho_rastreabilidade_caminhao'));
