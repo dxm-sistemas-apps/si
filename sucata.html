@@ -623,7 +623,7 @@
 
 <body class="bg-[#f1f5f9] text-gray-800 font-sans min-h-screen antialiased pb-12">
 
-  <header class="bg-gray-900 text-white shadow-md no-print">
+  <header class="bg-[#001039] text-white shadow-md no-print">
       <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col items-center justify-center text-center">
           <div class="bg-blue p-1.5 rounded-lg shadow-sm mb-2">
               <img id="appLogo" class="h-64 object-contain" alt="Logo DGAD">
@@ -646,7 +646,7 @@
               crossorigin="anonymous">
         </div>
         <h1 class="text-lg sm:text-xl font-bold uppercase tracking-wide text-gray-900">Governo do Estado do Rio de Janeiro</h1>
-        <h2 class="text-md sm:text-lg font-semibold uppercase text-gray-800">Departamento de Trânsito do Estado do Rio de Janeiro - DETRAN RJ</h2>
+        <h2 class="text-md sm:text-lg font-semibold uppercase text-gray-800">Departamento de Trânsito do Estado do Rio de Janeiro - DETRAN.RJ</h2>
         <h3 class="text-sm sm:text-md font-medium text-gray-600 uppercase mt-1">Diretoria Geral das Atividades de Desmontagem</h3>
         <h3 class="text-sm sm:text-md font-medium text-black-600 uppercase mt-1">DIVISÃO DE FISCALIZAÇÃO</h3>
     </header>
@@ -2587,7 +2587,7 @@ function salvarRegistro() {
             pdf.text('GOVERNO DO ESTADO DO RIO DE JANEIRO', pageWidth / 2, curY, { align: 'center' });
             curY += 5.5;
             pdf.setFontSize(10);
-            pdf.text('DEPARTAMENTO DE TRÂNSITO DO ESTADO DO RIO DE JANEIRO - DETRAN RJ', pageWidth / 2, curY, { align: 'center' });
+            pdf.text('DEPARTAMENTO DE TRÂNSITO DO ESTADO DO RIO DE JANEIRO - DETRAN.RJ', pageWidth / 2, curY, { align: 'center' });
             curY += 5.5;
             pdf.setFont('helvetica', 'normal');
             pdf.setFontSize(9);
