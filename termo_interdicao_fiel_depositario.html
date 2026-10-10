@@ -248,7 +248,7 @@
 <body class="text-slate-800 antialiased pb-12 relative">
 
     <!-- Header Navigation -->
-    <header class="bg-gray-900 text-white shadow-md">
+    <header class="bg-[#001039] text-white shadow-md">
         <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col items-center justify-center text-center">
             <div class="bg-blue p-1.5 rounded-lg shadow-sm mb-2">
                 <img id="appLogo" class="h-64 object-contain" alt="Logo DGAD Suporte">
@@ -291,7 +291,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Nome do Agente Fiscalizador *</label>
-                            <input type="text" id="inputNomeAgente" placeholder="NOME DO AGENTE DO DETRAN" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                            <input type="text" id="inputNomeAgente" placeholder="NOME DO AGENTE DO DETRAN.RJ" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
                         </div>
 
                         <div>
@@ -381,7 +381,7 @@
                                     <span id="placeholderSignProprietario" class="text-xs text-slate-400 italic">SEM ASSINATURA</span>
                                 </div>
                             </div>
-                            <button type="button" onclick="openSignatureModal('Proprietario', 'Proprietário do Estabelecimento')" class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded">
+                            <button type="button" onclick="openSignatureModal('Proprietario', 'Proprietário do Estabelecimento')" class="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded">
                                 ASSINAR
                             </button>
                         </div>
@@ -391,7 +391,7 @@
                 <!-- Botões de Ação -->
                 <div class="flex flex-col sm:flex-row flex-wrap gap-3 justify-end items-center bg-white p-4 rounded-xl shadow-sm border border-slate-200 no-print">
                     <button type="button" onclick="confirmClearAllForm()" 
-                        class="w-full sm:w-auto px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-700 font-semibold rounded-lg text-sm border border-red-200 transition flex items-center justify-center space-x-2">
+                        class="w-full sm:w-auto px-4 py-2.5 bg-red-600 hover:bg-red-500 text-white font-bold rounded-lg text-sm border border-red-200 transition flex items-center justify-center space-x-2">
                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                         <span>LIMPAR PÁGINA</span>
                     </button>
@@ -409,7 +409,7 @@
                     </button>
 
                     <button type="button" onclick="generatePDF(true)" 
-                        class="w-full sm:w-auto px-6 py-2.5 bg-blue-900 hover:bg-blue-800 text-white font-bold rounded-lg text-sm shadow-md transition flex items-center justify-center space-x-2">
+                        class="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm shadow-md transition flex items-center justify-center space-x-2">
                         <i data-lucide="file-check-2" class="w-4 h-4"></i>
                         <span>GERAR PDF</span>
                     </button>
@@ -433,9 +433,10 @@
                                             <div class="flex justify-center mb-3">
                                                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Ins%C3%ADgnia_bras%C3%A3o_estilizado_governos_Wilson_Witzel_e_Cl%C3%A1udio_Castro_RJ.png/500px-Ins%C3%ADgnia_bras%C3%A3o_estilizado_governos_Wilson_Witzel_e_Cl%C3%A1udio_Castro_RJ.png" alt="Brasão do Estado do Rio de Janeiro" class="h-24 w-auto object-contain">
                                             </div>
-                                            <h2 style="font-size: 12.5px; font-weight: bold; margin: 0; text-transform: uppercase;">Governo do Estado do Rio de Janeiro</h2>
+                                            <h1 style="font-size: 12.5px; font-weight: bold; margin: 0; text-transform: uppercase;">Governo do Estado do Rio de Janeiro</h1>
+                                            <h2 style="font-size: 11px; font-weight: bold; margin: 1px 0; text-transform: uppercase;">Departamento de Trânsito do Estado do Rio de Janeiro</h2>
                                             <h3 style="font-size: 11px; font-weight: bold; margin: 1px 0; text-transform: uppercase;">DIRETORIA GERAL DAS ATIVIDADES DE DESMONTAGEM</h3>
-                                            <h4 style="font-size: 11px; font-weight: bold; margin: 1px 0; text-transform: uppercase;">Departamento de Trânsito do Estado do Rio de Janeiro</h4>
+                                            <h3 class="text-sm sm:text-md font-medium text-slate-600 uppercase mt-1">DIVISÃO DE FISCALIZAÇÃO</h3>
                                             <h1 style="font-size: 12.5px; font-weight: bold; margin-top: 8px; text-transform: uppercase; text-decoration: underline;">
                                                 TERMO DE INTERDIÇÃO E DESIGNAÇÃO COMO FIEL DEPOSITÁRIO
                                             </h1>
