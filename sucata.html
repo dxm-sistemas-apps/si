@@ -2552,7 +2552,7 @@ function salvarRegistro() {
 
         Swal.fire({
             title: 'GERANDO PDF...',
-            html: 'AGUARDE A CRIAÇÃO E SALVAMENTO DO ARQUIVO OTIMIZADO.',
+            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> AGUARDE A CRIAÇÃO E SALVAMENTO DO ARQUIVO.',
             allowOutsideClick: false,
             didOpen: () => { Swal.showLoading(); }
         });
@@ -2779,8 +2779,8 @@ function salvarRegistro() {
               Swal.fire({
                   icon: 'success',
                   title: 'PDF GERADO COM SUCESSO!',
-                  html: `O ARQUIVO FOI ADICIONADO AO HISTÓRICO DA PÁGINA.<br><br>
-                         <b>PARA BAIXAR:</b> UTILIZE O BOTÃO "⬇️" NO HISTÓRICO DE PDFs ABAIXO.`,
+                  html: `<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS.<br><br>
+               <b>PARA FAZER BAIXAR,</b> UTILIZE O BOTÃO "⬇️" NO HISTÓRICO DE PDF´S ABAIXO.`,
                   confirmButtonColor: '#000000'
               }).then(() => {
                   // limparAposGeracao();
