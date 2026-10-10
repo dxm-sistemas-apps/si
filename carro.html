@@ -1314,6 +1314,10 @@ function gerarPDFPersonalizado() {
             pdf.setFont('helvetica', 'normal');
             pdf.setFontSize(9);
             pdf.text('DIRETORIA GERAL DAS ATIVIDADES DE DESMONTAGEM', pageWidth / 2, y, { align: 'center' });
+            y += 5.5;
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(9);
+            pdf.text('DIVISÃO DE FISCALIZAÇÃO', pageWidth / 2, y, { align: 'center' });
             y += 10;
 
             const drawInfoBox = (x, yPos, w, label, value) => {
