@@ -1208,7 +1208,7 @@ function gerarPDFPersonalizado() {
 
         Swal.fire({
             title: 'GERANDO PDF...',
-            text: 'ATENÇÃO, AGUARDE A CRIAÇÃO E SALVAMENTO DO ARQUIVO.',
+            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> AGUARDE A CRIAÇÃO E SALVAMENTO DO ARQUIVO.',
             allowOutsideClick: false,
             didOpen: () => { Swal.showLoading(); }
         });
