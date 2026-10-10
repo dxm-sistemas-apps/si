@@ -231,7 +231,7 @@
 <body class="bg-[#f1f5f9] text-gray-800 font-sans min-h-screen antialiased pb-12">
 
     <!-- HEADER PADRONIZADO EXATAMENTE NO MODELO DO SUPORTE -->
-    <header class="bg-gray-900 text-white shadow-md">
+    <header class="bg-[[#001039] text-white shadow-md">
         <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col items-center justify-center text-center">
             <div class="bg-blue p-1.5 rounded-lg shadow-sm mb-2">
                 <img id="appLogo" class="h-64 object-contain" alt="Logo DGAD Suporte">
@@ -250,8 +250,9 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Ins%C3%ADgnia_bras%C3%A3o_estilizado_governos_Wilson_Witzel_e_Cl%C3%A1udio_Castro_RJ.png" alt="Brasão do Estado do Rio de Janeiro" class="h-24 w-auto object-contain">
             </div>
             <h1 class="text-lg sm:text-xl font-bold uppercase tracking-wide">Governo do Estado do Rio de Janeiro</h1>
-            <h2 class="text-md sm:text-lg font-semibold uppercase">Departamento de Trânsito do Estado do Rio de Janeiro - DETRAN RJ</h2>
+            <h2 class="text-md sm:text-lg font-semibold uppercase">Departamento de Trânsito do Estado do Rio de Janeiro - DETRAN.RJ</h2>
             <h3 class="text-sm sm:text-md font-medium text-black-600 uppercase mt-1">Diretoria Geral das Atividades de Desmontagem</h3>
+            <h3 class="text-sm sm:text-md font-medium text-black-600 uppercase mt-1">DIVISÃO DE FISCALIZAÇÃO</h3>
         </header>
 
         <section class="flex flex-col gap-4 mb-4 bg-gray-50 p-4 rounded-lg border border-gray-200">
@@ -351,7 +352,7 @@
             <div id="bloco-agentes-detran" class="w-full grid grid-cols-1 md:grid-cols-2 gap-6 justify-center">
                 <div class="bloco-assinatura flex flex-col justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg">
                     <div class="mb-3">
-                        <label class="block text-xs font-bold uppercase text-black-500 mb-1">ASSINATURA DIGITAL:</label>
+                        <label class="block text-xs font-bold uppercase text-black-500 mb-1">ASSINATURA DIGITALIZADA:</label>
                         <canvas id="sig-agente1" class="w-full h-72 sm:h-52 bg-white border border-dashed border-gray-400 rounded pointer-events-none"></canvas>
                         <div class="flex justify-between mt-1">
                             <button onclick="habilitarAssinatura('sig-agente1')" class="no-print text-xs text-blue-800 font-bold hover:underline">ASSINAR</button>
@@ -362,12 +363,12 @@
                         <label class="block text-xs font-bold uppercase text-black-600 mb-1">ID FUNCIONAL:</label>
                         <input type="text" id="mat-agente1" placeholder="0000000-0" maxlength="9" oninput="aplicarMascaraMatricula(this)" class="w-full p-2 border border-gray-300 rounded text-sm font-mono">
                     </div>
-                    <p class="text-center font-bold text-xs uppercase tracking-wide mt-4 pt-2 border-t border-gray-300 text-black-700">Agente do Detran RJ</p>
+                    <p class="text-center font-bold text-xs uppercase tracking-wide mt-4 pt-2 border-t border-gray-300 text-black-700">Agente do Detran.RJ</p>
                 </div>
 
                 <div class="bloco-assinatura flex flex-col justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg">
                     <div class="mb-3">
-                        <label class="block text-xs font-bold uppercase text-black-500 mb-1">ASSINATURA DIGITAL:</label>
+                        <label class="block text-xs font-bold uppercase text-black-500 mb-1">ASSINATURA DIGITALIZADA:</label>
                         <canvas id="sig-agente2" class="w-full h-72 sm:h-52 bg-white border border-dashed border-gray-400 rounded pointer-events-none"></canvas>
                         <div class="flex justify-between mt-1">
                             <button onclick="habilitarAssinatura('sig-agente2')" class="no-print text-xs text-blue-800 font-bold hover:underline">ASSINAR</button>
@@ -378,13 +379,13 @@
                         <label class="block text-xs font-bold uppercase text-black-600 mb-1">ID FUNCIONAL:</label>
                         <input type="text" id="mat-agente2" placeholder="0000000-0" maxlength="9" oninput="aplicarMascaraMatricula(this)" class="w-full p-2 border border-gray-300 rounded text-sm font-mono">
                     </div>
-                    <p class="text-center font-bold text-xs uppercase tracking-wide mt-4 pt-2 border-t border-gray-300 text-black-700">Agente do Detran RJ</p>
+                    <p class="text-center font-bold text-xs uppercase tracking-wide mt-4 pt-2 border-t border-gray-300 text-black-700">Agente do Detran.RJ</p>
                 </div>
             </div>
 
             <div id="bloco-representante-empresa" class="bloco-assinatura w-full md:w-1/2 flex flex-col justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg mx-auto">
                 <div class="mb-3">
-                    <label class="block text-xs font-bold uppercase text-black-500 mb-1">ASSINATURA DIGITAL:</label>
+                    <label class="block text-xs font-bold uppercase text-black-500 mb-1">ASSINATURA DIGITALIZADA:</label>
                     <canvas id="sig-empresa" class="w-full h-72 sm:h-52 bg-white border border-dashed border-gray-400 rounded pointer-events-none"></canvas>
                     <div class="flex justify-between mt-1">
                         <button onclick="habilitarAssinatura('sig-empresa')" class="no-print text-xs text-blue-800 font-bold hover:underline">ASSINAR</button>
@@ -928,7 +929,7 @@ function validarFormulario(acaoSucesso = null) {
 
     const modoPreenchimento = document.getElementById('tipo-preenchimento').value;
     if (!modoPreenchimento) {
-        mostrarAlertaAviso('MODO DE PREENCHIMENTO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> SELECIONE UM MODO DE PREENCHIMENTO DA TABELA!', document.getElementById('tipo-preenchimento'));
+        mostrarAlertaAviso('MODO DE PREENCHIMENTO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> ESCOLHA O <span class="text-red-500 font-bold">MODO DE PREENCHIMENTO DA TABELA!', document.getElementById('tipo-preenchimento'));
         return;
     }
     
@@ -1232,12 +1233,17 @@ function gerarPDFPersonalizado() {
             pdf.text('GOVERNO DO ESTADO DO RIO DE JANEIRO', pageWidth / 2, y, { align: 'center' });
             y += 5.5;
             pdf.setFontSize(10);
-            pdf.text('DEPARTAMENTO DE TRÂNSITO DO ESTADO DO RIO DE JANEIRO - DETRAN RJ', pageWidth / 2, y, { align: 'center' });
+            pdf.text('DEPARTAMENTO DE TRÂNSITO DO ESTADO DO RIO DE JANEIRO - DETRAN.RJ', pageWidth / 2, y, { align: 'center' });
             y += 5.5;
             pdf.setFont('helvetica', 'normal');
             pdf.setFontSize(9);
             pdf.text('DIRETORIA GERAL DAS ATIVIDADES DE DESMONTAGEM', pageWidth / 2, y, { align: 'center' });
+            y += 5.5;
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(9);
+            pdf.text('DIVISÃO DE FISCALIZAÇÃO', pageWidth / 2, y, { align: 'center' });
             y += 10;
+            
 
             const drawInfoBox = (x, yPos, w, label, value) => {
                 pdf.setFillColor(249, 250, 251); 
@@ -1334,7 +1340,7 @@ function gerarPDFPersonalizado() {
                 pdf.setFontSize(7);
                 pdf.setTextColor(100, 100, 100);
                 pdf.setFont('helvetica', 'bold');
-                pdf.text('ASSINATURA DIGITAL:', x + 5, yPos + 6);
+                pdf.text('ASSINATURA DIGITALIZADA:', x + 5, yPos + 6);
                 
                 pdf.setDrawColor(200, 200, 200);
                 pdf.rect(x + 5, yPos + 8, w - 10, 25);
@@ -1389,8 +1395,8 @@ function gerarPDFPersonalizado() {
                 sigY = 20;
             }
 
-            let boxHA = drawSig(14, sigY, sigWidth, 'AGENTE DO DETRAN RJ', 'sig-agente1', [{label: 'ID FUNCIONAL:', value: document.getElementById('mat-agente1').value}]);
-            drawSig(108, sigY, sigWidth, 'AGENTE DO DETRAN RJ', 'sig-agente2', [{label: 'ID FUNCIONAL:', value: document.getElementById('mat-agente2').value}]);
+            let boxHA = drawSig(14, sigY, sigWidth, 'AGENTE DO DETRAN.RJ', 'sig-agente1', [{label: 'ID FUNCIONAL:', value: document.getElementById('mat-agente1').value}]);
+            drawSig(108, sigY, sigWidth, 'AGENTE DO DETRAN.RJ', 'sig-agente2', [{label: 'ID FUNCIONAL:', value: document.getElementById('mat-agente2').value}]);
 
             sigY += boxHA + 8;
 
