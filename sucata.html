@@ -212,10 +212,29 @@
     }
 
     .btn-red { background-color: var(--primary-red); color: white; }
-    .btn-dark { background-color: var(--primary-dark); color: white; }
+    .btn-dark { 
+  background-color: #2563eb; /* bg-blue-600 */
+  color: white; 
+}
+.btn-dark:hover {
+  background-color: #3b82f6; /* hover:bg-blue-500 */
+}
     .btn-outline { background-color: #ffffff; border: 1px solid var(--border-color); color: var(--text-main); }
-    .btn-danger-outline { background-color: #fff; border: 1px solid #fca5a5; color: var(--primary-red); }
-    .btn-green { background-color: #16a34a; color: white; }
+    .btn-danger-outline { 
+  background-color: #dc2626; /* bg-red-600 */
+  color: #ffffff; 
+  border: none;
+}
+.btn-danger-outline:hover {
+  background-color: #ef4444; /* hover:bg-red-500 */
+}
+    .btn-green { 
+  background-color: #16a34a; /* bg-green-600 */
+  color: white; 
+}
+.btn-green:hover {
+  background-color: #22c55e; /* hover:bg-green-500 */
+}
 
     .section-title {
       font-size: 0.8rem;
@@ -750,16 +769,16 @@
       </div>
 
       <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
-        <button id="btn-salvar" class="btn btn-dark" style="width: 120px;" onclick="salvarRegistro()">CADASTRAR SUCATA</button>
+        <button id="btn-salvar" class="btn btn-dark" style="width: 120px;" onclick="salvarRegistro()">REGISTRAR SUCATA</button>
       </div>
     </div>
 
     <div id="items-list" style="display: flex; flex-direction: column; gap: 16px;"></div>
 
     <div class="no-print mt-2 flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
-      <button class="btn btn-danger-outline" onclick="limparTabela()">🗑️ LIMPAR PÁGINA</button>
-      <button class="btn btn-green" onclick="compartilharResumo()">COMPARTILHAR RESUMO (WHATSAPP)</button>
-      <button class="btn btn-dark" onclick="perguntarResumoWhatsAppAntesDoPDF()">📄 GERAR PDF</button>
+      <button class="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-6 rounded shadow text-sm transition" onclick="limparTabela()">🗑️ LIMPAR PÁGINA</button>
+<button class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-6 rounded shadow text-sm transition" onclick="compartilharResumo()">COMPARTILHAR RESUMO (WHATSAPP)</button>
+<button class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded shadow text-sm transition" onclick="perguntarResumoWhatsAppAntesDoPDF()">📄 GERAR PDF</button>
     </div>
 
     <div class="card no-print" id="secao-historico-pdf" style="margin-top: 16px;">
