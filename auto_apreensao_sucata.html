@@ -255,6 +255,15 @@
                 display: none !important;
             }
         }
+    
+        /* Cabeçalho do PDF: mesmas medidas do PDF da página carro (brasão 24 mm; títulos 12/10/9/9 pt; linhas de 5,5 mm) */
+        .pdf-document { --mm: 3.7129px; }
+        .cab-pdf-logo-wrap { display: flex; justify-content: center; margin: 0 0 calc(var(--mm) * 4) 0; }
+        .cab-pdf-logo { width: calc(var(--mm) * 24); height: calc(var(--mm) * 24); object-fit: contain; }
+        .cab-pdf-t1, .cab-pdf-t2, .cab-pdf-t3 { font-family: Helvetica, Arial, sans-serif !important; color: #000 !important; text-align: center; text-transform: uppercase !important; margin: 0 !important; line-height: calc(var(--mm) * 5.5) !important; }
+        .cab-pdf-t1 { font-size: calc(var(--mm) * 4.2333) !important; font-weight: bold !important; }
+        .cab-pdf-t2 { font-size: calc(var(--mm) * 3.5278) !important; font-weight: bold !important; }
+        .cab-pdf-t3 { font-size: calc(var(--mm) * 3.175) !important; font-weight: normal !important; }
     </style>
 </head>
 <body class="text-slate-800 antialiased pb-12 relative">
@@ -278,14 +287,14 @@
             
             <div class="space-y-6">
                 <!-- Cabeçalho Oficial -->
-                <header class="text-center border-b-2 border-gray-800 pb-4 mb-6">
+                <header class="font-sans text-gray-800 text-center border-b-2 border-gray-800 pb-4 mb-6">
                     <div class="flex justify-center mb-3">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Ins%C3%ADgnia_bras%C3%A3o_estilizado_governos_Wilson_Witzel_e_Cl%C3%A1udio_Castro_RJ.png/500px-Ins%C3%ADgnia_bras%C3%A3o_estilizado_governos_Wilson_Witzel_e_Cl%C3%A1udio_Castro_RJ.png" alt="Brasão do Estado do Rio de Janeiro" class="h-24 w-auto object-contain">
                     </div>
-                    <h1 style="font-size: 12.5px; font-weight: bold; margin: 0; text-transform: uppercase;">Governo do Estado do Rio de Janeiro</h1>
-                                            <h2 style="font-size: 11px; font-weight: bold; margin: 1px 0; text-transform: uppercase;">Departamento de Trânsito do Estado do Rio de Janeiro</h2>
-                                            <h3 style="font-size: 11px; font-weight: bold; margin: 1px 0; text-transform: uppercase;">DIRETORIA GERAL DAS ATIVIDADES DE DESMONTAGEM</h3>
-                                            <h3 class="text-sm sm:text-md font-medium text-slate-600 uppercase mt-1">DIVISÃO DE FISCALIZAÇÃO</h3>
+                    <h1 class="text-lg sm:text-xl font-bold uppercase tracking-wide">Governo do Estado do Rio de Janeiro</h1>
+            <h2 class="text-md sm:text-lg font-semibold uppercase">Departamento de Trânsito do Estado do Rio de Janeiro - DETRAN.RJ</h2>
+            <h3 class="text-sm sm:text-md font-medium text-black-600 uppercase mt-1">Diretoria Geral das Atividades de Desmontagem</h3>
+            <h3 class="text-sm sm:text-md font-medium text-black-600 uppercase mt-1">DIVISÃO DE FISCALIZAÇÃO</h3>
                                             
                 </header>
 
@@ -557,13 +566,13 @@
                                 <div style="text-align: left; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 14px;">
                                     <div style="display: flex; justify-content: center; margin-bottom: 6px;">
                                         <header class="text-center border-b-2 border-gray-800 pb-4 mb-6">
-                                            <div class="flex justify-center mb-3">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Ins%C3%ADgnia_bras%C3%A3o_estilizado_governos_Wilson_Witzel_e_Cl%C3%A1udio_Castro_RJ.png/500px-Ins%C3%ADgnia_bras%C3%A3o_estilizado_governos_Wilson_Witzel_e_Cl%C3%A1udio_Castro_RJ.png" alt="Brasão do Estado do Rio de Janeiro" class="h-24 w-auto object-contain">
+                                            <div class="cab-pdf-logo-wrap">
+                                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Ins%C3%ADgnia_bras%C3%A3o_estilizado_governos_Wilson_Witzel_e_Cl%C3%A1udio_Castro_RJ.png/500px-Ins%C3%ADgnia_bras%C3%A3o_estilizado_governos_Wilson_Witzel_e_Cl%C3%A1udio_Castro_RJ.png" alt="Brasão do Estado do Rio de Janeiro" class="cab-pdf-logo">
                                             </div>
-                                            <h1 style="font-size: 12.5px; font-weight: bold; margin: 0; text-transform: uppercase;">Governo do Estado do Rio de Janeiro</h1>
-                                            <h2 style="font-size: 11px; font-weight: bold; margin: 1px 0; text-transform: uppercase;">Departamento de Trânsito do Estado do Rio de Janeiro</h2>
-                                            <h3 style="font-size: 11px; font-weight: bold; margin: 1px 0; text-transform: uppercase;">DIRETORIA GERAL DAS ATIVIDADES DE DESMONTAGEM</h3>
-                                            <h3 class="text-sm sm:text-md font-medium text-slate-600 uppercase mt-1">DIVISÃO DE FISCALIZAÇÃO</h3>
+                                            <h1 class="cab-pdf-t1">Governo do Estado do Rio de Janeiro</h1>
+                                            <h2 class="cab-pdf-t2">Departamento de Trânsito do Estado do Rio de Janeiro - DETRAN.RJ</h2>
+                                            <h3 class="cab-pdf-t3">Diretoria Geral das Atividades de Desmontagem</h3>
+                                            <h3 class="cab-pdf-t3">DIVISÃO DE FISCALIZAÇÃO</h3>
                                             <h1 style="font-size: 12.5px; font-weight: bold; margin-top: 8px; text-transform: uppercase;">
                                                 AUTO DE APREENSÃO DE SUCATA AUTOMOTIVA Nº <span id="docNumAuto">______</span>/2026
                                             </h1>

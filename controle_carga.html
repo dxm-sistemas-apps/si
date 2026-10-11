@@ -687,10 +687,10 @@
               class="h-24 w-auto object-contain header-logo"
               crossorigin="anonymous">
         </div>
-        <h1 class="text-lg sm:text-xl font-bold uppercase tracking-wide text-gray-900">Governo do Estado do Rio de Janeiro</h1>
-        <h2 class="text-md sm:text-lg font-semibold uppercase text-gray-800">Departamento de Trânsito do Estado do Rio de Janeiro - DETRAN.RJ</h2>
-        <h3 class="text-sm sm:text-md font-medium text-gray-600 uppercase mt-1">Diretoria Geral das Atividades de Desmontagem</h3>
-        <h3 class="text-sm sm:text-md font-medium text-black-600 uppercase mt-1">DIVISÃO DE FISCALIZAÇÃO</h3>
+        <h1 class="text-lg sm:text-xl font-bold uppercase tracking-wide">Governo do Estado do Rio de Janeiro</h1>
+            <h2 class="text-md sm:text-lg font-semibold uppercase">Departamento de Trânsito do Estado do Rio de Janeiro - DETRAN.RJ</h2>
+            <h3 class="text-sm sm:text-md font-medium text-black-600 uppercase mt-1">Diretoria Geral das Atividades de Desmontagem</h3>
+            <h3 class="text-sm sm:text-md font-medium text-black-600 uppercase mt-1">DIVISÃO DE FISCALIZAÇÃO</h3>
     </header>
 
     <div class="card">
@@ -2140,8 +2140,8 @@
             curY += 5.5;
             pdf.setFont('helvetica', 'normal');
             pdf.setFontSize(9);
-            pdf.text('DIVISÃO DE FISCALIZAÇÃO', pageWidth / 2, y, { align: 'center' });
-            y += 10;
+            pdf.text('DIVISÃO DE FISCALIZAÇÃO', pageWidth / 2, curY, { align: 'center' });
+            curY += 10;
 
             const drawInfoBox = (x, yPos, w, label, value) => {
                 pdf.setFillColor(249, 250, 251); 
