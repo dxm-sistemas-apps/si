@@ -262,9 +262,7 @@
             <div class="bg-blue p-1.5 rounded-lg shadow-sm mb-2">
                 <img id="appLogo" class="h-64 object-contain" alt="Logo DGAD Suporte">
             </div>
-            <div>
-                <h1 class="font-bold text-base md:text-lg leading-tight uppercase">TERMO DE INTERDIÇÃO E FIEL DEPOSITÁRIO</h1>
-            </div>
+            
         </div>
     </header>
 
@@ -372,10 +370,11 @@
                                 <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Agente Público *</label>
                                 <div class="h-24 bg-white border border-slate-200 rounded flex items-center justify-center p-1 mb-2">
                                     <img id="previewSignAgente" class="max-h-full max-w-full hidden object-contain">
-                                    <span id="placeholderSignAgente" class="text-xs text-slate-400 italic">SEM ASSINATURA</span>
+                                    
                                 </div>
                             </div>
-                            <button type="button" onclick="openSignatureModal('Agente', 'Agente Público')" class="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded">
+                            <button type="button" onclick="openSignatureModal('Agente', 'Agente Público')" class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded">
+                                <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                 ASSINAR
                             </button>
                         </div>
@@ -386,10 +385,11 @@
                                 <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Proprietário / Fiel Depositário *</label>
                                 <div class="h-24 bg-white border border-slate-200 rounded flex items-center justify-center p-1 mb-2">
                                     <img id="previewSignProprietario" class="max-h-full max-w-full hidden object-contain">
-                                    <span id="placeholderSignProprietario" class="text-xs text-slate-400 italic">SEM ASSINATURA</span>
+                                    
                                 </div>
                             </div>
-                            <button type="button" onclick="openSignatureModal('Proprietario', 'Proprietário do Estabelecimento')" class="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded">
+                            <button type="button" onclick="openSignatureModal('Proprietario', 'Proprietário do Estabelecimento')" class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded">
+                                <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                 ASSINAR
                             </button>
                         </div>
@@ -501,7 +501,7 @@
                                         <div style="border-top: 1px solid #000; padding-top: 3px;">
                                             <span id="docAssAgenteNome" style="font-weight: bold; font-size: 10px; text-transform: uppercase; display: block;">AGENTE PÚBLICO</span>
                                             <span style="font-size: 9px; display: block;">AGENTE PÚBLICO - DETRAN.RJ</span>
-                                            <span style="font-size: 8px; display: block;">ID. FUNCIONAL: <span id="docAssAgenteId">________</span></span>
+                                            <span style="font-size: 8px; display: block;">ID FUNCIONAL: <span id="docAssAgenteId">________</span></span>
                                         </div>
                                     </div>
 
@@ -510,8 +510,8 @@
                                             <img id="imgSignProprietario" style="max-height: 38px; max-width: 100%; visibility: hidden;">
                                         </div>
                                         <div style="border-top: 1px solid #000; padding-top: 3px;">
-                                            <span id="docAssPropNome" style="font-weight: bold; font-size: 10px; text-transform: uppercase; display: block;">PROPRIETÁRIO DO ESTABELECIMENTO</span>
-                                            <span style="font-size: 9px; display: block;">PROPRIETÁRIO DO ESTABELECIMENTO</span>
+                                            <span id="docAssPropNome" style="font-weight: bold; font-size: 10px; text-transform: uppercase; display: block;">PROPRIETÁRIO DA EMPRESA / ESTABELECIMENTO</span>
+                                            <span style="font-size: 9px; display: block;">PROPRIETÁRIO DA EMPRESA / ESTABELECIMENTO</span>
                                             <span style="font-size: 8px; display: block;">CPF: <span id="docAssPropCPF">___.___.___-__</span></span>
                                         </div>
                                     </div>
