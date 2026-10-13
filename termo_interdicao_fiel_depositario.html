@@ -297,30 +297,37 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Nome do Agente Fiscalizador</label>
+                            <input type="text" id="inputNomeAgente" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
                         </div>
 
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">ID Funcional do Agente FISCALIZADOR</label>
+                            <input type="number" id="inputIdAgente" maxlength="9" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
                         </div>
 
                         <div class="md:col-span-2">
                             <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">EMPRESA / Estabelecimento</label>
+                            <input type="text" id="inputNomeEstabelecimento" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
                         </div>
 
                         <div class="md:col-span-2">
                             <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Endereço da Empresa / Estabelecimento</label>
+                            <input type="text" id="inputLocalEstabelecimento" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
                         </div>
 
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Nome do Proprietário / Fiel Depositário</label>
+                            <input type="text" id="inputNomeProprietario" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
                         </div>
 
                         <div class="grid grid-cols-2 gap-2">
                             <div>
                                 <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">CPF</label>
+                                <input type="number" id="inputCPFProprietario" maxlength="14" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
                             </div>
                             <div>
                                 <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">RG</label>
+                                <input type="text" id="inputRGProprietario" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
                             </div>
                         </div>
 
@@ -331,6 +338,7 @@
 
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Data</label>
+                            <input type="date" id="inputDataTermo" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
                         </div>
                     </div>
                 </div>
@@ -344,7 +352,7 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Discrimine os itens lacrados sob guarda do fiel depositário</label>
-                        <textarea id="inputDescricaoMercadorias" rows="4" placeholder="" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></textarea>
+                        <textarea id="inputDescricaoMercadorias" rows="4" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></textarea>
                     </div>
                 </div>
 
@@ -380,10 +388,10 @@
                                     
                                 </div>
                             </div>
-                            <button type="button" onclick="openSignatureModal('Proprietario', 'Proprietário dA EMPRESA / Estabelecimento')" class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded">
-                                <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                            <button type="button" onclick="openSignatureModal('Agente', 'Agente Público')" class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded">
+                      <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                 ASSINAR
-                            </button>
+                </button>
                         </div>
                     </div>
                 </div>
