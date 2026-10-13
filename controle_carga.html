@@ -813,10 +813,22 @@
     </div>
     <div id="items-list" style="display: flex; flex-direction: column; gap: 16px;"></div>
 
-    <div class="no-print mt-2 flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
-      <button class="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-6 rounded shadow text-sm transition" onclick="limparTabela()">🗑️ LIMPAR PÁGINA</button>
-<button class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-6 rounded shadow text-sm transition" onclick="compartilharResumo()">COMPARTILHAR RESUMO (WHATSAPP)</button>
-<button class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded shadow text-sm transition" onclick="perguntarResumoWhatsAppAntesDoPDF()">📄 GERAR PDF</button>
+    <div id="barra-acoes" class="no-print mt-2 flex flex-col sm:flex-row flex-wrap gap-3 justify-end items-center bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+      <button type="button" onclick="limparTabela()"
+                class="w-full sm:w-auto px-4 py-2.5 bg-red-600 hover:bg-red-500 border border-red-200 text-white font-bold rounded-lg text-sm  transition flex items-center justify-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                <span>LIMPAR PÁGINA</span>
+            </button>
+      <button type="button" onclick="compartilharResumo()"
+                class="w-full sm:w-auto px-5 py-2.5 bg-green-600 hover:bg-green-500 text-white font-bold rounded-lg text-sm shadow-md transition flex items-center justify-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+                <span>COMPARTILHAR RESUMO (WHATSAPP)</span>
+            </button>
+      <button type="button" onclick="perguntarResumoWhatsAppAntesDoPDF()"
+                class="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm shadow-md transition flex items-center justify-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m3 15 2 2 4-4"/></svg>
+                <span>GERAR PDF</span>
+            </button>
     </div>
 
     <div class="card no-print" id="secao-historico-pdf" style="margin-top: 16px;">
@@ -1175,7 +1187,7 @@
         Swal.fire({
             icon: 'question',
             title: 'RESUMO NO WHATSAPP',
-            html: '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> O <b>RESUMO NO WHATSAPP</b> JÁ FOI COMPARTILHADO?',
+            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O <b>RESUMO NO WHATSAPP</b> JÁ FOI COMPARTILHADO?',
             showCancelButton: true,
             allowOutsideClick: false,
             confirmButtonColor: '#000000',
@@ -1191,7 +1203,7 @@
                 Swal.fire({
                     icon: 'warning',
                     title: 'COMPARTILHE O RESUMO PRIMEIRO',
-                    html: '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> O BOTÃO <b>"GERAR PDF"</b> SÓ É LIBERADO APÓS O COMPARTILHAMENTO DO <span style="color:#dc2626; font-weight:bold;">RESUMO NO WHATSAPP</span>!',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O BOTÃO <b>"GERAR PDF"</b> SÓ É LIBERADO APÓS O COMPARTILHAMENTO DO <span class="text-red-600 font-bold">RESUMO NO WHATSAPP</span>!',
                     showCancelButton: true,
                     allowOutsideClick: false,
                     confirmButtonColor: '#16a34a',
@@ -1328,7 +1340,7 @@
 
     function triggerCameraInput() {
       if (currentImages.length >= 5) {
-        mostrarAlertaAviso('LIMITE DE IMAGENS', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> LIMITE MÁXIMO DE 5 IMAGENS POR CARGA ATINGIDO!');
+        mostrarAlertaAviso('LIMITE DE IMAGENS', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> LIMITE MÁXIMO DE 5 IMAGENS POR CARGA ATINGIDO!');
         return;
       }
       document.getElementById('file-camera').click();
@@ -1336,7 +1348,7 @@
 
     function triggerUploadInput() {
       if (currentImages.length >= 5) {
-        mostrarAlertaAviso('LIMITE DE IMAGENS', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> LIMITE MÁXIMO DE 5 IMAGENS POR CARGA ATINGIDO!');
+        mostrarAlertaAviso('LIMITE DE IMAGENS', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> LIMITE MÁXIMO DE 5 IMAGENS POR CARGA ATINGIDO!');
         return;
       }
       document.getElementById('file-upload').click();
@@ -1348,7 +1360,7 @@
 
       const remainingSlots = 5 - currentImages.length;
       if (files.length > remainingSlots) {
-        mostrarAlertaAviso('LIMITE DE IMAGENS', `<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> VOCÊ SÓ PODE ADICIONAR NO MÁXIMO <span class="text-red-500 font-bold">${remainingSlots} IMAGENS</span>.`);
+        mostrarAlertaAviso('LIMITE DE IMAGENS', `<span class="text-amber-500 font-bold">ATENÇÃO:</span> VOCÊ SÓ PODE ADICIONAR NO MÁXIMO <span class="text-red-500 font-bold">${remainingSlots} IMAGENS</span>.`);
       }
 
       const filesToProcess = files.slice(0, remainingSlots);
@@ -1480,19 +1492,19 @@
       const exibeFase = document.getElementById('grupo-fase-forca-tarefa').style.display !== 'none';
       const exibeEndereco = document.getElementById('grupo-endereco').style.display !== 'none';
 
-      if (!dataHeader && !editingParcialId) { mostrarAlertaAviso('DATA OBRIGATÓRIA', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> INFORME A <span style="color:#dc2626; font-weight:bold;">"DATA DA OPERAÇÃO / CARGA"</span> ANTES DE CONTINUAR!', elData); return; }
-      if (!atividade) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE A <span style="color:#dc2626; font-weight:bold;">"NATUREZA DA ATIVIDADE"</span>!', elAtividade); return; }
-      if (document.getElementById('grupo-apoio').style.display !== 'none' && !document.getElementById('header-apoio').value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O CAMPO <span style="color:#dc2626; font-weight:bold;">"APOIO À"</span>!', document.getElementById('header-apoio')); return; }
-      if (exibeFase && !fase) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA A <span style="color:#dc2626; font-weight:bold;">"FASE DA FORÇA TAREFA"</span>!', elFase); return; }
-      if (!estabelecimento) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"EMPRESA / ESTABELECIMENTO"</span>!', elEstabelecimento); return; }
-      if (exibeEndereco && !local) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"ENDEREÇO"</span>!', elLocal); return; }
-      if (!recId) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE A <span style="color:#dc2626; font-weight:bold;">"RECICLADORA"</span>!', elRecicladora); return; }
-      if (!veicId) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE O <span style="color:#dc2626; font-weight:bold;">"TIPO DE VEÍCULO"</span>!', elVeiculo); return; }
-      if (!placa) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> INFORME A <span style="color:#dc2626; font-weight:bold;">"PLACA DO VEÍCULO"</span>!', elPlaca); return; }
-      if (!chegada) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> INFORME O <span style="color:#dc2626; font-weight:bold;">"HORÁRIO DE CHEGADA"</span>!', elChegada); return; }
-      if (!inicio) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> INFORME O <span style="color:#dc2626; font-weight:bold;">"INÍCIO DO RECOLHIMENTO"</span>!', elInicio); return; }
-      if (!termino) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> INFORME O <span style="color:#dc2626; font-weight:bold;">"TÉRMINO DO RECOLHIMENTO"</span>!', elTermino); return; }
-      if (currentImages.length === 0) { mostrarAlertaAviso('IMAGENS FALTANDO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> ADICIONE AO MENOS <span style="color:#dc2626; font-weight:bold;">1 IMAGEM</span> DA CARGA / VEÍCULO!', document.getElementById('preview-container').parentElement); return; }
+      if (!dataHeader && !editingParcialId) { mostrarAlertaAviso('DATA OBRIGATÓRIA', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> INFORME A <span class="text-red-600 font-bold">"DATA DA OPERAÇÃO / CARGA"</span> ANTES DE CONTINUAR!', elData); return; }
+      if (!atividade) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> SELECIONE A <span class="text-red-600 font-bold">"NATUREZA DA ATIVIDADE"</span>!', elAtividade); return; }
+      if (document.getElementById('grupo-apoio').style.display !== 'none' && !document.getElementById('header-apoio').value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> PREENCHA O CAMPO <span class="text-red-600 font-bold">"APOIO À"</span>!', document.getElementById('header-apoio')); return; }
+      if (exibeFase && !fase) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> PREENCHA A <span class="text-red-600 font-bold">"FASE DA FORÇA TAREFA"</span>!', elFase); return; }
+      if (!estabelecimento) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> PREENCHA O <span class="text-red-600 font-bold">"EMPRESA / ESTABELECIMENTO"</span>!', elEstabelecimento); return; }
+      if (exibeEndereco && !local) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> PREENCHA O <span class="text-red-600 font-bold">"ENDEREÇO"</span>!', elLocal); return; }
+      if (!recId) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> SELECIONE A <span class="text-red-600 font-bold">"RECICLADORA"</span>!', elRecicladora); return; }
+      if (!veicId) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> SELECIONE O <span class="text-red-600 font-bold">"TIPO DE VEÍCULO"</span>!', elVeiculo); return; }
+      if (!placa) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> INFORME A <span class="text-red-600 font-bold">"PLACA DO VEÍCULO"</span>!', elPlaca); return; }
+      if (!chegada) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> INFORME O <span class="text-red-600 font-bold">"HORÁRIO DE CHEGADA"</span>!', elChegada); return; }
+      if (!inicio) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> INFORME O <span class="text-red-600 font-bold">"INÍCIO DO RECOLHIMENTO"</span>!', elInicio); return; }
+      if (!termino) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> INFORME O <span class="text-red-600 font-bold">"TÉRMINO DO RECOLHIMENTO"</span>!', elTermino); return; }
+      if (currentImages.length === 0) { mostrarAlertaAviso('IMAGENS FALTANDO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> ADICIONE AO MENOS <span class="text-red-600 font-bold">1 IMAGEM</span> DA CARGA / VEÍCULO!', document.getElementById('preview-container').parentElement); return; }
 
       const objRec = recicladoras.find(r => r.id === recId);
       const objVeic = tiposVeiculos.find(v => v.id === veicId);
@@ -1511,7 +1523,7 @@
           try {
             localStorage.setItem(STORAGE_KEYS.PARCIAIS, JSON.stringify(relatoriosParciais));
           } catch (e) {
-            mostrarAlertaAviso('MEMÓRIA CHEIA', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> O SEU NAVEGADOR ESTÁ SEM ESPAÇO NA MEMÓRIA.');
+            mostrarAlertaAviso('MEMÓRIA CHEIA', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O SEU NAVEGADOR ESTÁ SEM ESPAÇO NA MEMÓRIA.');
             return;
           }
         }
@@ -1554,7 +1566,7 @@
       try {
         localStorage.setItem(STORAGE_KEYS.REGISTROS, JSON.stringify(registros));
       } catch (e) {
-          mostrarAlertaAviso('MEMÓRIA CHEIA', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> O SEU NAVEGADOR ESTÁ SEM ESPAÇO NA MEMÓRIA.');
+          mostrarAlertaAviso('MEMÓRIA CHEIA', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O SEU NAVEGADOR ESTÁ SEM ESPAÇO NA MEMÓRIA.');
           return;
       }
 
@@ -1665,7 +1677,7 @@
       }
       Swal.fire({
         title: 'EXCLUIR CARGA?',
-        text: 'ATENÇÃO, ESTA AÇÃO NÃO PODERÁ SER DESFEITA.',
+        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> ESTA AÇÃO <span class="text-red-500 font-bold">NÃO PODERÁ SER DESFEITA </span>.',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
@@ -1683,7 +1695,7 @@
           Swal.fire({
             icon: 'success',
             title: 'EXCLUÍDO!',
-            text: 'O REGISTRO DE CARGA FOI EXCLUÍDO.',
+            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O REGISTRO DE CARGA FOI EXCLUÍDO.',
             timer: 1400,
             showConfirmButton: false
           });
@@ -1696,12 +1708,12 @@
       const dataVal = dataEl.value;
 
       if (!dataVal) {
-        mostrarAlertaAviso('DATA OBRIGATÓRIA', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE UMA DATA NO CABEÇALHO PARA SALVAR O RELATÓRIO PARCIAL!', dataEl);
+        mostrarAlertaAviso('DATA OBRIGATÓRIA', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> SELECIONE UMA DATA NO CABEÇALHO PARA SALVAR O RELATÓRIO PARCIAL!', dataEl);
         return;
       }
 
       if (registros.length === 0) {
-        mostrarAlertaAviso('NENHUMA CARGA', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> CADASTRE AO MENOS UMA CARGA ANTES DE SALVAR O RELATÓRIO PARCIAL.', document.getElementById('form-card'));
+        mostrarAlertaAviso('NENHUMA CARGA', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> CADASTRE AO MENOS UMA CARGA ANTES DE SALVAR O RELATÓRIO PARCIAL.', document.getElementById('form-card'));
         return;
       }
 
@@ -1722,7 +1734,7 @@
       try {
         localStorage.setItem(STORAGE_KEYS.PARCIAIS, JSON.stringify(relatoriosParciais));
       } catch (e) {
-        mostrarAlertaAviso('MEMÓRIA CHEIA', 'O espaço do navegador está cheio para novos relatórios.');
+        mostrarAlertaAviso('MEMÓRIA CHEIA', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ESPAÇO DO NAVEGADOR ESTÁ <span class="text-red-500 font-bold">CHEIO</span> PARA NOVOS RELATÓRIOS.');
         return;
       }
 
@@ -1738,7 +1750,7 @@
       Swal.fire({
         icon: 'success',
         title: 'RELATÓRIO PARCIAL SALVO!',
-        html: `AS CARGAS DO DIA<b>${dataBR}</b> FORAM ADICIONADAS AO RELATÓRIO PARCIAL.<br>SELECIONE UM <b>NOVA DATA</b> PARA CONTINUAR REGISTRANDO AS CARGAS.`,
+        html: `<span class="text-amber-500 font-bold">ATENÇÃO:</span> AS CARGAS DO DIA <b>${dataBR}</b> FORAM ADICIONADAS AO RELATÓRIO PARCIAL.<br><br>SELECIONE UMA <span class="text-red-500 font-bold">NOVA DATA</span> PARA CONTINUAR REGISTRANDO AS CARGAS.`,
         confirmButtonColor: '#000000'
       });
     }
@@ -1846,7 +1858,7 @@
     function excluirRelatorioParcial(id) {
       Swal.fire({
         title: 'EXCLUIR PARCIAL?',
-        text: 'DESEJA REALMENTE EXCLUIR AS CARGAS ARQUIVADAS DESTE DIA?',
+        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> DESEJA REALMENTE <span class="text-red-500 font-bold">EXCLUIR AS CARGAS ARQUIVADAS</span> DESTE DIA?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
@@ -1868,7 +1880,7 @@
           Swal.fire({
             icon: 'success',
             title: 'EXCLUÍDO!',
-            text: 'O lote parcial foi removido.',
+            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O LOTE PARCIAL FOI REMOVIDO.',
             timer: 1300,
             showConfirmButton: false
           });
@@ -1960,19 +1972,19 @@
       const exibeEndereco = document.getElementById('grupo-endereco').style.display !== 'none';
       const { datasOrdenadas } = obterTodasAsCargasOrdenadas();
 
-      if (!elAtividade.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> SELECIONE A <span style="color:#dc2626; font-weight:bold;">"NATUREZA DA ATIVIDADE"</span>!', elAtividade); return false; }
-      if (document.getElementById('grupo-apoio').style.display !== 'none' && !document.getElementById('header-apoio').value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O CAMPO <span style="color:#dc2626; font-weight:bold;">"APOIO À"</span>!', document.getElementById('header-apoio')); return false; }
-      if (exibeFase && !elFase.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA A <span style="color:#dc2626; font-weight:bold;">"FASE DA FORÇA TAREFA"</span>!', elFase); return false; }
-      if (!elEstabelecimento.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"EMPRESA / ESTABELECIMENTO"</span>!', elEstabelecimento); return false; }
-      if (exibeEndereco && !elLocal.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> PREENCHA O <span style="color:#dc2626; font-weight:bold;">"ENDEREÇO"</span>!', elLocal); return false; }
+      if (!elAtividade.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> SELECIONE A <span class="text-red-600 font-bold">"NATUREZA DA ATIVIDADE"</span>!', elAtividade); return false; }
+      if (document.getElementById('grupo-apoio').style.display !== 'none' && !document.getElementById('header-apoio').value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> PREENCHA O CAMPO <span class="text-red-600 font-bold">"APOIO À"</span>!', document.getElementById('header-apoio')); return false; }
+      if (exibeFase && !elFase.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> PREENCHA A <span class="text-red-600 font-bold">"FASE DA FORÇA TAREFA"</span>!', elFase); return false; }
+      if (!elEstabelecimento.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> PREENCHA O <span class="text-red-600 font-bold">"EMPRESA / ESTABELECIMENTO"</span>!', elEstabelecimento); return false; }
+      if (exibeEndereco && !elLocal.value.trim()) { mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> PREENCHA O <span class="text-red-600 font-bold">"ENDEREÇO"</span>!', elLocal); return false; }
       const elDataHeader = document.getElementById('header-data');
-      if (registros.length > 0 && !elDataHeader.value) { mostrarAlertaAviso('DATA OBRIGATÓRIA', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> INFORME A <span style="color:#dc2626; font-weight:bold;">"DATA DA OPERAÇÃO / CARGA"</span> DAS CARGAS LANÇADAS NA TELA!', elDataHeader); return false; }
+      if (registros.length > 0 && !elDataHeader.value) { mostrarAlertaAviso('DATA OBRIGATÓRIA', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> INFORME A <span class="text-red-600 font-bold">"DATA DA OPERAÇÃO / CARGA"</span> DAS CARGAS LANÇADAS NA TELA!', elDataHeader); return false; }
 
       if (datasOrdenadas.length === 0) {
         Swal.fire({
           icon: 'warning',
           title: 'NENHUMA CARGA REGISTRADA',
-          text: 'ATENÇÃO, NÃO HÁ CARGAS NO RELATÓRIO PARCIAL NEM NA TELA ATUAL PARA GERAR O PDF.',
+          html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> NÃO HÁ <span class="text-red-500 font-bold">CARGAS NO RELATÓRIO PARCIAL NEM NA TELA ATUAL</span> PARA GERAR O PDF.',
           confirmButtonColor: '#000000'
         });
         return false;
@@ -2094,7 +2106,7 @@
 
         Swal.fire({
             title: 'GERANDO PDF...',
-            text: 'AGUARDE A CRIAÇÃO E SALVAMENTO DO DOCUMENTO OFICIAL.',
+            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> AGUARDE A CRIAÇÃO E SALVAMENTO DO DOCUMENTO OFICIAL.',
             allowOutsideClick: false,
             didOpen: () => { Swal.showLoading(); }
         });
@@ -2331,7 +2343,7 @@
               Swal.fire({
                   icon: 'success',
                   title: 'PDF GERADO E COMPARTILHADO!',
-                  text: 'O ARQUIVO FOI ADICIONADO AO HISTÓRICO DA PÁGINA.',
+                  html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DA PÁGINA.',
                   confirmButtonColor: '#000000'
               }).then(() => {
                   // limparAposGeracao();
@@ -2340,7 +2352,7 @@
               Swal.fire({
                   icon: 'success',
                   title: 'PDF GERADO COM SUCESSO!',
-                  html: `O ARQUIVO FOI ADICIONADO AO HISTÓRICO DA PÁGINA.<br><br>
+                  html: `<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DA PÁGINA.<br><br>
                          <b>PARA BAIXAR:</b> UTILIZE O BOTÃO "⬇️" NO HISTÓRICO DE PDFs ABAIXO.`,
                   confirmButtonColor: '#000000'
               }).then(() => {
@@ -2353,7 +2365,7 @@
             Swal.fire({
                 icon: 'error',
                 title: 'ERRO AO GERAR PDF',
-                text: 'ATENÇÃO, OCORREU UM PROBLEMA AO GERAR O CONTROLE DE CARGAS.',
+                html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> OCORREU UM <span class="text-red-500 font-bold">PROBLEMA AO GERAR O CONTROLE DE CARGAS</span>.',
                 confirmButtonColor: '#000000'
             });
         }
@@ -2506,7 +2518,7 @@
                 Swal.fire({
                     icon: 'warning',
                     title: 'BLOQUEADOR DE POP-UP DETECTADO',
-                    text: 'ATENÇÃO, PERMITA POP-UPS PARA ABRIR O PDF SALVO.',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> PERMITA POP-UPS PARA ABRIR O PDF SALVO.',
                     confirmButtonColor: '#000000'
                 });
             }
@@ -2517,7 +2529,7 @@
         Swal.fire({
             icon: 'error',
             title: 'NÃO ENCONTRADO',
-            text: 'O PDF SELECIONADO NÃO FOI ENCONTRADO NO HISTÓRICO.',
+            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O PDF SELECIONADO <span class="text-red-500 font-bold">NÃO FOI ENCONTRADO</span> NO HISTÓRICO.',
             confirmButtonColor: '#000000'
         });
     }
@@ -2526,7 +2538,7 @@
         Swal.fire({
             icon: 'success',
             title: 'DOWNLOAD INICIADO!',
-            html: '<span class="text-amber-500 font-bold" style="color:#f59e0b;font-weight:bold;">ATENÇÃO:</span> O PDF ESTÁ SENDO BAIXADO. A PÁGINA SERÁ ATUALIZADA.',
+            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O PDF ESTÁ SENDO BAIXADO. A PÁGINA SERÁ ATUALIZADA.',
             timer: 1500,
             timerProgressBar: true,
             showConfirmButton: false,
@@ -2566,7 +2578,7 @@
     async function excluirPDF(id) {
       Swal.fire({
         title: 'EXCLUIR PDF?',
-        text: 'ATENÇÃO, ESTA AÇÃO NÃO PODERÁ SER DESFEITA.',
+        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> ESTA AÇÃO <span class="text-red-500 font-bold">NÃO PODERÁ SER DESFEITA </span>.',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
@@ -2580,7 +2592,7 @@
           Swal.fire({
             icon: 'success',
             title: 'EXCLUÍDO!',
-            text: 'ATENÇÃO, O PDF FOI EXCLUÍDO DO HISTÓRICO.',
+            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O PDF FOI EXCLUÍDO DO HISTÓRICO.',
             timer: 1500,
             showConfirmButton: false
           });
@@ -2633,7 +2645,7 @@
       const nameInput = document.getElementById('modal-input-name');
       const val = nameInput.value.trim().toUpperCase();
       if (!val) {
-        mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span style="color:#f59e0b; font-weight:bold;">ATENÇÃO:</span> INFORME O NOME!', nameInput);
+        mostrarAlertaAviso('CAMPO OBRIGATÓRIO', '<span class="text-amber-500 font-bold">ATENÇÃO:</span> INFORME O NOME!', nameInput);
         return;
       }
 
@@ -2671,7 +2683,7 @@
     function deleteOptionItem(id) {
       Swal.fire({
         title: 'EXCLUIR ITEM?',
-        text: 'DESEJA REALMENTE REMOVER ESTE ITEM DA LISTA?',
+        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> DESEJA REALMENTE <span class="text-red-500 font-bold">REMOVER ESTE ITEM</span> DA LISTA?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',

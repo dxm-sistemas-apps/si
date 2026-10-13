@@ -47,6 +47,8 @@
         Swal.fire = function (...args) {
             if (args.length && args[0] && typeof args[0] === 'object') {
                 const opcoes = Object.assign({ position: 'center', heightAuto: false, scrollbarPadding: false }, args[0]);
+                opcoes.customClass = Object.assign({}, opcoes.customClass);
+                opcoes.customClass.popup = ('font-sans ' + (opcoes.customClass.popup || '')).trim();
                 const didOpenOriginal = opcoes.didOpen;
                 const didCloseOriginal = opcoes.didClose;
                 opcoes.didOpen = function (...a) {
@@ -93,6 +95,13 @@
             overflow-y: auto;
         }
     </style>
+    <!-- Ano vigente: atualiza sozinho a cada ano (nada de "2026" fixo) -->
+    <script>
+    window.ANO_VIGENTE = new Date().getFullYear();
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.js-ano').forEach(function (e) { e.textContent = window.ANO_VIGENTE; });
+    });
+    </script>
     <!-- html2pdf.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
@@ -326,7 +335,7 @@
                                 </div>
                             </div>
 
-                            <button type="button" onclick="openSignatureModal('Agente1', 'Agente 1 Detran.RJ')" 
+                            <button type="button" onclick="openSignatureModal('Agente1', 'Agente 1 Detran.RJ')"
                                 class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
                                 <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                 <span>ASSINAR</span>
@@ -348,7 +357,7 @@
                                 </div>
                             </div>
 
-                            <button type="button" onclick="openSignatureModal('Agente2', 'Agente 2 Detran.RJ')" 
+                            <button type="button" onclick="openSignatureModal('Agente2', 'Agente 2 Detran.RJ')"
                                 class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
                                 <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                 <span>ASSINAR</span>
@@ -370,7 +379,7 @@
                                 </div>
                             </div>
 
-                            <button type="button" onclick="openSignatureModal('Representante', 'Representante da Empresa')" 
+                            <button type="button" onclick="openSignatureModal('Representante', 'Representante da Empresa')"
                                 class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
                                 <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                 <span>ASSINAR</span>
@@ -433,7 +442,7 @@
                         <p>
                             Aos <strong id="docDia" style="border-bottom: 1px dotted #000; padding: 0 4px;">__</strong> dias do mês de 
                             <strong id="docMes" style="border-bottom: 1px dotted #000; padding: 0 6px; text-transform: uppercase;">__________________</strong> do ano de 
-                            <strong id="docAno">2026</strong>, a Divisão de Controle, Normas e Programas da Diretoria Geral das Atividades de Desmontagem do DETRAN.RJ, por intermédio de seus agentes, vem por meio do presente atestar que a empresa 
+                            <strong id="docAno" class="js-ano">2026</strong>, a Divisão de Controle, Normas e Programas da Diretoria Geral das Atividades de Desmontagem do DETRAN.RJ, por intermédio de seus agentes, vem por meio do presente atestar que a empresa 
                             <strong id="docRazaoSocial" style="border-bottom: 1px dotted #000; padding: 0 6px; text-transform: uppercase;">__________________________________________________</strong>, inscrita no CNPJ sob o nº 
                             <strong id="docCNPJ" style="border-bottom: 1px dotted #000; padding: 0 4px;">__.___.___/____-__</strong>, regularmente credenciada para o exercício das atividades de desmontagem de veículos automotores, recebeu treinamento técnico-operacional in loco referente ao Sistema Desmonte.RJ.
                         </p>
@@ -462,7 +471,7 @@
 
                         <!-- Local e Data -->
                         <div style="margin-top: 10px; margin-bottom: 20px; text-align: right; font-size: 12px; font-weight: bold;">
-                            Rio de Janeiro, <span id="docDataDia">__</span> de <span id="docDataMes" style="text-transform: uppercase;">____________</span> de <span id="docDataAno">2026</span>.
+                            Rio de Janeiro, <span id="docDataDia">__</span> de <span id="docDataMes" style="text-transform: uppercase;">____________</span> de <span id="docDataAno" class="js-ano">2026</span>.
                         </div>
 
                         <!-- Bloco de Assinaturas compactado -->
@@ -795,7 +804,7 @@
             const rep = document.getElementById('inputRepresentante').value.trim().toUpperCase() || 'REPRESENTANTE EMPRESA';
 
             const dateVal = document.getElementById('inputDataTermo').value;
-            let dia = '__', mes = '____________', ano = '2026';
+            let dia = '__', mes = '____________', ano = String(window.ANO_VIGENTE);
 
             if (dateVal) {
                 const parts = dateVal.split('-');
@@ -1054,7 +1063,7 @@
 
             Swal.fire({
                 title: 'GERANDO PDF...',
-                text: 'ATENÇÃO, AGUARDE A CRIAÇÃO E SALVAMENTO DO ARQUIVO.',
+                html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> AGUARDE A CRIAÇÃO E SALVAMENTO DO ARQUIVO.',
                 allowOutsideClick: false,
                 didOpen: () => { Swal.showLoading(); }
             });
@@ -1117,7 +1126,7 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'ERRO AO GERAR PDF',
-                    text: 'ATENÇÃO, OCORREU UM PROBLEMA AO GERAR O PDF.',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> OCORREU UM <span class="text-red-500 font-bold">PROBLEMA AO GERAR O PDF</span>.',
                     confirmButtonColor: '#000000'
                 });
             }
@@ -1216,7 +1225,7 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'ERRO AO ABRIR PDF',
-                    text: 'ATENÇÃO, NÃO FOI POSSÍVEL ABRIR O PDF SALVO.',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> <span class="text-red-500 font-bold">NÃO FOI POSSÍVEL</span> ABRIR O PDF SALVO.',
                     confirmButtonColor: '#000000'
                 });
                 return;
@@ -1227,7 +1236,7 @@
                 Swal.fire({
                     icon: 'warning',
                     title: 'BLOQUEADOR DE POP-UP DETECTADO',
-                    text: 'ATENÇÃO, PERMITA POP-UPS PARA ABRIR O PDF SALVO.',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> PERMITA POP-UPS PARA ABRIR O PDF SALVO.',
                     confirmButtonColor: '#000000'
                 });
             }
@@ -1237,7 +1246,7 @@
             Swal.fire({
                 icon: 'success',
                 title: 'DOWNLOAD INICIADO!',
-                html: '<span class="text-amber-500 font-bold" style="color:#f59e0b;font-weight:bold;">ATENÇÃO:</span> O PDF ESTÁ SENDO BAIXADO. A PÁGINA SERÁ ATUALIZADA.',
+                html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O PDF ESTÁ SENDO BAIXADO. A PÁGINA SERÁ ATUALIZADA.',
                 timer: 1500,
                 timerProgressBar: true,
                 showConfirmButton: false,
@@ -1266,7 +1275,7 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'ERRO AO BAIXAR PDF',
-                    text: 'ATENÇÃO, NÃO FOI POSSÍVEL BAIXAR O PDF SALVO.',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> <span class="text-red-500 font-bold">NÃO FOI POSSÍVEL</span> BAIXAR O PDF SALVO.',
                     confirmButtonColor: '#000000'
                 });
             }
@@ -1275,7 +1284,7 @@
         function excluirPDF(id) {
             Swal.fire({
                 title: 'EXCLUIR PDF?',
-                text: 'ATENÇÃO, ESTA AÇÃO NÃO PODERÁ SER DESFEITA.',
+                html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> ESTA AÇÃO <span class="text-red-500 font-bold">NÃO PODERÁ SER DESFEITA </span>.',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -1293,7 +1302,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'EXCLUÍDO!',
-                        text: 'ATENÇÃO, O PDF FOI EXCLUÍDO DO HISTÓRICO.',
+                        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O PDF FOI EXCLUÍDO DO HISTÓRICO.',
                         timer: 1500,
                         showConfirmButton: false
                     });

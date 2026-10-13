@@ -354,8 +354,8 @@
                     <div class="mb-3">
                         <label class="block text-xs font-bold uppercase text-black-500 mb-1">ASSINATURA DIGITALIZADA:</label>
                         <canvas id="sig-agente1" class="w-full h-72 sm:h-52 bg-white border border-dashed border-gray-400 rounded pointer-events-none"></canvas>
-                        <div class="flex justify-between mt-1">
-                            <button onclick="habilitarAssinatura('sig-agente1')" class="no-print text-xs text-blue-800 font-bold hover:underline">ASSINAR</button>
+                        <div class="flex justify-between items-center mt-2">
+                            <button onclick="habilitarAssinatura('sig-agente1')" class="no-print px-3 py-1.5 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg><span>ASSINAR</span></button>
                             <button onclick="clearCanvas('sig-agente1')" class="no-print text-xs text-red-600 font-bold hover:underline">APAGAR ASSINATURA</button>
                         </div>
                     </div>
@@ -370,8 +370,8 @@
                     <div class="mb-3">
                         <label class="block text-xs font-bold uppercase text-black-500 mb-1">ASSINATURA DIGITALIZADA:</label>
                         <canvas id="sig-agente2" class="w-full h-72 sm:h-52 bg-white border border-dashed border-gray-400 rounded pointer-events-none"></canvas>
-                        <div class="flex justify-between mt-1">
-                            <button onclick="habilitarAssinatura('sig-agente2')" class="no-print text-xs text-blue-800 font-bold hover:underline">ASSINAR</button>
+                        <div class="flex justify-between items-center mt-2">
+                            <button onclick="habilitarAssinatura('sig-agente2')" class="no-print px-3 py-1.5 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg><span>ASSINAR</span></button>
                             <button onclick="clearCanvas('sig-agente2')" class="no-print text-xs text-red-600 font-bold hover:underline">APAGAR ASSINATURA</button>
                         </div>
                     </div>
@@ -387,8 +387,8 @@
                 <div class="mb-3">
                     <label class="block text-xs font-bold uppercase text-black-500 mb-1">ASSINATURA DIGITALIZADA:</label>
                     <canvas id="sig-empresa" class="w-full h-72 sm:h-52 bg-white border border-dashed border-gray-400 rounded pointer-events-none"></canvas>
-                    <div class="flex justify-between mt-1">
-                        <button onclick="habilitarAssinatura('sig-empresa')" class="no-print text-xs text-blue-800 font-bold hover:underline">ASSINAR</button>
+                    <div class="flex justify-between items-center mt-2">
+                        <button onclick="habilitarAssinatura('sig-empresa')" class="no-print px-3 py-1.5 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg><span>ASSINAR</span></button>
                         <button onclick="clearCanvas('sig-empresa')" class="no-print text-xs text-red-600 font-bold hover:underline">APAGAR ASSINATURA</button>
                     </div>
                 </div>
@@ -414,13 +414,25 @@
             </div>
         </section>
 
-        <div id="barra-acoes" class="no-print mt-8 flex flex-col sm:flex-row justify-end gap-3 border-t border-gray-200 pt-4">
+        <div id="barra-acoes" class="no-print mt-8 flex flex-col sm:flex-row flex-wrap gap-3 justify-end items-center bg-white p-4 rounded-xl shadow-sm border border-slate-200">
             <button id="btn-processar-agregados" onclick="encerrarContagemAgregados()" class="hidden bg-amber-500 hover:bg-amber-400 text-white font-bold py-2.5 px-8 rounded shadow-md text-sm tracking-wide uppercase transition-all transform hover:scale-[1.01]">
                 ADICIONAR ITENS COMPLETOS
             </button>
-            <button onclick="limparTabela()" class="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-6 rounded shadow text-sm transition">LIMPAR PÁGINA</button>
-            <button onclick="compartilharPDFWhatsApp()" class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-6 rounded shadow text-sm transition">COMPARTILHAR RESUMO (WHATSAPP)</button>
-            <button onclick="perguntarResumoWhatsAppAntesDoPDF()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded shadow text-sm transition">GERAR PDF</button>
+            <button type="button" onclick="limparTabela()"
+                class="w-full sm:w-auto px-4 py-2.5 bg-red-600 hover:bg-red-500 border border-red-200 text-white font-bold rounded-lg text-sm  transition flex items-center justify-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                <span>LIMPAR PÁGINA</span>
+            </button>
+            <button type="button" onclick="compartilharPDFWhatsApp()"
+                class="w-full sm:w-auto px-5 py-2.5 bg-green-600 hover:bg-green-500 text-white font-bold rounded-lg text-sm shadow-md transition flex items-center justify-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+                <span>COMPARTILHAR RESUMO (WHATSAPP)</span>
+            </button>
+            <button type="button" onclick="perguntarResumoWhatsAppAntesDoPDF()"
+                class="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm shadow-md transition flex items-center justify-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m3 15 2 2 4-4"/></svg>
+                <span>GERAR PDF</span>
+            </button>
         </div>
     </div>
 
@@ -1205,7 +1217,7 @@ function abrirPDF(id) {
                 Swal.fire({
                     icon: 'warning',
                     title: 'BLOQUEADOR DE POP-UP DETECTADO',
-                    text: 'ATENÇÃO, PERMITA POP-UPS PARA ABRIR O PDF SALVO.',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> PERMITA POP-UPS PARA ABRIR O PDF SALVO.',
                     confirmButtonColor: '#000000'
                 });
             }
@@ -1217,7 +1229,7 @@ function avisarDownloadEAtualizar() {
     Swal.fire({
         icon: 'success',
         title: 'DOWNLOAD INICIADO!',
-        html: '<span class="text-amber-500 font-bold" style="color:#f59e0b;font-weight:bold;">ATENÇÃO:</span> O PDF ESTÁ SENDO BAIXADO. A PÁGINA SERÁ ATUALIZADA.',
+        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O PDF ESTÁ SENDO BAIXADO. A PÁGINA SERÁ ATUALIZADA.',
         timer: 1500,
         timerProgressBar: true,
         showConfirmButton: false,
@@ -1251,7 +1263,7 @@ function baixarPDFHistorico(id) {
 function excluirPDF(id) {
     Swal.fire({
         title: 'EXCLUIR PDF?',
-        text: 'ATENÇÃO, ESTA AÇÃO NÃO PODERÁ SER DESFEITA.',
+        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> ESTA AÇÃO <span class="text-red-500 font-bold">NÃO PODERÁ SER DESFEITA </span>.',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
@@ -1267,7 +1279,7 @@ function excluirPDF(id) {
             Swal.fire({
                 icon: 'success',
                 title: 'EXCLUÍDO!',
-                text: 'ATENÇÃO, O PDF FOI EXCLUÍDO DO HISTÓRICO.',
+                html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O PDF FOI EXCLUÍDO DO HISTÓRICO.',
                 timer: 1500,
                 showConfirmButton: false
             });
@@ -1321,7 +1333,7 @@ function gerarPDFPersonalizado() {
 
         Swal.fire({
             title: 'GERANDO PDF...',
-            text: 'ATENÇÃO, AGUARDE A CRIAÇÃO E SALVAMENTO DO ARQUIVO.',
+            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> AGUARDE A CRIAÇÃO E SALVAMENTO DO ARQUIVO.',
             allowOutsideClick: false,
             didOpen: () => { Swal.showLoading(); }
         });
@@ -1585,7 +1597,7 @@ function limparTabelaDireto() {
             Swal.fire({
                 icon: 'error',
                 title: 'ERRO AO GERAR PDF',
-                text: 'ATENÇÃO, OCORREU UM PROBLEMA AO GERAR O PDF.',
+                html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> OCORREU UM <span class="text-red-500 font-bold">PROBLEMA AO GERAR O PDF</span>.',
                 confirmButtonColor: '#000000'
             });
         }

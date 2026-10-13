@@ -47,6 +47,8 @@
         Swal.fire = function (...args) {
             if (args.length && args[0] && typeof args[0] === 'object') {
                 const opcoes = Object.assign({ position: 'center', heightAuto: false, scrollbarPadding: false }, args[0]);
+                opcoes.customClass = Object.assign({}, opcoes.customClass);
+                opcoes.customClass.popup = ('font-sans ' + (opcoes.customClass.popup || '')).trim();
                 const didOpenOriginal = opcoes.didOpen;
                 const didCloseOriginal = opcoes.didClose;
                 opcoes.didOpen = function (...a) {
@@ -93,6 +95,13 @@
             overflow-y: auto;
         }
     </style>
+    <!-- Ano vigente: atualiza sozinho a cada ano (nada de "2026" fixo) -->
+    <script>
+    window.ANO_VIGENTE = new Date().getFullYear();
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.js-ano').forEach(function (e) { e.textContent = window.ANO_VIGENTE; });
+    });
+    </script>
     <!-- html2pdf.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
@@ -302,7 +311,7 @@
 
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">ID Funcional do Agente FISCALIZADOR *</label>
-                            <input type="number" id="inputIdAgente" placeholder="Nº DA MATRÍCULA / ID" maxlength="9" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                            <input type="text" inputmode="numeric" autocomplete="off" id="inputIdAgente" placeholder="0000000-0" maxlength="9" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
                         </div>
 
                         <div class="md:col-span-2">
@@ -323,7 +332,7 @@
                         <div class="grid grid-cols-2 gap-2">
                             <div>
                                 <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">CPF *</label>
-                                <input type="number" id="inputCPFProprietario" placeholder="000.000.000-00" maxlength="14" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                                <input type="text" inputmode="numeric" autocomplete="off" id="inputCPFProprietario" placeholder="000.000.000-00" maxlength="14" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
                             </div>
                             <div>
                                 <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">RG</label>
@@ -373,9 +382,10 @@
                                     
                                 </div>
                             </div>
-                            <button type="button" onclick="openSignatureModal('Agente', 'Agente Público')" class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded">
+                            <button type="button" onclick="openSignatureModal('Agente', 'Agente Público')"
+                                class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
                                 <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                                ASSINAR
+                                <span>ASSINAR</span>
                             </button>
                         </div>
 
@@ -388,9 +398,10 @@
                                     
                                 </div>
                             </div>
-                            <button type="button" onclick="openSignatureModal('Proprietario', 'Proprietário do Estabelecimento')" class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded">
+                            <button type="button" onclick="openSignatureModal('Proprietario', 'Proprietário do Estabelecimento')"
+                                class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
                                 <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                                ASSINAR
+                                <span>ASSINAR</span>
                             </button>
                         </div>
                     </div>
@@ -489,7 +500,7 @@
 
                                 <!-- Local e Data -->
                                 <div style="margin-top: 14px; margin-bottom: 22px; font-size: 11px; font-weight: bold;">
-                                    LOCAL: <span id="docMunicipio">RIO DE JANEIRO</span>, DATA: <span id="docDataTermo">__/__/2026</span>.
+                                    LOCAL: <span id="docMunicipio">RIO DE JANEIRO</span>, DATA: <span id="docDataTermo">__/__/<span class="js-ano">2026</span></span>.
                                 </div>
 
                                 <!-- Assinaturas em 2 Colunas -->
@@ -600,7 +611,7 @@
             document.getElementById('docRGProprietario').innerText = propRg;
             document.getElementById('docDescricaoMercadorias').innerText = merc;
             document.getElementById('docMunicipio').innerText = munic;
-            document.getElementById('docDataTermo').innerText = dt ? dt.split('-').reverse().join('/') : '__/__/2026';
+            document.getElementById('docDataTermo').innerText = dt ? dt.split('-').reverse().join('/') : '__/__/' + window.ANO_VIGENTE;
 
             document.getElementById('docAssAgenteNome').innerText = agNome !== '________________________________________________' ? agNome : 'AGENTE PÚBLICO';
             document.getElementById('docAssAgenteId').innerText = agId;
@@ -625,7 +636,7 @@
             let v = e.target.value.replace(/\D/g, '').slice(0, 11);
             v = v.replace(/^(\d{3})(\d)/, '$1.$2');
             v = v.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
-            v = v.replace(/\.(\d{3})(\d)/, '.$1-$2');
+            v = v.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
             e.target.value = v;
             updatePreview();
         });
@@ -826,7 +837,7 @@
                     Swal.fire({
                         icon: 'warning',
                         title: 'CAMPO OBRIGATÓRIO',
-                        text: `PREENCHA O CAMPO: ${campo.label.toUpperCase()}`,
+                        html: `<span class="text-amber-500 font-bold">ATENÇÃO:</span> PREENCHA O CAMPO<br><b style="font-size:18px; color:#E53935;">"${campo.label.toUpperCase()}"</b>!`,
                         returnFocus: false,
                         didClose: () => focarCampoInvalido(el)
                     });
@@ -840,7 +851,7 @@
                 Swal.fire({
                     icon: 'warning',
                     title: 'ASSINATURA OBRIGATÓRIA',
-                    text: 'A ASSINATURA DO AGENTE PÚBLICO É OBRIGATÓRIA!',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> A ASSINATURA DO<br><b style="font-size:18px; color:#E53935;">"AGENTE PÚBLICO"</b> É OBRIGATÓRIA!',
                     returnFocus: false,
                     didClose: () => {
                         irParaCampoAposAlerta(boxSig, null);
@@ -855,7 +866,7 @@
                 Swal.fire({
                     icon: 'warning',
                     title: 'ASSINATURA OBRIGATÓRIA',
-                    text: 'A ASSINATURA DO FIEL DEPOSITÁRIO É OBRIGATÓRIA!',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> A ASSINATURA DO<br><b style="font-size:18px; color:#E53935;">"FIEL DEPOSITÁRIO"</b> É OBRIGATÓRIA!',
                     returnFocus: false,
                     didClose: () => {
                         irParaCampoAposAlerta(boxSig, null);
@@ -888,7 +899,7 @@
 
             Swal.fire({
                 title: 'GERANDO PDF...',
-                text: 'AGUARDE O PROCESSAMENTO...',
+                html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> AGUARDE O PROCESSAMENTO...',
                 allowOutsideClick: false,
                 didOpen: () => Swal.showLoading()
             });
@@ -923,7 +934,7 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'ERRO',
-                    text: 'Falha ao renderizar o documento.'
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> <span class="text-red-500 font-bold">FALHA AO RENDERIZAR O DOCUMENTO</span>.'
                 });
                 return;
             }
@@ -960,7 +971,7 @@
                 await Swal.fire({
                     icon: 'success',
                     title: 'SUCESSO',
-                    text: 'TERMO DE INTERDIÇÃO GERADO COM SUCESSO! BAIXE PELO HISTÓRICO ABAIXO QUANDO QUISER.',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> TERMO DE INTERDIÇÃO GERADO COM SUCESSO!<br>BAIXE PELO <b>HISTÓRICO ABAIXO</b> QUANDO QUISER.',
                     returnFocus: false
                 });
 
@@ -973,7 +984,7 @@
             } catch (err) {
                 console.error(err);
                 Swal.close();
-                Swal.fire('ERRO', 'FALHA AO SALVAR/COMPARTILHAR O PDF.', 'error');
+                Swal.fire({ icon: 'error', title: 'ERRO', html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> <span class="text-red-500 font-bold">FALHA AO SALVAR/COMPARTILHAR O PDF</span>.', confirmButtonColor: '#000000' });
             }
         }
 
@@ -999,7 +1010,7 @@
                     await Swal.fire({
                         icon: 'info',
                         title: 'COMPARTILHAMENTO NÃO DISPONÍVEL',
-                        text: 'ESTE NAVEGADOR NÃO SUPORTA COMPARTILHAMENTO DIRETO. BAIXE O PDF PELO HISTÓRICO ABAIXO E ANEXE MANUALMENTE NO WHATSAPP.',
+                        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> ESTE NAVEGADOR <span class="text-red-500 font-bold">NÃO SUPORTA COMPARTILHAMENTO DIRETO</span>. BAIXE O PDF PELO HISTÓRICO ABAIXO E ANEXE MANUALMENTE NO WHATSAPP.',
                         confirmButtonColor: '#000000',
                         returnFocus: false
                     });
@@ -1052,7 +1063,7 @@
             Swal.fire({
                 icon: 'success',
                 title: 'DOWNLOAD INICIADO!',
-                html: '<span class="text-amber-500 font-bold" style="color:#f59e0b;font-weight:bold;">ATENÇÃO:</span> O PDF ESTÁ SENDO BAIXADO. A PÁGINA SERÁ ATUALIZADA.',
+                html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O PDF ESTÁ SENDO BAIXADO. A PÁGINA SERÁ ATUALIZADA.',
                 timer: 1500,
                 timerProgressBar: true,
                 showConfirmButton: false,
@@ -1081,7 +1092,7 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'ERRO AO BAIXAR PDF',
-                    text: 'ATENÇÃO, NÃO FOI POSSÍVEL BAIXAR O PDF SALVO.',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> <span class="text-red-500 font-bold">NÃO FOI POSSÍVEL</span> BAIXAR O PDF SALVO.',
                     confirmButtonColor: '#000000'
                 });
             }
@@ -1111,7 +1122,7 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'ERRO AO ABRIR PDF',
-                    text: 'ATENÇÃO, NÃO FOI POSSÍVEL ABRIR O PDF SALVO.',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> <span class="text-red-500 font-bold">NÃO FOI POSSÍVEL</span> ABRIR O PDF SALVO.',
                     confirmButtonColor: '#000000'
                 });
                 return;
@@ -1122,7 +1133,7 @@
                 Swal.fire({
                     icon: 'warning',
                     title: 'BLOQUEADOR DE POP-UP DETECTADO',
-                    text: 'ATENÇÃO, PERMITA POP-UPS PARA ABRIR O PDF SALVO.',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> PERMITA POP-UPS PARA ABRIR O PDF SALVO.',
                     confirmButtonColor: '#000000'
                 });
             }
@@ -1131,7 +1142,7 @@
         function excluirPDF(id) {
             Swal.fire({
                 title: 'EXCLUIR PDF?',
-                text: 'ATENÇÃO, ESTA AÇÃO NÃO PODERÁ SER DESFEITA.',
+                html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> ESTA AÇÃO <span class="text-red-500 font-bold">NÃO PODERÁ SER DESFEITA </span>.',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -1147,7 +1158,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'EXCLUÍDO!',
-                        text: 'ATENÇÃO, O PDF FOI EXCLUÍDO DO HISTÓRICO.',
+                        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O PDF FOI EXCLUÍDO DO HISTÓRICO.',
                         timer: 1500,
                         showConfirmButton: false
                     });
