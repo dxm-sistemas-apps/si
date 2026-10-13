@@ -101,7 +101,8 @@
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.js-ano').forEach(function (e) { e.textContent = window.ANO_VIGENTE; });
     });
-    </script>
+    </script>
+
     <!-- html2pdf.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
@@ -382,7 +383,7 @@
                                     
                                 </div>
                             </div>
-                            <button type="button" onclick="openSignatureModal('Agente', 'Agente Público')"
+                            <button type="button" onclick="openSignatureModal('AGENTE', 'AGENTE PÚBLICO')"
                                 class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
                                 <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                 <span>ASSINAR</span>
@@ -398,7 +399,7 @@
                                     
                                 </div>
                             </div>
-                            <button type="button" onclick="openSignatureModal('Proprietario', 'Proprietário do Estabelecimento')"
+                            <button type="button" onclick="openSignatureModal('PROPRIETÁRIO', 'PROPRIETÁRIO DA EMPRESA / ESTABELECIMENTO')"
                                 class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
                                 <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                 <span>ASSINAR</span>
@@ -615,7 +616,7 @@
 
             document.getElementById('docAssAgenteNome').innerText = agNome !== '________________________________________________' ? agNome : 'AGENTE PÚBLICO';
             document.getElementById('docAssAgenteId').innerText = agId;
-            document.getElementById('docAssPropNome').innerText = propNome !== '________________________________________________' ? propNome : 'PROPRIETÁRIO DO ESTABELECIMENTO';
+            document.getElementById('docAssPropNome').innerText = propNome !== '________________________________________________' ? propNome : 'PROPRIETÁRIO DA EMPRESA / ESTABELECIMENTO';
             document.getElementById('docAssPropCPF').innerText = propCpf;
 
             ['Agente', 'Proprietario'].forEach(r => {
@@ -661,7 +662,7 @@
 
         function openSignatureModal(roleKey, roleTitle) {
             currentTargetRole = roleKey;
-            document.getElementById('modalTitle').innerText = `Coletar Assinatura: ${roleTitle}`;
+            document.getElementById('modalTitle').innerText = `COLETAR ASSINATURA: ${roleTitle}`;
             modal.classList.add('modal-active');
             setTimeout(() => {
                 canvas.width = canvas.getBoundingClientRect().width;
@@ -1146,7 +1147,7 @@
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
-                cancelButtonColor: '#000000',
+                cancelButtonColor: '#d33',
                 confirmButtonText: 'EXCLUIR',
                 cancelButtonText: 'CANCELAR'
             }).then((result) => {
