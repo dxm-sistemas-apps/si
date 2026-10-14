@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TERMO DE INTERDIÇÃO E DESIGNAÇÃO COMO FIEL DEPOSITÁRIO - DETRAN.RJ</title>
     <!-- Tailwind CSS CDN -->
+    <script src="firebase-config.js"></script>
+    <script src="armazem.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -47,6 +49,10 @@
         Swal.fire = function (...args) {
             if (args.length && args[0] && typeof args[0] === 'object') {
                 const opcoes = Object.assign({ position: 'center', heightAuto: false, scrollbarPadding: false }, args[0]);
+                // Botões padronizados: EXCLUIR PDF (excluir vermelho / cancelar preto) e CAMPO OBRIGATÓRIO (OK preto)
+                const tituloAlertaPadrao = String(opcoes.title || '').toUpperCase();
+                if (tituloAlertaPadrao.indexOf('EXCLUIR PDF') !== -1) { opcoes.confirmButtonColor = '#ef4444'; opcoes.cancelButtonColor = '#000000'; }
+                if (tituloAlertaPadrao.indexOf('CAMPO OBRIGAT') !== -1) { opcoes.confirmButtonColor = '#000000'; }
                 opcoes.customClass = Object.assign({}, opcoes.customClass);
                 opcoes.customClass.popup = ('font-sans ' + (opcoes.customClass.popup || '')).trim();
                 const didOpenOriginal = opcoes.didOpen;
@@ -263,6 +269,13 @@
         .cab-pdf-t2 { font-size: calc(var(--mm) * 3.5278) !important; font-weight: bold !important; }
         .cab-pdf-t3 { font-size: calc(var(--mm) * 3.175) !important; font-weight: normal !important; }
     </style>
+<style>
+/* Cards e modal de assinatura: todos os caracteres em maiúsculo */
+.bloco-assinatura, .bloco-assinatura *,
+[id^="box"], [id^="box"] *,
+#signatureModal, #signatureModal * { text-transform: uppercase !important; }
+.bloco-assinatura ::placeholder, #signatureModal ::placeholder { text-transform: uppercase !important; }
+</style>
 </head>
 <body class="text-slate-800 antialiased pb-12 relative">
 
@@ -362,7 +375,7 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Discrimine os itens lacrados sob guarda do fiel depositário *</label>
-                        <textarea id="inputDescricaoMercadorias" rows="4" placeholder="EX: 15 MOTORES VEICULARES, 08 CAIXAS DE CÂMBIO, DIVERSAS PEÇAS DE LATARIA E SUSPENSÃO LACRADAS NO GALPÃO..." class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></textarea>
+                        <textarea id="inputDescricaoMercadorias" rows="4" placeholder=" " class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></textarea>
                     </div>
                 </div>
 
@@ -383,7 +396,7 @@
                                     
                                 </div>
                             </div>
-                            <button type="button" onclick="openSignatureModal('AGENTE', 'AGENTE PÚBLICO')"
+                            <button type="button" onclick="openSignatureModal('Agente', 'Agente Público')"
                                 class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
                                 <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                 <span>ASSINAR</span>
@@ -399,7 +412,7 @@
                                     
                                 </div>
                             </div>
-                            <button type="button" onclick="openSignatureModal('PROPRIETÁRIO', 'PROPRIETÁRIO DA EMPRESA / ESTABELECIMENTO')"
+                            <button type="button" onclick="openSignatureModal('Proprietario', 'Proprietário do Estabelecimento')"
                                 class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
                                 <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                 <span>ASSINAR</span>
@@ -420,12 +433,6 @@
                         class="w-full sm:w-auto px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg text-sm transition flex items-center justify-center space-x-2">
                         <i data-lucide="eye" class="w-4 h-4"></i>
                         <span>VISUALIZAR PRÉVIA</span>
-                    </button>
-
-                    <button type="button" onclick="generatePDF(false)" 
-                        class="w-full sm:w-auto px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg text-sm shadow-md transition flex items-center justify-center space-x-2">
-                        <i data-lucide="download" class="w-4 h-4"></i>
-                        <span>BAIXAR PDF</span>
                     </button>
 
                     <button type="button" onclick="generatePDF(true)" 
@@ -540,7 +547,7 @@
             <div class="card no-print max-w-4xl mx-auto mt-6" id="secao-historico-pdf">
                 <div class="pdf-history-header">
                     <div class="section-title" style="margin-bottom: 0;">
-                        <span>📄 PDF'S GERADOS - INTERDIÇÃO E FIEL DEPOSITÁRIO</span>
+                        <span>📄 PDF'S GERADOS - TERMO DE INTERDIÇÃO E FIEL DEPOSITÁRIO</span>
                     </div>
                     <div class="pdf-search-wrapper" style="margin-top: 8px;">
                         <span class="pdf-search-icon">🔍</span>
@@ -577,7 +584,7 @@
         </div>
     </div>
 
-    <script>
+    <script type="text/armazem">
         lucide.createIcons();
         const LOGO_DGAD_SUPORTE = "fiel depositario.png";
         let currentTargetRole = '';
@@ -616,7 +623,7 @@
 
             document.getElementById('docAssAgenteNome').innerText = agNome !== '________________________________________________' ? agNome : 'AGENTE PÚBLICO';
             document.getElementById('docAssAgenteId').innerText = agId;
-            document.getElementById('docAssPropNome').innerText = propNome !== '________________________________________________' ? propNome : 'PROPRIETÁRIO DA EMPRESA / ESTABELECIMENTO';
+            document.getElementById('docAssPropNome').innerText = propNome !== '________________________________________________' ? propNome : 'PROPRIETÁRIO DO ESTABELECIMENTO';
             document.getElementById('docAssPropCPF').innerText = propCpf;
 
             ['Agente', 'Proprietario'].forEach(r => {
@@ -779,7 +786,7 @@
             { id: 'inputLocalEstabelecimento', label: 'Endereço do Estabelecimento' },
             { id: 'inputNomeProprietario', label: 'Nome do Proprietário / Fiel Depositário' },
             { id: 'inputCPFProprietario', label: 'CPF do Proprietário' },
-            { id: 'inputDataTermo', label: 'Data do Termo' },
+            { id: 'inputDataTermo', label: 'Data' },
             { id: 'inputDescricaoMercadorias', label: 'Descrição das Mercadorias (Inventário)' }
         ];
 
@@ -972,7 +979,7 @@
                 await Swal.fire({
                     icon: 'success',
                     title: 'SUCESSO',
-                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> TERMO DE INTERDIÇÃO GERADO COM SUCESSO!<br>BAIXE PELO <b>HISTÓRICO ABAIXO</b> QUANDO QUISER.',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> TERMO DE INTERDIÇÃO GERADO COM SUCESSO!<br><br>BAIXE PELO <b>HISTÓRICO ABAIXO</b> QUANDO QUISER.',
                     returnFocus: false
                 });
 
@@ -1024,9 +1031,9 @@
         }
 
         function salvarPDFHistorico(obj) {
-            let h = JSON.parse(localStorage.getItem('historico_pdfs_interdicao')) || [];
+            let h = JSON.parse(Armazem.ls.getItem('historico_pdfs_interdicao')) || [];
             h.unshift(obj);
-            try { localStorage.setItem('historico_pdfs_interdicao', JSON.stringify(h)); } catch(e) { h.pop(); }
+            try { Armazem.ls.setItem('historico_pdfs_interdicao', JSON.stringify(h)); } catch(e) { h.pop(); }
             renderizarGridPDFs();
         }
 
@@ -1034,7 +1041,7 @@
             const container = document.getElementById('grid-pdfs-container');
             if (!container) return;
             const termo = (document.getElementById('busca-pdf')?.value || '').toLowerCase().trim();
-            let h = JSON.parse(localStorage.getItem('historico_pdfs_interdicao')) || [];
+            let h = JSON.parse(Armazem.ls.getItem('historico_pdfs_interdicao')) || [];
             if (termo) {
                 h = h.filter(i => (i.nome + ' ' + (i.empresa || '') + ' ' + (i.proprietario || '') + ' ' + (i.cnpj || '')).toLowerCase().includes(termo));
             }
@@ -1047,7 +1054,7 @@
                   <div class="pdf-card-info" onclick="abrirPDF('${item.id}')">
                     <span class="pdf-card-icon">📄</span>
                     <div class="pdf-card-text">
-                      <div class="pdf-card-title">${item.empresa || item.nome}</div>
+                      <div class="pdf-card-title" title="${item.nome || ''}">${(item.nome || item.empresa || '').replace(/\.pdf$/i, '')}</div>
                       <div class="pdf-card-meta">GERADO EM: ${item.dataGeracao}</div>
                     </div>
                   </div>
@@ -1073,9 +1080,10 @@
             }).then(() => { window.location.reload(); });
         }
 
-        function baixarPDFHistorico(id) {
-            const h = JSON.parse(localStorage.getItem('historico_pdfs_interdicao')) || [];
+        async function baixarPDFHistorico(id) {
+            const h = JSON.parse(Armazem.ls.getItem('historico_pdfs_interdicao')) || [];
             const p = h.find(i => String(i.id) === String(id));
+            await Armazem.completar(p);
             if (!p || !p.dataUri) return;
 
             try {
@@ -1110,9 +1118,10 @@
             return new Blob([bytes], { type: mime });
         }
 
-        function abrirPDF(id) {
-            const h = JSON.parse(localStorage.getItem('historico_pdfs_interdicao')) || [];
+        async function abrirPDF(id) {
+            const h = JSON.parse(Armazem.ls.getItem('historico_pdfs_interdicao')) || [];
             const p = h.find(i => String(i.id) === String(id));
+            await Armazem.completar(p);
             if (!p || !p.dataUri) return;
 
             let url;
@@ -1147,14 +1156,14 @@
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
-                cancelButtonColor: '#d33',
+                cancelButtonColor: '#000000',
                 confirmButtonText: 'EXCLUIR',
                 cancelButtonText: 'CANCELAR'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let h = JSON.parse(localStorage.getItem('historico_pdfs_interdicao')) || [];
+                    let h = JSON.parse(Armazem.ls.getItem('historico_pdfs_interdicao')) || [];
                     h = h.filter(i => String(i.id) !== String(id));
-                    localStorage.setItem('historico_pdfs_interdicao', JSON.stringify(h));
+                    Armazem.ls.setItem('historico_pdfs_interdicao', JSON.stringify(h));
                     renderizarGridPDFs();
                     Swal.fire({
                         icon: 'success',
@@ -1166,6 +1175,35 @@
                 }
             });
         }
-    </script>
+    
+        /* ===== Rascunho automático: salva e restaura todos os campos e assinaturas (armazem.js) ===== */
+        var rascunhoTermo = Armazem.rascunhoCampos('rascunho_termo', {
+            ignorar: ['busca-pdf'],
+            coletar: function () { return { signatures: signatures }; },
+            restaurar: function (x) {
+                if (x.signatures) {
+                    signatures = Object.assign({ Agente: '', Proprietario: '' }, x.signatures);
+                    ['Agente', 'Proprietario'].forEach(function (r) { if (signatures[r]) renderSignatureUI(r, signatures[r]); });
+                }
+                updatePreview();
+            }
+        });
+        (function () {
+            const _updatePreview = updatePreview;
+            updatePreview = function () { _updatePreview.apply(this, arguments); if (rascunhoTermo) rascunhoTermo.agendar(); };
+            const _limpar = limparTodosOsCampos;
+            limparTodosOsCampos = function () { _limpar.apply(this, arguments); if (rascunhoTermo) rascunhoTermo.limpar(); };
+        })();
+        window.addEventListener('DOMContentLoaded', function () { rascunhoTermo.restaurar(); });
+</script>
+<script>
+(function () {
+    if (window.Armazem) return;
+    var d = document.createElement('div');
+    d.setAttribute('style', 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:#fff;color:#b91c1c;font:700 16px sans-serif;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;text-transform:uppercase');
+    d.textContent = 'ARQUIVO "armazem.js" NÃO ENCONTRADO. COPIE armazem.js, nuvem.js E firebase-config.js PARA A MESMA PASTA DESTA PÁGINA.';
+    document.body.appendChild(d);
+})();
+</script>
 </body>
 </html>

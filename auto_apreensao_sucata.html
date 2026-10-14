@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AUTO DE APREENSÃO DE SUCATA AUTOMOTIVA - DETRAN.RJ</title>
     <!-- Tailwind CSS CDN -->
+    <script src="firebase-config.js"></script>
+    <script src="armazem.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -47,6 +49,10 @@
         Swal.fire = function (...args) {
             if (args.length && args[0] && typeof args[0] === 'object') {
                 const opcoes = Object.assign({ position: 'center', heightAuto: false, scrollbarPadding: false }, args[0]);
+                // Botões padronizados: EXCLUIR PDF (excluir vermelho / cancelar preto) e CAMPO OBRIGATÓRIO (OK preto)
+                const tituloAlertaPadrao = String(opcoes.title || '').toUpperCase();
+                if (tituloAlertaPadrao.indexOf('EXCLUIR PDF') !== -1) { opcoes.confirmButtonColor = '#ef4444'; opcoes.cancelButtonColor = '#000000'; }
+                if (tituloAlertaPadrao.indexOf('CAMPO OBRIGAT') !== -1) { opcoes.confirmButtonColor = '#000000'; }
                 opcoes.customClass = Object.assign({}, opcoes.customClass);
                 opcoes.customClass.popup = ('font-sans ' + (opcoes.customClass.popup || '')).trim();
                 const didOpenOriginal = opcoes.didOpen;
@@ -119,7 +125,8 @@
     document.addEventListener('input', function (e) {
         if (e.target && e.target.dataset && e.target.dataset.processoSei) e.target.value = formatarProcessoSEI(e.target.value);
     }, true);
-    </script>
+    </script>
+
     <!-- html2pdf.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
@@ -292,6 +299,13 @@
         .cab-pdf-t2 { font-size: calc(var(--mm) * 3.5278) !important; font-weight: bold !important; }
         .cab-pdf-t3 { font-size: calc(var(--mm) * 3.175) !important; font-weight: normal !important; }
     </style>
+<style>
+/* Cards e modal de assinatura: todos os caracteres em maiúsculo */
+.bloco-assinatura, .bloco-assinatura *,
+[id^="box"], [id^="box"] *,
+#signatureModal, #signatureModal * { text-transform: uppercase !important; }
+.bloco-assinatura ::placeholder, #signatureModal ::placeholder { text-transform: uppercase !important; }
+</style>
 </head>
 <body class="text-slate-800 antialiased pb-12 relative">
 
@@ -301,10 +315,7 @@
             <div class="bg-blue p-1.5 rounded-lg shadow-sm mb-2">
                 <img id="appLogo" class="h-64 object-contain" alt="Logo DGAD Suporte">
             </div>
-            <div>
-                <h1 class="font-bold text-base md:text-lg leading-tight uppercase">AUTO DE APREENSÃO DE SUCATA</h1>
-                <p class="text-xs text-blue-200 uppercase">SISTEMA INTEGRADO - EQUIPE OPERACIONAL</p>
-            </div>
+            
         </div>
     </header>
 
@@ -328,9 +339,7 @@
                 <!-- Botão de rolagem -->
                 <div class="flex justify-between items-center mb-2 no-print">
                     <span class="text-xs font-bold text-gray-500 uppercase tracking-wider"></span>
-                    <button type="button" onclick="window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })" class="btn-scroll-dir anim-bounce" title="Rolar até o final">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
-                    </button>
+                    
                 </div>
 
                 <!-- Card 1: Identificação do Auto e Empresa -->
@@ -346,7 +355,7 @@
                                 Auto de Apreensão nº *
                             </label>
                             <div class="flex items-center">
-                                <input type="text" id="inputNumAuto" placeholder="0001" 
+                                <input data-so-numeros type="text" inputmode="numeric" autocomplete="off" id="inputNumAuto" placeholder="001" 
                                     class="w-full px-3 py-2 rounded-l-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm">
                                 <span class="bg-slate-100 px-3 py-2 border border-l-0 border-slate-300 rounded-r-lg text-sm font-bold text-slate-600">/<span class="js-ano">2026</span></span>
                             </div>
@@ -376,7 +385,7 @@
                             <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
                                 CNPJ *
                             </label>
-                            <input type="text" id="inputCNPJ" placeholder="00.000.000/0001-00" maxlength="18"
+                            <input type="text" inputmode="numeric" autocomplete="off" id="inputCNPJ" placeholder="00.000.000/0001-00" maxlength="18"
                                 class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm">
                         </div>
 
@@ -408,7 +417,7 @@
                             <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
                                 Inscrição Estadual
                             </label>
-                            <input type="text" id="inputInscricaoEstadual" placeholder="ISENTO OU NÚMERO" 
+                            <input type="text" inputmode="numeric" autocomplete="off" maxlength="14" id="inputInscricaoEstadual" placeholder="SOMENTE NÚMEROS" 
                                 class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm">
                         </div>
 
@@ -432,7 +441,7 @@
                             <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
                                 CPF do Representante *
                             </label>
-                            <input type="text" id="inputCPF" placeholder="000.000.000-00" maxlength="14"
+                            <input type="text" inputmode="numeric" autocomplete="off" id="inputCPF" placeholder="000.000.000-00" maxlength="14"
                                 class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm">
                         </div>
                     </div>
@@ -466,7 +475,7 @@
                         <div class="flex justify-between items-center mb-2">
                             <label class="block text-xs font-semibold text-slate-700 uppercase">Relação de Bens Apreendidos *</label>
                             <button type="button" onclick="adicionarItemTabela()" class="text-xs bg-blue-50 text-blue-900 hover:bg-blue-100 font-semibold px-2.5 py-1 rounded border border-blue-200">
-                                + Adicionar Item
+                                + ADICIONAR ITEM
                             </button>
                         </div>
                         <div id="itensDinamicosContainer" class="space-y-2"></div>
@@ -476,22 +485,22 @@
                     <div class="space-y-2.5 border-t border-slate-100 pt-4" id="grupoMedidas">
                         <label class="flex items-center space-x-2 cursor-pointer">
                             <input type="checkbox" id="checkCautelar" class="h-4 w-4 text-blue-900 rounded" onchange="updatePreview()">
-                            <span class="text-sm font-semibold text-slate-700">Material Cautelarmente Apreendido</span>
+                            <span class="text-sm font-semibold text-slate-700 uppercase">Material Cautelarmente Apreendido</span>
                         </label>
                         
                         <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
                             <label class="flex items-center space-x-2 cursor-pointer">
                                 <input type="checkbox" id="checkFielDepositario" class="h-4 w-4 text-blue-900 rounded" onchange="updatePreview()">
-                                <span class="text-sm font-semibold text-slate-700">Nomeio:</span>
+                                <span class="text-sm font-semibold text-slate-700 uppercase">Nomeio:</span>
                             </label>
                             <input type="text" id="inputNomeFiel" placeholder="NOME DO FIEL DEPOSITÁRIO" 
-                                class="w-full sm:w-80 px-2 py-1 border border-slate-300 rounded text-xs">
-                            <span class="text-xs text-slate-600 font-semibold">fiel depositário.</span>
+                                class="w-full sm:w-80 px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm">
+                            <span class="text-xs text-slate-600 font-semibold uppercase">fiel depositário.</span>
                         </div>
 
                         <label class="flex items-center space-x-2 cursor-pointer">
                             <input type="checkbox" id="checkDestruicao" class="h-4 w-4 text-blue-900 rounded" onchange="updatePreview()">
-                            <span class="text-sm font-semibold text-slate-700">Determino a imediata destruição do material apreendido, por reconhecer potencial risco ambiental.</span>
+                            <span class="text-sm font-semibold text-slate-700 uppercase">Determino a imediata destruição do material apreendido, por reconhecer potencial risco ambiental.</span>
                         </label>
                     </div>
                 </div>
@@ -505,23 +514,42 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <!-- Agente 1 -->
-                        <div id="boxAgente1" class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col justify-between">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Agente Público 1 *</label>
-                                <input type="text" id="inputAgente1" placeholder="NOME DO AGENTE" class="w-full px-3 py-2 bg-white rounded border border-slate-300 text-xs mb-2">
-                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">ID Funcional *</label>
-                                <input type="text" id="inputIdAgente1" placeholder="0000000-0" maxlength="9" class="w-full px-3 py-2 bg-white rounded border border-slate-300 text-xs mb-2">
-                                <div class="h-20 bg-white border border-slate-200 rounded flex items-center justify-center p-1 mb-2">
-                                    <img id="previewSignAgente1" class="max-h-full max-w-full hidden object-contain">
-                                    <span id="placeholderSignAgente1" class="text-xs text-slate-400 italic">SEM ASSINATURA</span>
-                                </div>
-                            </div>
-                            <button type="button" onclick="openSignatureModal('Agente1', 'Agente Público 1')"
-                                class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
-                                <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                                <span>ASSINAR</span>
-                            </button>
-                        </div>
+    <div id="boxAgente1" class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col justify-between">
+        <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Agente Público 1 *</label>
+            <input type="text" id="inputAgente1" placeholder="NOME DO AGENTE" class="w-full px-3 py-2 bg-white rounded border border-slate-300 text-xs mb-2">
+            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">ID Funcional *</label>
+            <input type="text" inputmode="numeric" autocomplete="off" id="inputIdAgente1" placeholder="0000000-0" maxlength="9" class="w-full px-3 py-2 bg-white rounded border border-slate-300 text-xs mb-2">
+            <div class="h-20 bg-white border border-slate-200 rounded flex items-center justify-center p-1 mb-2">
+                <img id="previewSignAgente1" class="max-h-full max-w-full hidden object-contain">
+                <span id="placeholderSignAgente1" class="text-xs text-slate-400 italic"></span>
+            </div>
+        </div>
+        <button type="button" onclick="openSignatureModal('Agente1', 'Agente Público 1')"
+            class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
+            <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+            <span>ASSINAR</span>
+        </button>
+    </div>
+
+    <!-- Agente 2 -->
+    <div id="boxAgente2" class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col justify-between">
+        <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Agente Público 2</label>
+            <input type="text" id="inputAgente2" placeholder="NOME DO AGENTE" class="w-full px-3 py-2 bg-white rounded border border-slate-300 text-xs mb-2">
+            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">ID Funcional</label>
+            <input type="text" inputmode="numeric" autocomplete="off" id="inputIdAgente2" placeholder="0000000-0" maxlength="9" class="w-full px-3 py-2 bg-white rounded border border-slate-300 text-xs mb-2">
+            <div class="h-20 bg-white border border-slate-200 rounded flex items-center justify-center p-1 mb-2">
+                <img id="previewSignAgente2" class="max-h-full max-w-full hidden object-contain">
+                <span id="placeholderSignAgente2" class="text-xs text-slate-400 italic"></span>
+            </div>
+        </div>
+        <button type="button" onclick="openSignatureModal('Agente2', 'Agente Público 2')"
+            class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
+            <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+            <span>ASSINAR</span>
+        </button>
+    </div>
 
                         <!-- Ciência Autuado -->
                         <div id="boxCiencia" class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col justify-between">
@@ -530,7 +558,7 @@
                                 <input type="text" id="inputAutuadoSignNome" placeholder="NOME DO RESPONSÁVEL" class="w-full px-3 py-2 bg-white rounded border border-slate-300 text-xs mb-2">
                                 <div class="h-20 bg-white border border-slate-200 rounded flex items-center justify-center p-1 mb-2">
                                     <img id="previewSignCiencia" class="max-h-full max-w-full hidden object-contain">
-                                    <span id="placeholderSignCiencia" class="text-xs text-slate-400 italic">SEM ASSINATURA</span>
+                                    <span id="placeholderSignCiencia" class="text-xs text-slate-400 italic"></span>
                                 </div>
                             </div>
                             <button type="button" onclick="openSignatureModal('Ciencia', 'Ciência do Autuado')"
@@ -539,27 +567,9 @@
                                 <span>ASSINAR</span>
                             </button>
                         </div>
-
-                        <!-- Agente 2 -->
-                        <div id="boxAgente2" class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col justify-between">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Agente Público 2</label>
-                                <input type="text" id="inputAgente2" placeholder="NOME DO AGENTE" class="w-full px-3 py-2 bg-white rounded border border-slate-300 text-xs mb-2">
-                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">ID Funcional</label>
-                                <input type="text" id="inputIdAgente2" placeholder="0000000-0" maxlength="9" class="w-full px-3 py-2 bg-white rounded border border-slate-300 text-xs mb-2">
-                                <div class="h-20 bg-white border border-slate-200 rounded flex items-center justify-center p-1 mb-2">
-                                    <img id="previewSignAgente2" class="max-h-full max-w-full hidden object-contain">
-                                    <span id="placeholderSignAgente2" class="text-xs text-slate-400 italic">SEM ASSINATURA</span>
-                                </div>
-                            </div>
-                            <button type="button" onclick="openSignatureModal('Agente2', 'Agente Público 2')"
-                                class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
-                                <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                                <span>ASSINAR</span>
-                            </button>
-                        </div>
                     </div>
-                </div>
+
+                        
 
                 <!-- Botões de Ação -->
                 <div class="flex flex-col sm:flex-row flex-wrap gap-3 justify-end items-center bg-white p-4 rounded-xl shadow-sm border border-slate-200 no-print">
@@ -573,12 +583,6 @@
                         class="w-full sm:w-auto px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg text-sm transition flex items-center justify-center space-x-2">
                         <i data-lucide="eye" class="w-4 h-4"></i>
                         <span>VISUALIZAR PRÉVIA</span>
-                    </button>
-
-                    <button type="button" onclick="generatePDF(false)" 
-                        class="w-full sm:w-auto px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg text-sm shadow-md transition flex items-center justify-center space-x-2">
-                        <i data-lucide="download" class="w-4 h-4"></i>
-                        <span>BAIXAR PDF</span>
                     </button>
 
                     <button type="button" onclick="generatePDF(true)" 
@@ -692,16 +696,6 @@
 
                                     <div style="display: table-cell; text-align: center; vertical-align: bottom; width: 33%; padding: 0 8px;">
                                         <div style="height: 38px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 2px;">
-                                            <img id="imgSignCiencia" style="max-height: 38px; max-width: 100%; visibility: hidden;">
-                                        </div>
-                                        <div style="border-top: 1px solid #000; padding-top: 2px;">
-                                            <span id="docAssinaturaCiencia" style="font-weight: bold; font-size: 9px; text-transform: uppercase; display: block;">CIÊNCIA DO AUTUADO</span>
-                                            <span style="font-size: 8.5px;">Ciência do Autuado</span>
-                                        </div>
-                                    </div>
-
-                                    <div style="display: table-cell; text-align: center; vertical-align: bottom; width: 33%; padding: 0 8px;">
-                                        <div style="height: 38px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 2px;">
                                             <img id="imgSignAgente2" style="max-height: 38px; max-width: 100%; visibility: hidden;">
                                         </div>
                                         <div style="border-top: 1px solid #000; padding-top: 2px;">
@@ -710,9 +704,21 @@
                                             <span style="font-size: 8px; display: block;">Id. Funcional: <span id="docIdAgente2">________</span></span>
                                         </div>
                                     </div>
+
+                                    <div style="display: table-cell; text-align: center; vertical-align: bottom; width: 33%; padding: 0 8px;">
+                                        <div style="height: 38px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 2px;">
+                                            <img id="imgSignCiencia" style="max-height: 38px; max-width: 100%; visibility: hidden;">
+                                        </div>
+                                        <div style="border-top: 1px solid #000; padding-top: 2px;">
+                                            <span id="docAssinaturaCiencia" style="font-weight: bold; font-size: 9px; text-transform: uppercase; display: block;">CIÊNCIA DO AUTUADO</span>
+                                            <span style="font-size: 8.5px;">Ciência do Autuado</span>
+                                        </div>
+                                    </div>
+
+                                    
                                 </div>
 
-                                // <div style="text-align: right; font-size: 8.5px; font-weight: bold; margin-top: 16px;">Via 1 - DETRAN-RJ</div>
+                                
                             </div>
                         </div>
                     </div>
@@ -724,9 +730,7 @@
                 <div class="pdf-history-header">
                     <div class="section-title" style="margin-bottom: 0;">
                         <span>📄 PDF'S GERADOS - APREENSÃO DE SUCATA</span>
-                        <button type="button" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="btn-scroll-dir anim-bounce no-print" title="Voltar ao topo">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
-                        </button>
+                        
                     </div>
                     <div class="pdf-search-wrapper" style="margin-top: 8px;">
                         <span class="pdf-search-icon">🔍</span>
@@ -742,7 +746,7 @@
     <div id="signatureModal" class="fixed inset-0 bg-slate-900/70 z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-5 space-y-4">
             <div class="flex items-center justify-between border-b pb-3">
-                <h3 class="font-bold text-slate-800 text-base" id="modalTitle">Assinatura Digital</h3>
+                <h3 class="font-bold text-slate-800 text-base" id="modalTitle">ASSINATURA DIGITAL</h3>
                 <button type="button" onclick="closeSignatureModal()" class="text-slate-400 hover:text-slate-600">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
@@ -763,7 +767,7 @@
         </div>
     </div>
 
-    <script>
+    <script type="text/armazem">
         lucide.createIcons();
         const LOGO_DGAD_SUPORTE = "apreensao.png";
         let itens = [{ qtd: '', desc: '' }];
@@ -795,11 +799,13 @@
         function renderizarItensInputs() {
             const container = document.getElementById('itensDinamicosContainer');
             container.innerHTML = itens.map((item, i) => `
-                <div class="flex items-center space-x-2">
-                    <input type="text" value="${item.qtd}" placeholder="QTD / PESO" oninput="itens[${i}].qtd = this.value.toUpperCase(); updatePreview();" class="w-1/3 px-3 py-1.5 border border-slate-300 rounded text-xs">
-                    <input type="text" id="inputItemDesc_${i}" value="${item.desc}" placeholder="DESCRIÇÃO DO BEM APREENDIDO *" oninput="itens[${i}].desc = this.value.toUpperCase(); updatePreview();" class="w-2/3 px-3 py-1.5 border border-slate-300 rounded text-xs">
-                    <button type="button" onclick="removerItemTabela(${i})" class="text-red-500 hover:text-red-700 p-1">✕</button>
-                </div>
+                <div class="flex items-start gap-2">
+                        <div class="flex-1 space-y-2">
+                            <input type="text" value="${item.qtd}" placeholder="QTD / PESO" oninput="itens[${i}].qtd = this.value.toUpperCase(); updatePreview();" class="w-full md:w-1/3 px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm">
+                            <input type="text" id="inputItemDesc_${i}" value="${item.desc}" placeholder="DESCRIÇÃO DO BEM APREENDIDO *" oninput="itens[${i}].desc = this.value.toUpperCase(); updatePreview();" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm">
+                        </div>
+                        <button type="button" onclick="removerItemTabela(${i})" class="text-red-500 hover:text-red-700 p-2" title="Remover item">✕</button>
+                    </div>
             `).join('');
         }
 
@@ -853,8 +859,8 @@
             let v = e.target.value.replace(/\D/g, '').slice(0, 14);
             v = v.replace(/^(\d{2})(\d)/, '$1.$2');
             v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-            v = v.replace(/\.(\d{3})(\d)/, '.$1/$2');
-            v = v.replace(/(\d{4})(\d)/, '$1-$2');
+            v = v.replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4');
+            v = v.replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5');
             e.target.value = v;
             updatePreview();
         });
@@ -863,8 +869,13 @@
             let v = e.target.value.replace(/\D/g, '').slice(0, 11);
             v = v.replace(/^(\d{3})(\d)/, '$1.$2');
             v = v.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
-            v = v.replace(/\.(\d{3})(\d)/, '.$1-$2');
+            v = v.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
             e.target.value = v;
+            updatePreview();
+        });
+
+        document.getElementById('inputInscricaoEstadual').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '').slice(0, 14);
             updatePreview();
         });
 
@@ -890,7 +901,7 @@
 
         function openSignatureModal(roleKey, roleTitle) {
             currentTargetRole = roleKey;
-            document.getElementById('modalTitle').innerText = `Coletar Assinatura: ${roleTitle}`;
+            document.getElementById('modalTitle').innerText = `COLETAR ASSINATURA: ${roleTitle}`;
             modal.classList.add('modal-active');
             setTimeout(() => {
                 canvas.width = canvas.getBoundingClientRect().width;
@@ -1296,9 +1307,9 @@
         }
 
         function salvarPDFHistorico(obj) {
-            let h = JSON.parse(localStorage.getItem('historico_pdfs_apreensao')) || [];
+            let h = JSON.parse(Armazem.ls.getItem('historico_pdfs_apreensao')) || [];
             h.unshift(obj);
-            try { localStorage.setItem('historico_pdfs_apreensao', JSON.stringify(h)); } catch(e) { h.pop(); }
+            try { Armazem.ls.setItem('historico_pdfs_apreensao', JSON.stringify(h)); } catch(e) { h.pop(); }
             renderizarGridPDFs();
         }
 
@@ -1306,7 +1317,7 @@
             const container = document.getElementById('grid-pdfs-container');
             if (!container) return;
             const termo = (document.getElementById('busca-pdf')?.value || '').toLowerCase().trim();
-            let h = JSON.parse(localStorage.getItem('historico_pdfs_apreensao')) || [];
+            let h = JSON.parse(Armazem.ls.getItem('historico_pdfs_apreensao')) || [];
             if (termo) {
                 h = h.filter(i => (i.nome + ' ' + i.empresa + ' ' + i.cnpj).toLowerCase().includes(termo));
             }
@@ -1319,7 +1330,7 @@
                   <div class="pdf-card-info" onclick="abrirPDF('${item.id}')">
                     <span class="pdf-card-icon">📄</span>
                     <div class="pdf-card-text">
-                      <div class="pdf-card-title">${item.empresa || item.nome}</div>
+                      <div class="pdf-card-title" title="${item.nome || ''}">${(item.nome || item.empresa || '').replace(/\.pdf$/i, '')}</div>
                       <div class="pdf-card-meta">GERADO EM: ${item.dataGeracao}</div>
                     </div>
                   </div>
@@ -1345,9 +1356,10 @@
             }).then(() => { window.location.reload(); });
         }
 
-        function baixarPDFHistorico(id) {
-            const h = JSON.parse(localStorage.getItem('historico_pdfs_apreensao')) || [];
+        async function baixarPDFHistorico(id) {
+            const h = JSON.parse(Armazem.ls.getItem('historico_pdfs_apreensao')) || [];
             const p = h.find(i => String(i.id) === String(id));
+            await Armazem.completar(p);
             if (!p || !p.dataUri) return;
 
             try {
@@ -1382,9 +1394,10 @@
             return new Blob([bytes], { type: mime });
         }
 
-        function abrirPDF(id) {
-            const h = JSON.parse(localStorage.getItem('historico_pdfs_apreensao')) || [];
+        async function abrirPDF(id) {
+            const h = JSON.parse(Armazem.ls.getItem('historico_pdfs_apreensao')) || [];
             const p = h.find(i => String(i.id) === String(id));
+            await Armazem.completar(p);
             if (!p || !p.dataUri) return;
 
             let url;
@@ -1424,9 +1437,9 @@
                 cancelButtonText: 'CANCELAR'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let h = JSON.parse(localStorage.getItem('historico_pdfs_apreensao')) || [];
+                    let h = JSON.parse(Armazem.ls.getItem('historico_pdfs_apreensao')) || [];
                     h = h.filter(i => String(i.id) !== String(id));
-                    localStorage.setItem('historico_pdfs_apreensao', JSON.stringify(h));
+                    Armazem.ls.setItem('historico_pdfs_apreensao', JSON.stringify(h));
                     renderizarGridPDFs();
                     Swal.fire({
                         icon: 'success',
@@ -1438,6 +1451,48 @@
                 }
             });
         }
-    </script>
+    
+        /* ===== Rascunho automático: salva e restaura todos os campos, bens e assinaturas (armazem.js) ===== */
+        var rascunhoApreensao = Armazem.rascunhoCampos('rascunho_apreensao', {
+            ignorar: ['busca-pdf'],
+            ignorarPrefixos: ['inputItemDesc_'],
+            coletar: function () { return { itens: itens, signatures: signatures }; },
+            restaurar: function (x) {
+                if (Array.isArray(x.itens) && x.itens.length) itens = x.itens;
+                if (x.signatures) {
+                    signatures = Object.assign({ Agente1: '', Ciencia: '', Agente2: '' }, x.signatures);
+                    ['Agente1', 'Ciencia', 'Agente2'].forEach(function (r) { if (signatures[r]) renderSignatureUI(r, signatures[r]); });
+                }
+                renderizarItensInputs();
+                updatePreview();
+            }
+        });
+        (function () {
+            const _updatePreview = updatePreview;
+            updatePreview = function () { _updatePreview.apply(this, arguments); if (rascunhoApreensao) rascunhoApreensao.agendar(); };
+            const _limpar = limparTodosOsCampos;
+            limparTodosOsCampos = function () { _limpar.apply(this, arguments); if (rascunhoApreensao) rascunhoApreensao.limpar(); };
+        })();
+        window.addEventListener('DOMContentLoaded', function () { rascunhoApreensao.restaurar(); });
+</script>
+<script>
+/* Campos numéricos: texto + teclado numérico (evita o navegador apagar o valor mascarado) */
+document.addEventListener('input', function (e) {
+    var t = e.target;
+    if (t && t.hasAttribute && t.hasAttribute('data-so-numeros')) {
+        var v = t.value.replace(/\D/g, '');
+        if (v !== t.value) t.value = v;
+    }
+});
+</script>
+<script>
+(function () {
+    if (window.Armazem) return;
+    var d = document.createElement('div');
+    d.setAttribute('style', 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:#fff;color:#b91c1c;font:700 16px sans-serif;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;text-transform:uppercase');
+    d.textContent = 'ARQUIVO "armazem.js" NÃO ENCONTRADO. COPIE armazem.js, nuvem.js E firebase-config.js PARA A MESMA PASTA DESTA PÁGINA.';
+    document.body.appendChild(d);
+})();
+</script>
 </body>
 </html>

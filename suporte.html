@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TERMO DE ATESTADO DE TREINAMENTO - DESMONTE.RJ</title>
     <!-- Tailwind CSS CDN -->
+    <script src="firebase-config.js"></script>
+    <script src="armazem.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -47,6 +49,10 @@
         Swal.fire = function (...args) {
             if (args.length && args[0] && typeof args[0] === 'object') {
                 const opcoes = Object.assign({ position: 'center', heightAuto: false, scrollbarPadding: false }, args[0]);
+                // Botões padronizados: EXCLUIR PDF (excluir vermelho / cancelar preto) e CAMPO OBRIGATÓRIO (OK preto)
+                const tituloAlertaPadrao = String(opcoes.title || '').toUpperCase();
+                if (tituloAlertaPadrao.indexOf('EXCLUIR PDF') !== -1) { opcoes.confirmButtonColor = '#ef4444'; opcoes.cancelButtonColor = '#000000'; }
+                if (tituloAlertaPadrao.indexOf('CAMPO OBRIGAT') !== -1) { opcoes.confirmButtonColor = '#000000'; }
                 opcoes.customClass = Object.assign({}, opcoes.customClass);
                 opcoes.customClass.popup = ('font-sans ' + (opcoes.customClass.popup || '')).trim();
                 const didOpenOriginal = opcoes.didOpen;
@@ -101,7 +107,8 @@
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.js-ano').forEach(function (e) { e.textContent = window.ANO_VIGENTE; });
     });
-    </script>
+    </script>
+
     <!-- html2pdf.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
@@ -195,6 +202,13 @@
         .cab-pdf-t2 { font-size: calc(var(--mm) * 3.5278) !important; font-weight: bold !important; }
         .cab-pdf-t3 { font-size: calc(var(--mm) * 3.175) !important; font-weight: normal !important; }
     </style>
+<style>
+/* Cards e modal de assinatura: todos os caracteres em maiúsculo */
+.bloco-assinatura, .bloco-assinatura *,
+[id^="box"], [id^="box"] *,
+#signatureModal, #signatureModal * { text-transform: uppercase !important; }
+.bloco-assinatura ::placeholder, #signatureModal ::placeholder { text-transform: uppercase !important; }
+</style>
 </head>
 <body class="text-slate-800 antialiased pb-12 relative">
 
@@ -204,10 +218,7 @@
             <div class="bg-blue p-1.5 rounded-lg shadow-sm mb-2">
                 <img id="appLogo" class="h-64 object-contain" alt="Logo DGAD Suporte">
             </div>
-            <div>
-                <h1 class="font-bold text-base md:text-lg leading-tight uppercase">suporte técnico</h1>
-                
-            </div>
+            
         </div>
     </header>
 
@@ -244,7 +255,7 @@
                             <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
                                 CNPJ
                             </label>
-                            <input type="text" id="inputCNPJ" placeholder="00.000.000/0001-00" maxlength="18"
+                            <input type="text" inputmode="numeric" autocomplete="off" id="inputCNPJ" placeholder="00.000.000/0001-00" maxlength="18"
                                 class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm transition">
                         </div>
 
@@ -534,7 +545,7 @@
     <div id="signatureModal" class="fixed inset-0 bg-slate-900/70 z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-5 space-y-4">
             <div class="flex items-center justify-between border-b pb-3">
-                <h3 class="font-bold text-slate-800 text-base" id="modalTitle">Assinatura Digital</h3>
+                <h3 class="font-bold text-slate-800 text-base" id="modalTitle">ASSINATURA DIGITAL</h3>
                 <button type="button" onclick="closeSignatureModal()" class="text-slate-400 hover:text-slate-600">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
@@ -568,7 +579,7 @@
         </div>
     </div>
 
-    <script>
+    <script type="text/armazem">
         lucide.createIcons();
 
         const LOGO_DGAD_SUPORTE = "suporte.png"; 
@@ -622,12 +633,12 @@
             };
 
             try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+                Armazem.ls.setItem(STORAGE_KEY, JSON.stringify(formData));
             } catch (_) {}
         }
 
         function loadSavedData() {
-            const saved = localStorage.getItem(STORAGE_KEY);
+            const saved = Armazem.ls.getItem(STORAGE_KEY);
             if (!saved) return;
 
             try {
@@ -881,8 +892,8 @@
             if (value.length > 14) value = value.slice(0, 14);
             value = value.replace(/^(\d{2})(\d)/, '$1.$2');
             value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-            value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
-            value = value.replace(/(\d{4})(\d)/, '$1-$2');
+            value = value.replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4');
+            value = value.replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5');
             e.target.value = value;
             updatePreview();
         });
@@ -905,7 +916,7 @@
 
         function openSignatureModal(roleKey, roleTitle) {
             currentTargetRole = roleKey;
-            document.getElementById('modalTitle').innerText = `Coletar Assinatura: ${roleTitle}`;
+            document.getElementById('modalTitle').innerText = `COLETAR ASSINATURA: ${roleTitle}`;
             modal.classList.add('modal-active');
             
             setTimeout(() => {
@@ -963,22 +974,20 @@
         function renderSignatureUI(roleKey, dataURL) {
             const previewImg = document.getElementById(`previewSign${roleKey}`);
             const placeholder = document.getElementById(`placeholderSign${roleKey}`);
-            previewImg.src = dataURL;
-            previewImg.classList.remove('hidden');
-            placeholder.classList.add('hidden');
+            if (previewImg) { previewImg.src = dataURL; previewImg.classList.remove('hidden'); }
+            if (placeholder) placeholder.classList.add('hidden');
 
             const docImg = document.getElementById(`imgSign${roleKey}`);
-            docImg.src = dataURL;
-            docImg.style.display = 'block';
+            if (docImg) { docImg.src = dataURL; docImg.style.display = 'block'; }
         }
 
         function saveSignature() {
             const dataURL = modalCanvas.toDataURL('image/png');
             signatures[currentTargetRole] = dataURL;
 
-            renderSignatureUI(currentTargetRole, dataURL);
-            clearErrors();
             closeSignatureModal();
+            try { renderSignatureUI(currentTargetRole, dataURL); } catch (e) { console.error(e); }
+            clearErrors();
             saveDataToStorage();
         }
 
@@ -1030,16 +1039,14 @@
             ['Agente1', 'Agente2', 'Representante'].forEach(role => {
                 const previewImg = document.getElementById(`previewSign${role}`);
                 const placeholder = document.getElementById(`placeholderSign${role}`);
-                previewImg.src = '';
-                previewImg.classList.add('hidden');
-                placeholder.classList.remove('hidden');
+                if (previewImg) { previewImg.src = ''; previewImg.classList.add('hidden'); }
+                if (placeholder) placeholder.classList.remove('hidden');
 
                 const docImg = document.getElementById(`imgSign${role}`);
-                docImg.src = '';
-                docImg.style.display = 'none';
+                if (docImg) { docImg.src = ''; docImg.style.display = 'none'; }
             });
 
-            localStorage.removeItem(STORAGE_KEY);
+            Armazem.ls.removeItem(STORAGE_KEY);
             clearErrors();
             updatePreview();
         }
@@ -1142,13 +1149,13 @@
         }
 
         function salvarPDFHistorico(o) {
-            let h = JSON.parse(localStorage.getItem('historico_pdfs_suporte')) || [];
+            let h = JSON.parse(Armazem.ls.getItem('historico_pdfs_suporte')) || [];
             h.unshift(o);
             
             let salvou = false;
             while (!salvou && h.length > 0) {
                 try {
-                    localStorage.setItem('historico_pdfs_suporte', JSON.stringify(h));
+                    Armazem.ls.setItem('historico_pdfs_suporte', JSON.stringify(h));
                     salvou = true;
                 } catch (e) {
                     if (h.length > 1) {
@@ -1167,7 +1174,7 @@
             if (!container) return;
 
             const termoBusca = (document.getElementById('busca-pdf')?.value || '').toLowerCase().trim();
-            let historico = JSON.parse(localStorage.getItem('historico_pdfs_suporte')) || [];
+            let historico = JSON.parse(Armazem.ls.getItem('historico_pdfs_suporte')) || [];
 
             historico.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
@@ -1188,7 +1195,7 @@
                   <div class="pdf-card-info" onclick="abrirPDF('${item.id}')" title="CLIQUE AQUI PARA ABRIR O PDF">
                     <span class="pdf-card-icon">📄</span>
                     <div class="pdf-card-text">
-                      <div class="pdf-card-title" title="${item.nome || ''}">TERMO DE TREINAMENTO DESMONTE.RJ - ${item.empresa || ''}${item.cnpj ? ' - CNPJ: ' + item.cnpj : ''} - ${item.data || ''}</div>
+                      <div class="pdf-card-title" title="${item.nome || ''}">TERMO DE TREINAMENTO DESMONTE.RJ - ${item.empresa || ''}${item.cnpj ? ' - CNPJ: ' + item.cnpj : ''} - ${item.data || (item.dataGeracao || '').split(',')[0]}</div>
                       <div class="pdf-card-meta">GERADO EM: ${item.dataGeracao || ''}</div>
                     </div>
                   </div>
@@ -1212,9 +1219,10 @@
             return new Blob([bytes], { type: mime });
         }
 
-        function abrirPDF(id) {
-            const h = JSON.parse(localStorage.getItem('historico_pdfs_suporte')) || [];
+        async function abrirPDF(id) {
+            const h = JSON.parse(Armazem.ls.getItem('historico_pdfs_suporte')) || [];
             const p = h.find(i => String(i.id) === String(id));
+            await Armazem.completar(p);
             if (!p || !p.dataUri) return;
 
             let url;
@@ -1255,9 +1263,10 @@
             }).then(() => { window.location.reload(); });
         }
 
-        function baixarPDFHistorico(id) {
-            const h = JSON.parse(localStorage.getItem('historico_pdfs_suporte')) || [];
+        async function baixarPDFHistorico(id) {
+            const h = JSON.parse(Armazem.ls.getItem('historico_pdfs_suporte')) || [];
             const p = h.find(i => String(i.id) === String(id));
+            await Armazem.completar(p);
             if (!p || !p.dataUri) return;
 
             try {
@@ -1293,10 +1302,10 @@
                 cancelButtonText: 'CANCELAR'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let h = JSON.parse(localStorage.getItem('historico_pdfs_suporte')) || [];
+                    let h = JSON.parse(Armazem.ls.getItem('historico_pdfs_suporte')) || [];
                     h = h.filter(i => String(i.id) !== String(id));
                     try {
-                        localStorage.setItem('historico_pdfs_suporte', JSON.stringify(h));
+                        Armazem.ls.setItem('historico_pdfs_suporte', JSON.stringify(h));
                     } catch (_) {}
                     renderizarGridPDFs();
                     Swal.fire({
@@ -1329,5 +1338,14 @@
             return false;
         }
     </script>
+<script>
+(function () {
+    if (window.Armazem) return;
+    var d = document.createElement('div');
+    d.setAttribute('style', 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:#fff;color:#b91c1c;font:700 16px sans-serif;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;text-transform:uppercase');
+    d.textContent = 'ARQUIVO "armazem.js" NÃO ENCONTRADO. COPIE armazem.js, nuvem.js E firebase-config.js PARA A MESMA PASTA DESTA PÁGINA.';
+    document.body.appendChild(d);
+})();
+</script>
 </body>
 </html>
