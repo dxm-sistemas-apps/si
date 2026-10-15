@@ -439,9 +439,15 @@
         </section>
 
         <div id="barra-acoes" class="no-print mt-8 flex flex-col sm:flex-row flex-wrap gap-3 justify-end items-center bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-            <button id="btn-processar-agregados" onclick="encerrarContagemAgregados()" class="hidden bg-amber-500 hover:bg-amber-400 text-white font-bold py-2.5 px-8 rounded shadow-md text-sm tracking-wide uppercase transition-all transform hover:scale-[1.01]">
-                ADICIONAR ITENS COMPLETOS
-            </button>
+            <button id="btn-processar-agregados" type="button" onclick="encerrarContagemAgregados()"
+    class="hidden w-full sm:w-auto px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-lg text-sm shadow-md transition flex items-center justify-center space-x-2">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="16"/>
+        <line x1="8" y1="12" x2="16" y2="12"/>
+    </svg>
+    <span>ADICIONAR ITENS COMPLETOS</span>
+</button>
             <button type="button" onclick="limparTabela()"
                 class="w-full sm:w-auto px-4 py-2.5 bg-red-600 hover:bg-red-500 border border-red-200 text-white font-bold rounded-lg text-sm  transition flex items-center justify-center space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
