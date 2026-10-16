@@ -2174,7 +2174,9 @@
             };
 
             drawInfoBox(marginX, curY, cardWidth, 'NATUREZA DA ATIVIDADE:', atividade.toUpperCase());
-            curY += 13;
+            const periodoExibicao = datasOrdenadas.length > 1 ? `${datasOrdenadas[0].split('-').reverse().join('/')} A ${datasOrdenadas[datasOrdenadas.length - 1].split('-').reverse().join('/')}` : datasOrdenadas[0].split('-').reverse().join('/');
+            drawInfoBox(marginX, curY, cardWidth, 'DATA(S):', periodoExibicao);
+                curY += 13;
             if (document.getElementById('grupo-apoio').style.display !== 'none') {
                 drawInfoBox(marginX, curY, cardWidth, 'APOIO À:', apoio.toUpperCase());
                 curY += 13;
@@ -2189,9 +2191,7 @@
                 drawInfoBox(marginX, curY, cardWidth, 'ENDEREÇO:', local.toUpperCase());
                 curY += 13;
             }
-            const periodoExibicao = datasOrdenadas.length > 1 ? `${datasOrdenadas[0].split('-').reverse().join('/')} A ${datasOrdenadas[datasOrdenadas.length - 1].split('-').reverse().join('/')}` : datasOrdenadas[0].split('-').reverse().join('/');
-            drawInfoBox(marginX, curY, cardWidth, 'PERÍODO / DATAS:', periodoExibicao);
-            curY += 18;
+            
 
             pdf.setFont('helvetica', 'bold');
             pdf.setFontSize(11);
