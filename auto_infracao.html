@@ -53,6 +53,9 @@
                 const tituloAlertaPadrao = String(opcoes.title || '').toUpperCase();
                 if (tituloAlertaPadrao.indexOf('EXCLUIR PDF') !== -1) { opcoes.confirmButtonColor = '#ef4444'; opcoes.cancelButtonColor = '#000000'; }
                 if (tituloAlertaPadrao.indexOf('CAMPO OBRIGAT') !== -1) { opcoes.confirmButtonColor = '#000000'; }
+                // Botão OK sempre preto
+                if (!opcoes.showCancelButton && !opcoes.showDenyButton) { opcoes.confirmButtonColor = '#000000'; }
+                if (String(opcoes.confirmButtonText || '').trim().toUpperCase() === 'OK') { opcoes.confirmButtonColor = '#000000'; }
                 opcoes.customClass = Object.assign({}, opcoes.customClass);
                 opcoes.customClass.popup = ('font-sans ' + (opcoes.customClass.popup || '')).trim();
                 const didOpenOriginal = opcoes.didOpen;
@@ -1250,7 +1253,7 @@
                 await Swal.fire({
                     icon: 'success',
                     title: 'SUCESSO',
-                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O AUTO DE INFRAÇÃO FOI GERADO COM SUCESSO E O <b>PDF</b> ESTÁ DISPONÍVEL PARA DOWNLOAD NO <b>HISTÓRICO ABAIXO</b>.',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O TERMO DE INTERDIÇÃO FOI GERADO COM SUCESSO E O <b>PDF</b> ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️) NO <b>HISTÓRICO ABAIXO</b>.',
                     returnFocus: false
                 });
 
@@ -1325,8 +1328,8 @@
                     </div>
                   </div>
                   <div class="pdf-card-actions">
-                    <button class="btn-icon-pdf" onclick="baixarPDFHistorico('${item.id}')" title="Baixar PDF">⬇️</button>
                     <button class="btn-icon-pdf" onclick="abrirPDF('${item.id}')" title="Visualizar">👁️</button>
+                    <button class="btn-icon-pdf" onclick="baixarPDFHistorico('${item.id}')" title="Baixar PDF">⬇️</button>
                     <button class="btn-icon-pdf" onclick="excluirPDF('${item.id}')" title="Excluir">🗑️</button>
                   </div>
                 </div>
