@@ -2583,7 +2583,7 @@ function salvarRegistro() {
 
         Swal.fire({
             title: 'GERANDO PDF...',
-            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> AGUARDE A CRIAÇÃO E SALVAMENTO DO ARQUIVO.',
+            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> AGUARDE A GERAÇÃO DO ARQUIVO PDF',
             allowOutsideClick: false,
             didOpen: () => { Swal.showLoading(); }
         });
@@ -2814,8 +2814,7 @@ function salvarRegistro() {
               Swal.fire({
                   icon: 'success',
                   title: 'PDF GERADO COM SUCESSO!',
-                  html: `<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS.<br><br>
-               <b>PARA FAZER BAIXAR,</b> UTILIZE O BOTÃO "⬇️" NO HISTÓRICO DE PDF´S ABAIXO.`,
+                  html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O TERMO DE INTERDIÇÃO FOI GERADO COM SUCESSO E O <b>PDF</b> ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️) NO <b>HISTÓRICO ABAIXO</b>.',
                   confirmButtonColor: '#000000'
               }).then(() => {
                   // limparAposGeracao();
