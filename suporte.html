@@ -1114,20 +1114,19 @@
                 Swal.close();
 
                 const tituloSucesso = foiCompartilhado ? 'PDF GERADO E COMPARTILHADO!' : 'PDF GERADO COM SUCESSO!';
-                const textoSucesso = foiCompartilhado 
-                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O TERMO DE TREINAMENTO FOI GERADO COM SUCESSO E O <b>PDF</b> ESTÁ DISPONÍVEL PARA DOWNLOAD NO <b>HISTÓRICO ABAIXO</b>.',
+const textoSucesso = '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O TERMO DE TREINAMENTO FOI GERADO COM SUCESSO E O <b>PDF</b> ESTÁ DISPONÍVEL PARA DOWNLOAD NO <b>HISTÓRICO ABAIXO</b>.';
 
-                Swal.fire({
-                    icon: 'success',
-                    title: tituloSucesso,
-                    html: textoSucesso,
-                    confirmButtonColor: '#000000'
-                }).then(() => {
-                    // executeClearAllForm();
-                    setTimeout(() => {
-                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-                    }, 100);
-                });
+Swal.fire({
+    icon: 'success',
+    title: tituloSucesso,
+    html: textoSucesso,
+    confirmButtonColor: '#000000'
+}).then(() => {
+    // executeClearAllForm();
+    setTimeout(() => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }, 100);
+});
 
             } catch (error) {
                 console.error(error);
