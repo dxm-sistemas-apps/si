@@ -1473,7 +1473,7 @@ function gerarPDFPersonalizado() {
     Swal.fire({
         icon: 'success',
         title: 'PDF GERADO E COMPARTILHADO!',
-        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DA PÁGINA.',
+        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS E ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️).',
         confirmButtonColor: '#000000'
     }).then(() => {
         // limparTabelaDireto();
@@ -1482,8 +1482,8 @@ function gerarPDFPersonalizado() {
 } else {
     Swal.fire({
         icon: 'success',
-        title: 'PDF GERADO COM SUCESSO!',
-        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI GERADO COM SUCESSO E O <b>PDF</b> ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️) NO <b>HISTÓRICO ABAIXO</b>.',
+        title: 'PDF GERADO!',
+        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS E ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️).',
         confirmButtonColor: '#000000'
     }).then(() => {
         // limparTabelaDireto();
