@@ -1128,15 +1128,16 @@ Swal.fire({
     }, 100);
 });
 
-            } catch (error) {
-                console.error(error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'ERRO AO GERAR PDF',
-                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> OCORREU UM <span class="text-red-500 font-bold">PROBLEMA AO GERAR O PDF</span>.',
-                    confirmButtonColor: '#000000'
-                });
-            }
+            } catch (err) {
+    console.error(err);
+    Swal.close();
+    Swal.fire({
+        icon: 'error',
+        title: 'ERRO AO GERAR PDF',
+        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> OCORREU UM <span class="text-red-500 font-bold">PROBLEMA AO GERAR O PDF</span>.',
+        confirmButtonColor: '#000000'
+    });
+}
         }
 
         function blobToDataURI(blob) {
