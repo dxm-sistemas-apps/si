@@ -113,7 +113,7 @@
             overflow-y: auto;
         }
     </style>
-    <!-- Ano vigente: atualiza sozinho a cada ano (nada de "2026" fixo) -->
+    <!-- Ano vigente: atualiza sozinho a cada ano -->
     <script>
     window.ANO_VIGENTE = new Date().getFullYear();
     document.addEventListener('DOMContentLoaded', function () {
@@ -239,40 +239,13 @@
             box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.25) !important;
         }
 
-        .btn-scroll-dir {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #1e3a8a, #0f172a);
-            color: #ffffff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.15);
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .btn-scroll-dir:hover {
-            transform: translateY(-2px) scale(1.08);
-            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
-            background: linear-gradient(135deg, #2563eb, #1e293b);
-        }
-        @keyframes bounceSubtle {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(3px); }
-        }
-        .anim-bounce {
-            animation: bounceSubtle 1.8s infinite ease-in-out;
-        }
-
         @media print {
             .no-print, #barra-acoes, button, #secao-historico-pdf {
                 display: none !important;
             }
         }
     
-        /* Cabeçalho do PDF: mesmas medidas do PDF da página carro (brasão 24 mm; títulos 12/10/9/9 pt; linhas de 5,5 mm) */
+        /* Cabeçalho do PDF */
         .pdf-document { --mm: 3.7129px; }
         .cab-pdf-logo-wrap { display: flex; justify-content: center; margin: 0 0 calc(var(--mm) * 4) 0; }
         .cab-pdf-logo { width: calc(var(--mm) * 24); height: calc(var(--mm) * 24); object-fit: contain; }
@@ -281,13 +254,13 @@
         .cab-pdf-t2 { font-size: calc(var(--mm) * 3.5278) !important; font-weight: bold !important; }
         .cab-pdf-t3 { font-size: calc(var(--mm) * 3.175) !important; font-weight: normal !important; }
     </style>
-<style>
-/* Cards e modal de assinatura: todos os caracteres em maiúsculo */
-.bloco-assinatura, .bloco-assinatura *,
-[id^="box"], [id^="box"] *,
-#signatureModal, #signatureModal * { text-transform: uppercase !important; }
-.bloco-assinatura ::placeholder, #signatureModal ::placeholder { text-transform: uppercase !important; }
-</style>
+    <style>
+    /* Cards e modal de assinatura: todos os caracteres em maiúsculo */
+    .bloco-assinatura, .bloco-assinatura *,
+    [id^="box"], [id^="box"] *,
+    #signatureModal, #signatureModal * { text-transform: uppercase !important; }
+    .bloco-assinatura ::placeholder, #signatureModal ::placeholder { text-transform: uppercase !important; }
+    </style>
 </head>
 <body class="text-slate-800 antialiased pb-12 relative">
 
@@ -297,7 +270,6 @@
             <div class="bg-blue p-1.5 rounded-lg shadow-sm mb-2">
                 <img id="appLogo" class="h-64 object-contain" alt="Logo DGAD Suporte">
             </div>
-            
         </div>
     </header>
 
@@ -311,16 +283,10 @@
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Ins%C3%ADgnia_bras%C3%A3o_estilizado_governos_Wilson_Witzel_e_Cl%C3%A1udio_Castro_RJ.png/500px-Ins%C3%ADgnia_bras%C3%A3o_estilizado_governos_Wilson_Witzel_e_Cl%C3%A1udio_Castro_RJ.png" alt="Brasão do Estado do Rio de Janeiro" class="h-24 w-auto object-contain">
                     </div>
                     <h1 class="text-lg sm:text-xl font-bold uppercase tracking-wide">Governo do Estado do Rio de Janeiro</h1>
-            <h2 class="text-md sm:text-lg font-semibold uppercase">Departamento de Trânsito do Estado do Rio de Janeiro - DETRAN.RJ</h2>
-            <h3 class="text-sm sm:text-md font-medium text-black-600 uppercase mt-1">Diretoria Geral das Atividades de Desmontagem</h3>
-            <h3 class="text-sm sm:text-md font-medium text-black-600 uppercase mt-1">DIVISÃO DE FISCALIZAÇÃO</h3>
+                    <h2 class="text-md sm:text-lg font-semibold uppercase">Departamento de Trânsito do Estado do Rio de Janeiro - DETRAN.RJ</h2>
+                    <h3 class="text-sm sm:text-md font-medium text-black-600 uppercase mt-1">Diretoria Geral das Atividades de Desmontagem</h3>
+                    <h3 class="text-sm sm:text-md font-medium text-black-600 uppercase mt-1">DIVISÃO DE FISCALIZAÇÃO</h3>
                 </header>
-
-                <!-- Botão de rolagem -->
-                <div class="flex justify-between items-center mb-2 no-print">
-                    <span class="text-xs font-bold text-gray-500 uppercase tracking-wider"></span>
-                
-                </div>
 
                 <!-- Card 1: Identificação das Partes e Estabelecimento -->
                 <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
@@ -347,7 +313,7 @@
 
                         <div class="md:col-span-2">
                             <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Endereço da Empresa / Estabelecimento *</label>
-                            <input type="text" id="inputLocalEstabelecimento" placeholder="RUA / AVENIDA, Nº, BAIRRO, CIDADE" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                            <input type="text" id="inputLocalEstabelecimento" placeholder="RUA / AVENIDA, Nº, BAIRRO" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
                         </div>
 
                         <div>
@@ -367,8 +333,8 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Município do Termo</label>
-                            <input type="text" id="inputMunicipio" value="" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Município do Termo *</label>
+                            <input type="text" id="inputMunicipio" value="" placeholder="EX: RIO DE JANEIRO" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
                         </div>
 
                         <div>
@@ -387,7 +353,7 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Discrimine os itens lacrados sob guarda do fiel depositário *</label>
-                        <textarea id="inputDescricaoMercadorias" rows="4" placeholder=" " class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></textarea>
+                        <textarea id="inputDescricaoMercadorias" rows="4" placeholder="DESCREVA DETALHADAMENTE AS PEÇAS E MATERIAIS LACRADOS" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></textarea>
                     </div>
                 </div>
 
@@ -405,7 +371,6 @@
                                 <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Agente Público *</label>
                                 <div class="h-24 bg-white border border-slate-200 rounded flex items-center justify-center p-1 mb-2">
                                     <img id="previewSignAgente" class="max-h-full max-w-full hidden object-contain">
-                                    
                                 </div>
                             </div>
                             <button type="button" onclick="openSignatureModal('Agente', 'Agente Público')"
@@ -421,7 +386,6 @@
                                 <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Proprietário / Fiel Depositário *</label>
                                 <div class="h-24 bg-white border border-slate-200 rounded flex items-center justify-center p-1 mb-2">
                                     <img id="previewSignProprietario" class="max-h-full max-w-full hidden object-contain">
-                                    
                                 </div>
                             </div>
                             <button type="button" onclick="openSignatureModal('Proprietario', 'Proprietário do Estabelecimento')"
@@ -479,7 +443,7 @@
 
                                 <!-- Texto 1: Interdição -->
                                 <p>
-                                    Eu, <strong id="docNomeAgente">________________________________________________</strong>, Id. Funcional <strong id="docIdAgente">________</strong>, representando o Departamento Estadual de Trânsito do Estado do Rio de Janeiro, por meio deste termo, <b>notifico e determino a interdição do estabelecimento comercial</b> localizado - <strong id="docLocalEstabelecimento">________________________________________________</strong>, denominado <strong id="docNomeEstabelecimento">________________________________________________</strong>, em virtude das seguintes razões: <b>"realização de desmontagem de veículo em local não registrado perante o órgão executivo de trânsito competente" - Art. 16 VIII - Lei Federal nº. 12.977 de 20 de maio de 2014.</b>
+                                    Eu, <strong id="docNomeAgente">________________________________________________</strong>, Id. Funcional <strong id="docIdAgente">________</strong>, representando o Departamento Estadual de Trânsito do Estado do Rio de Janeiro, por meio deste termo, <b>notifico e determino a interdição do estabelecimento comercial</b> localizado - <strong id="docLocalEstabelecimento">________________________________________________</strong> - <strong id="docMunicipioTexto">____________________</strong>/RJ, denominado <strong id="docNomeEstabelecimento">________________________________________________</strong>, em virtude das seguintes razões: <b>"realização de desmontagem de veículo em local não registrado perante o órgão executivo de trânsito competente" - Art. 16 VIII - Lei Federal nº. 12.977 de 20 de maio de 2014.</b>
                                 </p>
 
                                 <!-- Texto 2: Designação Fiel Depositário -->
@@ -514,7 +478,7 @@
 
                                 <!-- Local e Data -->
                                 <div style="margin-top: 14px; margin-bottom: 22px; font-size: 11px; font-weight: bold;">
-                                    LOCAL: <span id="docMunicipio">RIO DE JANEIRO</span>, DATA: <span id="docDataTermo">__/__/<span class="js-ano">2026</span></span>.
+                                    LOCAL: <span id="docMunicipio">____________________</span>, DATA: <span id="docDataTermo">__/__/<span class="js-ano">2026</span></span>.
                                 </div>
 
                                 <!-- Assinaturas em 2 Colunas -->
@@ -626,13 +590,14 @@
             const propCpf = document.getElementById('inputCPFProprietario').value.trim() || '___.___.___-__';
             const propRg = (document.getElementById('inputRGProprietario').value.trim() || '________________').toUpperCase();
             const merc = (document.getElementById('inputDescricaoMercadorias').value.trim() || 'NENHUMA MERCADORIA INFORMADA.').toUpperCase();
-            const munic = (document.getElementById('inputMunicipio').value.trim() || 'RIO DE JANEIRO').toUpperCase();
+            const munic = (document.getElementById('inputMunicipio').value.trim() || '____________________').toUpperCase();
             const dt = document.getElementById('inputDataTermo').value;
 
             document.getElementById('docNomeAgente').innerText = agNome;
             document.getElementById('docIdAgente').innerText = agId;
             document.getElementById('docNomeEstabelecimento').innerText = estNome;
             document.getElementById('docLocalEstabelecimento').innerText = estLocal;
+            document.getElementById('docMunicipioTexto').innerText = munic;
             document.getElementById('docNomeProprietario').innerText = propNome;
             document.getElementById('docCPFProprietario').innerText = propCpf;
             document.getElementById('docRGProprietario').innerText = propRg;
@@ -739,15 +704,13 @@
             const camposTexto = [
                 'inputNomeAgente', 'inputIdAgente', 'inputNomeEstabelecimento',
                 'inputLocalEstabelecimento', 'inputNomeProprietario', 'inputCPFProprietario',
-                'inputRGProprietario', 'inputDescricaoMercadorias', 'inputDataTermo'
+                'inputRGProprietario', 'inputMunicipio', 'inputDescricaoMercadorias', 'inputDataTermo'
             ];
 
             camposTexto.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.value = '';
             });
-
-            document.getElementById('inputMunicipio').value = 'RIO DE JANEIRO';
 
             signatures = { Agente: '', Proprietario: '' };
             ['Agente', 'Proprietario'].forEach(role => {
@@ -766,13 +729,12 @@
 
         function rolarParaTopoAposLimpar() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            // correção de segurança caso a rolagem suave seja interrompida pela mudança de layout
             setTimeout(() => {
                 if (window.pageYOffset > 2) window.scrollTo({ top: 0, behavior: 'auto' });
             }, 1200);
         }
 
-                function confirmClearAllForm() {
+        function confirmClearAllForm() {
             Swal.fire({
                 title: 'TEM CERTEZA?',
                 html: "<span class='text-amber-500 font-bold'>ATENÇÃO:  </span> ISTO IRÁ <span class='text-red-500 font-bold'> 'APAGAR' TODOS OS CAMPOS PREENCHIDOS NA PÁGINA </span>!",
@@ -797,7 +759,7 @@
             });
         }
 
-        /* Lista de campos obrigatórios individuais (exceto RG e Município) */
+        /* Lista de campos obrigatórios individuais */
         const CAMPOS_OBRIGATORIOS = [
             { id: 'inputNomeAgente', label: 'Nome do Agente Fiscalizador' },
             { id: 'inputIdAgente', label: 'ID Funcional do Agente' },
@@ -805,6 +767,7 @@
             { id: 'inputLocalEstabelecimento', label: 'Endereço dA EMPRESA / Estabelecimento' },
             { id: 'inputNomeProprietario', label: 'Nome do Proprietário / Fiel Depositário' },
             { id: 'inputCPFProprietario', label: 'CPF do Proprietário' },
+            { id: 'inputMunicipio', label: 'Município do Termo' },
             { id: 'inputDataTermo', label: 'Data' },
             { id: 'inputDescricaoMercadorias', label: 'Descrição das Mercadorias (Inventário)' }
         ];
@@ -823,7 +786,6 @@
             window.scrollTo({ top: Math.max(0, meio), behavior: 'smooth' });
             if (!aoTerminar) return;
 
-            // aguarda a rolagem suave terminar para só então executar a ação (colocar o cursor)
             let ultimo = window.pageYOffset, estavel = 0, quadros = 0;
             const acompanhar = () => {
                 quadros++;
@@ -842,7 +804,6 @@
             try { if (el.select && el.tagName !== 'SELECT') el.select(); } catch (_) {}
         }
 
-        // Chamada SOMENTE depois que o alerta fechou: rola o campo para o meio da tela e então coloca o cursor
         function irParaCampoAposAlerta(alvo, campo) {
             setTimeout(() => {
                 rolarCampoParaCentro(alvo, () => focarNoCampo(campo));
@@ -931,7 +892,6 @@
                 didOpen: () => Swal.showLoading()
             });
 
-            // Parâmetros calibrados milimetricamente idênticos aos outros arquivos
             const opt = {
                 margin: [4, 4, 4, 4],
                 filename: nomeArquivo,
@@ -989,8 +949,6 @@
                     downloadLink.remove();
                 }
 
-                // limparTodosOsCampos();
-
                 if (compartilhar) {
                     await compartilharPDFGeradoWhatsApp(blob, nomeArquivo);
                 }
@@ -1002,7 +960,6 @@
                     returnFocus: false
                 });
 
-                // Rolagem até o final da página
                 setTimeout(() => {
                     const secao = document.getElementById('secao-historico-pdf');
                     if (secao) secao.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1086,7 +1043,7 @@
             `).join('');
         }
 
-                function avisarDownloadEAtualizar() {
+        function avisarDownloadEAtualizar() {
             Swal.fire({
                 icon: 'success',
                 title: 'DOWNLOAD INICIADO!',
@@ -1214,6 +1171,16 @@
             limparTodosOsCampos = function () { _limpar.apply(this, arguments); if (rascunhoTermo) rascunhoTermo.limpar(); };
         })();
         window.addEventListener('DOMContentLoaded', function () { rascunhoTermo.restaurar(); });
+</script>
+<script>
+/* Campos numéricos: texto + teclado numérico (evita o navegador apagar o valor mascarado) */
+document.addEventListener('input', function (e) {
+    var t = e.target;
+    if (t && t.hasAttribute && t.hasAttribute('data-so-numeros')) {
+        var v = t.value.replace(/\D/g, '');
+        if (v !== t.value) t.value = v;
+    }
+});
 </script>
 <script>
 (function () {
