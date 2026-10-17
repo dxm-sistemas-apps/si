@@ -1269,11 +1269,13 @@
                 }
 
                 await Swal.fire({
-                    icon: 'success',
-                    title: 'SUCESSO',
-                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O TERMO DE INTERDIÇÃO FOI GERADO COM SUCESSO E O <b>PDF</b> ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️) NO <b>HISTÓRICO ABAIXO</b>.',
-                    returnFocus: false
-                });
+    icon: 'success',
+    title: 'PDF GERADO!',
+    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS E ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️).',
+    confirmButtonColor: '#000000'
+}).then(() => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+});
 
                 // Rolagem até o final da página
                 setTimeout(() => {
@@ -1282,11 +1284,15 @@
                 }, 150);
 
             } catch (err) {
-                console.error(err);
-                Swal.close();
-                Swal.fire({ icon: 'error', title: 'ERRO', html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> <span class="text-red-500 font-bold">FALHA AO SALVAR/COMPARTILHAR O PDF</span>.', confirmButtonColor: '#000000' });
-            }
-        }
+    console.error(err);
+    Swal.close();
+    Swal.fire({
+        icon: 'error',
+        title: 'ERRO AO GERAR PDF',
+        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> OCORREU UM <span class="text-red-500 font-bold">PROBLEMA AO GERAR O PDF</span>.',
+        confirmButtonColor: '#000000'
+    });
+}
 
         function blobToDataURI(blob) {
             return new Promise((resolve, reject) => {
