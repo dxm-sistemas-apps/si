@@ -2357,8 +2357,9 @@
             if (foiCompartilhado) {
               Swal.fire({
                   icon: 'success',
-                  title: 'GERANDO PDF...',
-                html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> AGUARDE A GERAÇÃO DO ARQUIVO PDF',
+                          title: 'PDF GERADO E COMPARTILHADO!',
+        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS E ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️).',
+
                   confirmButtonColor: '#000000'
               }).then(() => {
                   // limparAposGeracao();
@@ -2366,9 +2367,8 @@
             } else {
               Swal.fire({
                   icon: 'success',
-                  title: 'PDF GERADO COM SUCESSO!',
-                  html: `<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DA PÁGINA.<br><br>
-                         <b>PARA BAIXAR:</b> UTILIZE O BOTÃO "⬇️" NO HISTÓRICO DE PDFs ABAIXO.`,
+                  title: 'PDF GERADO!',
+        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS E ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️).',
                   confirmButtonColor: '#000000'
               }).then(() => {
                   // limparAposGeracao();
