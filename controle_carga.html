@@ -2173,10 +2173,10 @@
                 pdf.text(value, x + 3, yPos + 9);
             };
 
-            drawInfoBox(marginX, curY, cardWidth, 'NATUREZA DA ATIVIDADE:', atividade.toUpperCase());
             const periodoExibicao = datasOrdenadas.length > 1 ? `${datasOrdenadas[0].split('-').reverse().join('/')} A ${datasOrdenadas[datasOrdenadas.length - 1].split('-').reverse().join('/')}` : datasOrdenadas[0].split('-').reverse().join('/');
-            drawInfoBox(marginX, curY, cardWidth, 'DATA(S):', periodoExibicao);
-                curY += 13;
+            drawInfoBox(marginX, curY, 112, 'NATUREZA DA ATIVIDADE:', atividade.toUpperCase());
+            drawInfoBox(marginX + 116, curY, 66, 'PERÍODO / DATAS:', periodoExibicao);
+            curY += 13;
             if (document.getElementById('grupo-apoio').style.display !== 'none') {
                 drawInfoBox(marginX, curY, cardWidth, 'APOIO À:', apoio.toUpperCase());
                 curY += 13;
@@ -2191,7 +2191,7 @@
                 drawInfoBox(marginX, curY, cardWidth, 'ENDEREÇO:', local.toUpperCase());
                 curY += 13;
             }
-            
+            curY += 5;
 
             pdf.setFont('helvetica', 'bold');
             pdf.setFontSize(11);
