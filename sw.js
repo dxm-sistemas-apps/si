@@ -4,9 +4,10 @@
      sem conexão, usa a cópia guardada no aparelho.
    - Bibliotecas externas (Tailwind, jsPDF, SweetAlert...): guardadas após o 1º uso.
    - Firebase/Google (login e sincronização) NUNCA passam por aqui.
-   Para forçar a atualização geral, troque o número em VERSAO.
+   Atualização automática: ao publicar mudanças no GitHub, basta abrir o app com internet (cerca de 1 a 2 min depois).
+   Não é preciso limpar cache. Só mude o número em VERSAO se quiser descartar também as bibliotecas externas guardadas.
    ============================================================================ */
-const VERSAO = 'v1';
+const VERSAO = 'v2';
 const CACHE_APP = 'dgad-app-' + VERSAO;
 const CACHE_EXT = 'dgad-ext-' + VERSAO;
 
@@ -86,9 +87,10 @@ self.addEventListener('fetch', (e) => {
     e.respondWith((async () => {
       const cache = await caches.open(CACHE_APP);
       try {
-        const r = await comTempo(fetch(req), 5000);
-        if (r && r.ok) cache.put(req, r.clone());
-        return r;
+        // 'no-cache' = sempre pergunta ao servidor se o arquivo mudou (ignora os 10 min de cache do GitHub Pages)
+        const rede = fetch(req, { cache: 'no-cache' }).then((r) => { if (r && r.ok) cache.put(req, r.clone()); return r; });
+        e.waitUntil(rede.catch(() => {}));
+        return await comTempo(rede, 6000);
       } catch (_) {
         const c = await cache.match(req, { ignoreSearch: true });
         if (c) return c;

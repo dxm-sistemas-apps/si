@@ -12,6 +12,51 @@
         });
     }
 
+    /* ---------- Aviso de versão nova (funciona também com o app instalado) ---------- */
+    (function vigiarAtualizacoes() {
+        var ARQ = ['index.html', 'carro.html', 'moto.html', 'caminhão-ônibus.html', 'sucata.html', 'controle_carga.html', 'suporte.html',
+            'auto_apreensao_sucata.html', 'auto_infracao.html', 'termo_interdicao_fiel_depositario.html',
+            'armazem.js', 'nuvem.js', 'firebase-config.js', 'pwa.js', 'manifest.webmanifest'];
+        var base = null, aviso = null, ultimo = 0;
+
+        function assinaturas() {
+            return Promise.all(ARQ.map(function (a) {
+                return fetch(a, { method: 'HEAD', cache: 'no-cache' }).then(function (r) {
+                    return r.ok ? (r.headers.get('etag') || r.headers.get('last-modified') || '') : '';
+                }).catch(function () { return null; });
+            }));
+        }
+
+        function mostrar() {
+            if (aviso || !document.body) return;
+            aviso = document.createElement('button');
+            aviso.type = 'button';
+            aviso.className = 'no-print';
+            aviso.textContent = '↻ NOVA VERSÃO DISPONÍVEL — TOQUE PARA ATUALIZAR';
+            aviso.setAttribute('style', 'position:fixed;left:50%;top:10px;transform:translateX(-50%);z-index:60;padding:9px 16px;border:0;border-radius:999px;' +
+                'background:#b45309;color:#fff;font:700 11px/1.2 system-ui,Segoe UI,sans-serif;text-transform:uppercase;letter-spacing:.04em;' +
+                'box-shadow:0 2px 10px rgba(0,0,0,.4);cursor:pointer;max-width:92vw');
+            aviso.addEventListener('click', function () { location.reload(); });
+            document.body.appendChild(aviso);
+        }
+
+        function conferir() {
+            if (!navigator.onLine || !base || aviso || Date.now() - ultimo < 60000) return;
+            ultimo = Date.now();
+            try { if (navigator.serviceWorker) navigator.serviceWorker.getRegistration().then(function (r) { if (r) r.update(); }); } catch (_) {}
+            assinaturas().then(function (atual) {
+                for (var i = 0; i < ARQ.length; i++) {
+                    if (base[i] && atual[i] && base[i] !== atual[i]) { mostrar(); return; }
+                }
+            });
+        }
+
+        assinaturas().then(function (b) { base = b; ultimo = Date.now(); });
+        document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') conferir(); });
+        window.addEventListener('online', conferir);
+        setInterval(function () { if (document.visibilityState === 'visible') conferir(); }, 300000);
+    })();
+
     if (standalone) return;                                   // já está instalado: sem botão
     try { if (sessionStorage.getItem('pwa_botao_fechado')) return; } catch (_) {}
 
