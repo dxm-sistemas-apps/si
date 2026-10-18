@@ -67,7 +67,12 @@
 
   try {
     var rp = await fetch('pwa.js', { cache: 'no-store' });
+    var tp = rp.ok ? await rp.text() : '';
     add(rp.ok ? 'ok' : 'no', 'pwa.js encontrado', rp.ok ? '' : 'ENVIE O ARQUIVO pwa.js PARA A MESMA PASTA.');
+    if (rp.ok) {
+      var novo = tp.indexOf('vigiarAtualizacoes') !== -1;
+      add(novo ? 'ok' : 'no', 'pwa.js é a versão nova', novo ? 'MOSTRA O BOTÃO "INSTALAR APP" SEMPRE.' : 'O pwa.js PUBLICADO É O ANTIGO. SUBSTITUA-O PELO NOVO (O QUE TEM "vigiarAtualizacoes" DENTRO).');
+    }
   } catch (e) { add('no', 'pwa.js NÃO encontrado', e.message); }
 
   try {
@@ -80,8 +85,11 @@
   if ('serviceWorker' in navigator && seguro) {
     try {
       var reg = await navigator.serviceWorker.getRegistration();
-      add(reg ? 'ok' : 'av', reg ? 'Service worker registrado (' + (reg.active ? 'ativo' : 'instalando') + ')' : 'Service worker ainda não registrado', reg ? '' : 'ABRA O index.html UMA VEZ COM INTERNET, ESPERE ALGUNS SEGUNDOS E VOLTE AQUI.');
-    } catch (e) { add('no', 'Service worker', e.message); }
+      var ja = !!reg;
+      if (!reg) reg = await navigator.serviceWorker.register('sw.js');
+      var pronto = await Promise.race([navigator.serviceWorker.ready, new Promise(function (ok) { setTimeout(function () { ok(null); }, 6000); })]);
+      add(pronto ? 'ok' : 'av', 'Service worker ' + (pronto ? 'ativo' : 'ainda instalando'), (ja ? 'JÁ ESTAVA REGISTRADO.' : 'REGISTRADO AGORA POR ESTA PÁGINA.') + ' ESCOPO: ' + reg.scope);
+    } catch (e) { add('no', 'Service worker NÃO registrou', e.message); }
   } else add('no', 'Este navegador não suporta service worker', 'USE CHROME/EDGE (COMPUTADOR/ANDROID) OU SAFARI (IPHONE).');
 
   var recebeu = false;
@@ -89,7 +97,7 @@
   await new Promise(function (ok) { setTimeout(ok, 3000); });
   var ios = /iphone|ipad|ipod/i.test(ua);
   if (ios) add('av', 'iPhone/iPad', 'NÃO EXISTE AVISO AUTOMÁTICO. USE O SAFARI: COMPARTILHAR > ADICIONAR À TELA DE INÍCIO.');
-  else add(recebeu ? 'ok' : 'av', recebeu ? 'O navegador liberou a instalação' : 'O navegador ainda não liberou a instalação', recebeu ? 'USE O BOTÃO "INSTALAR APP" DO SISTEMA.' : 'SE TODOS OS ITENS ACIMA ESTÃO ✔, TENTE: FECHAR E ABRIR O SITE, USAR POR ALGUNS SEGUNDOS, E EVITAR ABA ANÔNIMA. NO CHROME TAMBÉM HÁ O MENU ⋮ > INSTALAR APLICATIVO.');
+  else add(recebeu ? 'ok' : 'av', recebeu ? 'O navegador liberou a instalação' : 'O navegador não enviou o aviso de instalação', recebeu ? 'USE O BOTÃO "INSTALAR APP" DO SISTEMA.' : 'ISSO É NORMAL SE O APP JÁ ESTIVER INSTALADO NESTE NAVEGADOR (NO COMPUTADOR, PROCURE O ÍCONE DE ABRIR NO APP NA BARRA DE ENDEREÇOS, OU chrome://apps). SE NÃO ESTIVER INSTALADO: F12 > APPLICATION > MANIFEST > "INSTALLABILITY" MOSTRA O MOTIVO EXATO. VOCÊ TAMBÉM PODE USAR O MENU ⋮ > "SALVAR E COMPARTILHAR" > "INSTALAR PÁGINA COMO APLICATIVO".');
 })();
 </script>
 </body>
