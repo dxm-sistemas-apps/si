@@ -478,7 +478,7 @@
     </div>
 
 <script type="text/armazem">
-    const LOGO_DGAD_SUPORTE = "caminhao-onibus.png";
+    const LOGO_DGAD_SUPORTE = "caminhao-onibus.jpg";
     window.addEventListener('DOMContentLoaded', () => {
         const logo = document.getElementById('appLogo');
         if (logo) logo.src = LOGO_DGAD_SUPORTE;
@@ -1372,7 +1372,7 @@ function gerarPDFPersonalizado() {
             let y = 10;
 
             try {
-                const logoDataUrl = await carregarImagemComoDataURL('https://upload.wikimedia.org/wikipedia/commons/e/e2/Ins%C3%ADgnia_bras%C3%A3o_estilizado_governos_Wilson_Witzel_e_Cl%C3%A1udio_Castro_RJ.png');
+                const logoDataUrl = await carregarImagemComoDataURL('brasao.png');
                 pdf.addImage(logoDataUrl, 'PNG', pageWidth / 2 - 12, y, 24, 24);
                 y += 32; 
             } catch(e) {
