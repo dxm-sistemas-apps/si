@@ -7,7 +7,7 @@
    Atualização automática: ao publicar mudanças no GitHub, basta abrir o app com internet (cerca de 1 a 2 min depois).
    Não é preciso limpar cache. Só mude o número em VERSAO se quiser descartar também as bibliotecas externas guardadas.
    ============================================================================ */
-const VERSAO = 'v3';
+const VERSAO = 'v4';
 const CACHE_APP = 'dgad-app-' + VERSAO;
 const CACHE_EXT = 'dgad-ext-' + VERSAO;
 
@@ -30,7 +30,6 @@ const EXTERNOS_PRE = [
   'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-  'https://upload.wikimedia.org/wikipedia/commons/e/e2/Ins%C3%ADgnia_bras%C3%A3o_estilizado_governos_Wilson_Witzel_e_Cl%C3%A1udio_Castro_RJ.png'
 ];
 
 const HOSTS_EXTERNOS = [
