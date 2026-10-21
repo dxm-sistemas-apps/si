@@ -225,7 +225,7 @@
     <header class="bg-[#001039] text-white shadow-md">
         <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col items-center justify-center text-center">
             <div class="bg-blue p-1.5 rounded-lg shadow-sm mb-2">
-                <img id="appLogo" src="suporte.jpg" class="h-64 object-contain" alt="Logo DGAD Suporte">
+                <img id="appLogo" class="h-64 object-contain" alt="Logo DGAD Suporte">
             </div>
             
         </div>
@@ -585,7 +585,7 @@
     <script type="text/armazem">
         lucide.createIcons();
 
-        const LOGO_DGAD_SUPORTE = "suporte.jpg"; 
+        const LOGO_DGAD_SUPORTE = "suporte.png"; 
         const BRASAO_RJ_BASE64 = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Ins%C3%ADgnia_bras%C3%A3o_estilizado_governos_Wilson_Witzel_e_Cl%C3%A1udio_Castro_RJ.png/500px-Ins%C3%ADgnia_bras%C3%A3o_estilizado_governos_Wilson_Witzel_e_Cl%C3%A1udio_Castro_RJ.png?utm_source=pt.wikipedia.org&utm_campaign=parser&utm_content=thumbnail";
 
         const mesesExtenso = [
@@ -1113,8 +1113,8 @@
 
                 Swal.close();
 
-                const tituloSucesso = foiCompartilhado ? 'PDF GERADO!';
-const textoSucesso = '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS E ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️).';
+                const tituloSucesso = foiCompartilhado ? 'PDF GERADO E COMPARTILHADO!' : 'PDF GERADO COM SUCESSO!';
+const textoSucesso = '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O TERMO DE TREINAMENTO FOI GERADO COM SUCESSO E O <b>PDF</b> ESTÁ DISPONÍVEL PARA DOWNLOAD NO <b>HISTÓRICO ABAIXO</b>.';
 
 Swal.fire({
     icon: 'success',
@@ -1128,16 +1128,15 @@ Swal.fire({
     }, 100);
 });
 
-            } catch (err) {
-    console.error(err);
-    Swal.close();
-    Swal.fire({
-        icon: 'error',
-        title: 'ERRO AO GERAR PDF',
-        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> OCORREU UM <span class="text-red-500 font-bold">PROBLEMA AO GERAR O PDF</span>.',
-        confirmButtonColor: '#000000'
-    });
-}
+            } catch (error) {
+                console.error(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ERRO AO GERAR PDF',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> OCORREU UM <span class="text-red-500 font-bold">PROBLEMA AO GERAR O PDF</span>.',
+                    confirmButtonColor: '#000000'
+                });
+            }
         }
 
         function blobToDataURI(blob) {

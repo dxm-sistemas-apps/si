@@ -491,7 +491,7 @@
     </div>
 
 <script type="text/armazem">
-const LOGO_DGAD_SUPORTE = "carro.jpg";
+const LOGO_DGAD_SUPORTE = "carro.png";
 
 document.addEventListener('DOMContentLoaded', () => {
     const logo = document.getElementById('appLogo');
@@ -1323,7 +1323,7 @@ function gerarPDFPersonalizado() {
 
         Swal.fire({
             title: 'GERANDO PDF...',
-            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> AGUARDE A GERAÇÃO DO ARQUIVO PDF',
+            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> AGUARDE A CRIAÇÃO E SALVAMENTO DO ARQUIVO.',
             allowOutsideClick: false,
             didOpen: () => { Swal.showLoading(); }
         });
@@ -1547,7 +1547,7 @@ if (foiCompartilhado) {
     Swal.fire({
         icon: 'success',
         title: 'PDF GERADO E COMPARTILHADO!',
-        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS E ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️).',
+        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS.',
         confirmButtonColor: '#000000'
     }).then(() => {
         // limparTabelaDireto();
@@ -1556,8 +1556,9 @@ if (foiCompartilhado) {
 } else {
     Swal.fire({
         icon: 'success',
-        title: 'PDF GERADO!',
-        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS E ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️).',
+        title: 'PDF GERADO COM SUCESSO!',
+        html: `<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS.<br><br>
+               <b>PARA FAZER BAIXAR,</b> UTILIZE O BOTÃO "⬇️" NO HISTÓRICO DE PDF´S ABAIXO.`,
         confirmButtonColor: '#000000'
     }).then(() => {
         // limparTabelaDireto();

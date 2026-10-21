@@ -322,7 +322,7 @@
     <header class="bg-[#001039] text-white shadow-md">
         <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col items-center justify-center text-center">
             <div class="bg-blue p-1.5 rounded-lg shadow-sm mb-2">
-                <img id="appLogo" src="apreensao.jpg" class="h-64 object-contain" alt="Logo DGAD Suporte">
+                <img id="appLogo" class="h-64 object-contain" alt="Logo DGAD Suporte">
             </div>
             
         </div>
@@ -681,7 +681,7 @@
 
                                 <!-- Texto Legal Obrigatório -->
                                 <p style="font-size: 10px; line-height: 1.5; margin-bottom: 10px;">
-                                    Em caso de material cautelarmente apreendido, não havendo a comprovação da origem lícita do material, em até 05 (cinco) dias úteis, através da apresentação das notas fiscais originais em nome da empresa ou do sócio, o Detran.RJ convocará Empresa de Reciclagem credenciada que efetuará a remoção, inutilização e a devida destinação final do material para Empresa de Siderurgia, não cabendo ao autuado nenhuma forma de ressarcimento do valor apurado.
+                                    Em caso de material cautelarmente apreendido, não havendo a comprovação da origem lícita do material, em até 05 (cinco) úteis, através da apresentação das notas fiscais originais em nome da empresa ou do sócio, o Detran.RJ convocará Empresa de Reciclagem credenciada que efetuará a remoção, inutilização e a devida destinação final do material para Empresa de Siderurgia, não cabendo ao autuado nenhuma forma de ressarcimento do valor apurado.
                                 </p>
 
                                 <!-- Assinaturas em 3 Colunas -->
@@ -732,7 +732,7 @@
             <div class="card no-print max-w-4xl mx-auto mt-6" id="secao-historico-pdf">
                 <div class="pdf-history-header">
                     <div class="section-title" style="margin-bottom: 0;">
-                        <span>📄 PDF'S GERADOS - AUTO DE APREENSÃO DE SUCATA AUTOMOTIVA</span>
+                        <span>📄 PDF'S GERADOS - APREENSÃO DE SUCATA</span>
                         
                     </div>
                     <div class="pdf-search-wrapper" style="margin-top: 8px;">
@@ -785,7 +785,7 @@
 
     <script type="text/armazem">
         lucide.createIcons();
-        const LOGO_DGAD_SUPORTE = "apreensao.jpg";
+        const LOGO_DGAD_SUPORTE = "apreensao.png";
         let itens = [{ qtd: '', desc: '' }];
         let currentTargetRole = '';
         let signatures = { Agente1: '', Ciencia: '', Agente2: '' };
@@ -1269,13 +1269,11 @@
                 }
 
                 await Swal.fire({
-    icon: 'success',
-    title: 'PDF GERADO!',
-    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS E ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️).',
-    confirmButtonColor: '#000000'
-}).then(() => {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-});
+                    icon: 'success',
+                    title: 'SUCESSO',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O AUTO DE APREENSÃO FOI GERADO COM SUCESSO E O <b>PDF</b> ESTÁ DISPONÍVEL PARA DOWNLOAD NO <b>HISTÓRICO ABAIXO</b>.',
+                    returnFocus: false
+                });
 
                 // Rolagem até o final da página
                 setTimeout(() => {
@@ -1284,15 +1282,11 @@
                 }, 150);
 
             } catch (err) {
-    console.error(err);
-    Swal.close();
-    Swal.fire({
-        icon: 'error',
-        title: 'ERRO AO GERAR PDF',
-        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> OCORREU UM <span class="text-red-500 font-bold">PROBLEMA AO GERAR O PDF</span>.',
-        confirmButtonColor: '#000000'
-    });
-}
+                console.error(err);
+                Swal.close();
+                Swal.fire({ icon: 'error', title: 'ERRO', html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> <span class="text-red-500 font-bold">FALHA AO SALVAR/COMPARTILHAR O PDF</span>.', confirmButtonColor: '#000000' });
+            }
+        }
 
         function blobToDataURI(blob) {
             return new Promise((resolve, reject) => {

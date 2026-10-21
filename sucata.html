@@ -841,7 +841,7 @@
   </div>
 
   <script type="text/armazem">
-    const LOGO_DGAD_SUPORTE = "sucata.jpg";
+    const LOGO_DGAD_SUPORTE = "sucata.png";
 
     const STORAGE_KEYS = {
       HEADER: 'detran_header_data_sucata',
@@ -2583,7 +2583,7 @@ function salvarRegistro() {
 
         Swal.fire({
             title: 'GERANDO PDF...',
-            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> AGUARDE A GERAÇÃO DO ARQUIVO PDF',
+            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> AGUARDE A CRIAÇÃO E SALVAMENTO DO ARQUIVO.',
             allowOutsideClick: false,
             didOpen: () => { Swal.showLoading(); }
         });
@@ -2804,9 +2804,8 @@ function salvarRegistro() {
             if (foiCompartilhado) {
               Swal.fire({
                   icon: 'success',
-                          title: 'PDF GERADO E COMPARTILHADO!',
-        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS E ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️).',
-
+                  title: 'PDF GERADO E COMPARTILHADO!',
+                  html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DA PÁGINA.',
                   confirmButtonColor: '#000000'
               }).then(() => {
                   // limparAposGeracao();
@@ -2814,8 +2813,9 @@ function salvarRegistro() {
             } else {
               Swal.fire({
                   icon: 'success',
-                  title: 'PDF GERADO!',
-        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS E ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️).',
+                  title: 'PDF GERADO COM SUCESSO!',
+                  html: `<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS.<br><br>
+               <b>PARA FAZER BAIXAR,</b> UTILIZE O BOTÃO "⬇️" NO HISTÓRICO DE PDF´S ABAIXO.`,
                   confirmButtonColor: '#000000'
               }).then(() => {
                   // limparAposGeracao();

@@ -443,7 +443,7 @@
 
                                 <!-- Texto 1: Interdição -->
                                 <p>
-                                    Eu, <strong id="docNomeAgente">________________________________________________</strong>, Id. Funcional <strong id="docIdAgente">________</strong>, representando o Departamento Estadual de Trânsito do Estado do Rio de Janeiro, por meio deste termo, <b>notifico e determino a interdição do estabelecimento comercial</b> localizado - <strong id="docLocalEstabelecimento">________________________________________________</strong> - <strong id="docMunicipioTexto">____________________</strong> - RJ, denominado <strong id="docNomeEstabelecimento">________________________________________________</strong>, em virtude das seguintes razões: <b>"realização de desmontagem de veículo em local não registrado perante o órgão executivo de trânsito competente" - Art. 16 VIII - Lei Federal nº. 12.977 de 20 de maio de 2014.</b>
+                                    Eu, <strong id="docNomeAgente">________________________________________________</strong>, Id. Funcional <strong id="docIdAgente">________</strong>, representando o Departamento Estadual de Trânsito do Estado do Rio de Janeiro, por meio deste termo, <b>notifico e determino a interdição do estabelecimento comercial</b> localizado - <strong id="docLocalEstabelecimento">________________________________________________</strong> - <strong id="docMunicipioTexto">____________________</strong>/RJ, denominado <strong id="docNomeEstabelecimento">________________________________________________</strong>, em virtude das seguintes razões: <b>"realização de desmontagem de veículo em local não registrado perante o órgão executivo de trânsito competente" - Art. 16 VIII - Lei Federal nº. 12.977 de 20 de maio de 2014.</b>
                                 </p>
 
                                 <!-- Texto 2: Designação Fiel Depositário -->
@@ -569,7 +569,7 @@
 
     <script type="text/armazem">
         lucide.createIcons();
-        const LOGO_DGAD_SUPORTE = "fiel depositario.jpg";
+        const LOGO_DGAD_SUPORTE = "fiel depositario.png";
         let currentTargetRole = '';
         let signatures = { Agente: '', Proprietario: '' };
 
@@ -913,15 +913,18 @@
                 await new Promise(r => setTimeout(r, 200));
                 blob = await html2pdf().set(opt).from(element).outputPdf('blob');
             } catch (err) {
-    console.error(err);
-    Swal.close();
-    Swal.fire({
-        icon: 'error',
-        title: 'ERRO AO GERAR PDF',
-        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> OCORREU UM <span class="text-red-500 font-bold">PROBLEMA AO GERAR O PDF</span>.',
-        confirmButtonColor: '#000000'
-    });
-}
+                console.error("ERRO NO PROCESSAMENTO DO PDF:", err);
+            }
+
+            if (!blob) {
+                Swal.close();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ERRO',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> <span class="text-red-500 font-bold">FALHA AO RENDERIZAR O DOCUMENTO</span>.'
+                });
+                return;
+            }
 
             try {
                 const uri = await blobToDataURI(blob);
@@ -951,13 +954,11 @@
                 }
 
                 await Swal.fire({
-    icon: 'success',
-    title: 'PDF GERADO!',
-    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS E ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️).',
-    confirmButtonColor: '#000000'
-}).then(() => {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-});
+                    icon: 'success',
+                    title: 'SUCESSO',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O TERMO DE INTERDIÇÃO FOI GERADO COM SUCESSO E O <b>PDF</b> ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️) NO <b>HISTÓRICO ABAIXO</b>.',
+                    returnFocus: false
+                });
 
                 setTimeout(() => {
                     const secao = document.getElementById('secao-historico-pdf');

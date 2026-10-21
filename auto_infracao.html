@@ -731,7 +731,7 @@
 
     <script type="text/armazem">
         lucide.createIcons();
-        const LOGO_DGAD_SUPORTE = "infracao.jpg";
+        const LOGO_DGAD_SUPORTE = "infracao.png";
         const STORAGE_KEY = 'detran_auto_infracao_v1';
         let currentTargetRole = '';
         let signatures = { Infrator: '', FT1: '', FT2: '' };
@@ -1217,15 +1217,18 @@
 
                 blob = await html2pdf().set(opt).from(element).outputPdf('blob');
             } catch (err) {
-    console.error(err);
-    Swal.close();
-    Swal.fire({
-        icon: 'error',
-        title: 'ERRO AO GERAR PDF',
-        html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> OCORREU UM <span class="text-red-500 font-bold">PROBLEMA AO GERAR O PDF</span>.',
-        confirmButtonColor: '#000000'
-    });
-}
+                console.error("Erro no processamento do PDF:", err);
+            }
+
+            if (!blob) {
+                Swal.close();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ERRO',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> <span class="text-red-500 font-bold">FALHA AO RENDERIZAR O DOCUMENTO</span>.'
+                });
+                return;
+            }
 
             try {
                 const uri = await blobToDataURI(blob);
@@ -1257,13 +1260,11 @@
                 }
 
                 await Swal.fire({
-    icon: 'success',
-    title: 'PDF GERADO!',
-    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS E ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️).',
-    confirmButtonColor: '#000000'
-}).then(() => {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-});
+                    icon: 'success',
+                    title: 'SUCESSO',
+                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O TERMO DE INTERDIÇÃO FOI GERADO COM SUCESSO E O <b>PDF</b> ESTÁ DISPONÍVEL PARA DOWNLOAD (⬇️) NO <b>HISTÓRICO ABAIXO</b>.',
+                    returnFocus: false
+                });
 
                 rolarParaHistoricoPDF();
             } catch (err) {
