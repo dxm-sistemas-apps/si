@@ -62,6 +62,8 @@
                 const tituloAlertaPadrao = String(opcoes.title || '').toUpperCase();
                 if (tituloAlertaPadrao.indexOf('EXCLUIR PDF') !== -1) { opcoes.confirmButtonColor = '#ef4444'; opcoes.cancelButtonColor = '#000000'; }
                 if (tituloAlertaPadrao.indexOf('CAMPO OBRIGAT') !== -1) { opcoes.confirmButtonColor = '#000000'; }
+                if (!opcoes.showCancelButton && !opcoes.showDenyButton) { opcoes.confirmButtonColor = '#000000'; }
+                if (String(opcoes.confirmButtonText || '').trim().toUpperCase() === 'OK') { opcoes.confirmButtonColor = '#000000'; }
                 opcoes.customClass = Object.assign({}, opcoes.customClass);
                 opcoes.customClass.popup = ('font-sans ' + (opcoes.customClass.popup || '')).trim();
                 const didOpenOriginal = opcoes.didOpen;
@@ -1268,8 +1270,9 @@
 
                 await Swal.fire({
                     icon: 'success',
-                    title: 'SUCESSO',
-                    html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O AUTO DE APREENSÃO FOI GERADO COM SUCESSO E O <b>PDF</b> ESTÁ DISPONÍVEL PARA DOWNLOAD NO <b>HISTÓRICO ABAIXO</b>.',
+                    title: 'PDF GERADO!',
+                    html: `<span class="text-amber-500 font-bold text-justify">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS.<br><br>
+                            <b>PARA BAIXAR NO SEU APARELHO,</b> UTILIZE O BOTÃO "⬇️" NO HISTÓRICO DE PDF´S.`,
                     returnFocus: false
                 });
 
@@ -1349,8 +1352,8 @@
                     </div>
                   </div>
                   <div class="pdf-card-actions">
-                    <button class="btn-icon-pdf" onclick="baixarPDFHistorico('${item.id}')" title="Baixar PDF">⬇️</button>
                     <button class="btn-icon-pdf" onclick="abrirPDF('${item.id}')" title="Visualizar">👁️</button>
+                    <button class="btn-icon-pdf" onclick="baixarPDFHistorico('${item.id}')" title="Baixar PDF">⬇️</button>
                     <button class="btn-icon-pdf" onclick="excluirPDF('${item.id}')" title="Excluir">🗑️</button>
                   </div>
                 </div>
