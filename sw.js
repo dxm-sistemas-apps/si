@@ -7,7 +7,7 @@
    Atualização automática: ao publicar mudanças no GitHub, basta abrir o app com internet (cerca de 1 a 2 min depois).
    Não é preciso limpar cache. Só mude o número em VERSAO se quiser descartar também as bibliotecas externas guardadas.
    ============================================================================ */
-const VERSAO = 'v2';
+const VERSAO = 'v3';
 const CACHE_APP = 'dgad-app-' + VERSAO;
 const CACHE_EXT = 'dgad-ext-' + VERSAO;
 
@@ -18,7 +18,7 @@ const ARQUIVOS = [
   'armazem.js', 'nuvem.js', 'firebase-config.js', 'pwa.js', 'manifest.webmanifest',
   'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png',
   'banner oficial.jpg', 'carro.png', 'moto.png', 'caminhao-onibus.png', 'sucata.png', 'carga.png',
-  'suporte.png', 'apreensao.png', 'infracao.png', 'fiel depositario.png'
+  'suporte.png', 'apreensao.png', 'infracao.png', 'fiel depositario.png', 'brasao.png',
 ];
 
 const EXTERNOS_PRE = [
