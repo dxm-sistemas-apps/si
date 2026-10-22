@@ -1,8 +1,13 @@
+html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Evitar cache agressivo do navegador durante alterações -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <link rel="manifest" href="manifest.webmanifest">
     <meta name="theme-color" content="#0f172a">
     <meta name="mobile-web-app-capable" content="yes">
@@ -26,7 +31,6 @@
     (function () {
         if (typeof Swal === 'undefined') return;
 
-        // Mantém o contêiner do alerta exatamente sobre a área VISÍVEL (considera zoom, barra do navegador e teclado)
         function ajustarAreaVisivel() {
             const c = document.querySelector('.swal2-container');
             const vv = window.visualViewport;
@@ -58,7 +62,6 @@
         Swal.fire = function (...args) {
             if (args.length && args[0] && typeof args[0] === 'object') {
                 const opcoes = Object.assign({ position: 'center', heightAuto: false, scrollbarPadding: false }, args[0]);
-                // Botões padronizados: EXCLUIR PDF (excluir vermelho / cancelar preto) e CAMPO OBRIGATÓRIO (OK preto)
                 const tituloAlertaPadrao = String(opcoes.title || '').toUpperCase();
                 if (tituloAlertaPadrao.indexOf('EXCLUIR PDF') !== -1) { opcoes.confirmButtonColor = '#ef4444'; opcoes.cancelButtonColor = '#000000'; }
                 if (tituloAlertaPadrao.indexOf('CAMPO OBRIGAT') !== -1) { opcoes.confirmButtonColor = '#000000'; }
@@ -110,7 +113,7 @@
             overflow-y: auto;
         }
     </style>
-    <!-- Ano vigente: atualiza sozinho a cada ano (nada de "2026" fixo) -->
+    <!-- Ano vigente: atualiza dinamicamente a cada ano -->
     <script>
     window.ANO_VIGENTE = new Date().getFullYear();
     document.addEventListener('DOMContentLoaded', function () {
@@ -149,7 +152,7 @@
             display: flex !important;
         }
 
-        /* Estilos do Card de PDFs Gerados (padrão Sucata) */
+        /* Estilos do Card de PDFs Gerados */
         .card { background: var(--card-bg); border-radius: var(--radius); padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid var(--border-color); }
         .section-title { font-size: 0.8rem; font-weight: 800; color: var(--primary-dark); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px; display: flex; justify-content: space-between; align-items: center; }
         .pdf-history-header { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
@@ -202,7 +205,7 @@
             }
         }
     
-        /* Cabeçalho do PDF: mesmas medidas do PDF da página carro (brasão 24 mm; títulos 12/10/9/9 pt; linhas de 5,5 mm) */
+        /* Cabeçalho do PDF */
         .pdf-document { --mm: 4.48px; }
         .cab-pdf-logo-wrap { display: flex; justify-content: center; margin: 0 0 calc(var(--mm) * 4) 0; }
         .cab-pdf-logo { width: calc(var(--mm) * 24); height: calc(var(--mm) * 24); object-fit: contain; }
@@ -211,13 +214,12 @@
         .cab-pdf-t2 { font-size: calc(var(--mm) * 3.5278) !important; font-weight: bold !important; }
         .cab-pdf-t3 { font-size: calc(var(--mm) * 3.175) !important; font-weight: normal !important; }
     </style>
-<style>
-/* Cards e modal de assinatura: todos os caracteres em maiúsculo */
-.bloco-assinatura, .bloco-assinatura *,
-[id^="box"], [id^="box"] *,
-#signatureModal, #signatureModal * { text-transform: uppercase !important; }
-.bloco-assinatura ::placeholder, #signatureModal ::placeholder { text-transform: uppercase !important; }
-</style>
+    <style>
+    .bloco-assinatura, .bloco-assinatura *,
+    [id^="box"], [id^="box"] *,
+    #signatureModal, #signatureModal * { text-transform: uppercase !important; }
+    .bloco-assinatura ::placeholder, #signatureModal ::placeholder { text-transform: uppercase !important; }
+    </style>
 </head>
 <body class="text-slate-800 antialiased pb-12 relative">
 
@@ -227,325 +229,318 @@
             <div class="bg-blue p-1.5 rounded-lg shadow-sm mb-2">
                 <img id="appLogo" src="suporte.jpg" class="h-64 object-contain" alt="Logo DGAD Suporte">
             </div>
-            
         </div>
     </header>
 
     <!-- Main Container -->
-    <div id="conteudo-principal" class="max-w-4xl mx-auto bg-white p-2 sm:p-8 mt-0 sm:mt-6 shadow-md rounded-none sm:rounded-lg border border-gray-200">
+    <main id="conteudo-principal" class="max-w-4xl mx-auto bg-white p-2 sm:p-8 mt-0 sm:mt-6 shadow-md rounded-none sm:rounded-lg border border-gray-200">
 
         <header class="text-center border-b-2 border-gray-800 pb-4 mb-6">
             <div class="flex justify-center mb-3">
-        <img src="brasao.png" 
-             alt="Brasão do Estado do Rio de Janeiro" 
-             class="h-24 w-auto object-contain" 
-             style="height: 96px; width: auto; object-fit: contain;">
-    </div>
+                <img src="brasao.png" 
+                     alt="Brasão do Estado do Rio de Janeiro" 
+                     class="h-24 w-auto object-contain" 
+                     style="height: 96px; width: auto; object-fit: contain;">
+            </div>
             <h1 class="text-lg sm:text-xl font-bold uppercase tracking-wide">Governo do Estado do Rio de Janeiro</h1>
             <h2 class="text-md sm:text-lg font-semibold uppercase">Departamento de Trânsito do Estado do Rio de Janeiro - DETRAN.RJ</h2>
             <h3 class="text-sm sm:text-md font-medium text-black-600 uppercase mt-1">Diretoria Geral das Atividades de Desmontagem</h3>
             <h3 class="text-sm sm:text-md font-medium text-black-600 uppercase mt-1">DIVISÃO DE FISCALIZAÇÃO</h3>
         </header>
 
-                <!-- Card 1: Informações Gerais -->
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-                    <div class="flex items-center space-x-2 border-b border-slate-100 pb-3 mb-4">
-                        <i data-lucide="building-2" class="w-5 h-5 text-blue-900"></i>
-                        <h2 class="font-bold text-slate-800 text-lg">INFORMAÇÕES</h2>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="md:col-span-2">
-                            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
-                                Nome/Razão Social da Empresa / estabelecimento Credenciada
-                            </label>
-                            <input type="text" id="inputRazaoSocial" placeholder="EX: AUTO PEÇAS E DESMONTADORA RIO LTDA" 
-                                class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm transition">
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
-                                CNPJ
-                            </label>
-                            <input type="text" inputmode="numeric" autocomplete="off" id="inputCNPJ" placeholder="00.000.000/0001-00" maxlength="18"
-                                class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm transition">
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
-                                Data de Emissão do Termo
-                            </label>
-                            <input type="date" id="inputDataTermo" 
-                                class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm transition">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2: Módulos do Treinamento -->
-                <div id="cardModulesContainer" class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 transition-all duration-300">
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
-                        <div class="flex items-center space-x-2">
-                            <i data-lucide="check-square" class="w-5 h-5 text-blue-900"></i>
-                            <h2 class="font-bold text-slate-800 text-lg">MÓDULOS E PROCEDIMENTOS MINISTRADOS</h2>
-                        </div>
-                        <button type="button" onclick="toggleSelectAllModules()" class="text-xs text-blue-800 hover:underline font-semibold">
-                            MARCAR / DESMARCAR TODOS
-                        </button>
-                    </div>
-
-                    <p class="text-xs text-slate-500 mb-3">SELECIONE AO MENOS 01 (UM) MÓDULO MINISTRADO NO TREINAMENTO IN LOCO:</p>
-
-                    <div class="space-y-2.5" id="modulesCheckboxGroup">
-                        <label class="flex items-start space-x-3 p-2.5 rounded-lg border border-slate-100 hover:bg-slate-50 cursor-pointer transition">
-                            <input type="checkbox" class="module-checkbox mt-1 h-4 w-4 text-blue-900 rounded border-slate-300 focus:ring-blue-800" 
-                                value="ENTRADA DE SUCATA PROVENIENTE DE VEÍCULOS BAIXADOS;" onchange="updatePreview()">
-                            <span class="text-sm text-slate-700">ENTRADA DE SUCATA PROVENIENTE DE VEÍCULOS BAIXADOS</span>
-                        </label>
-
-                        <label class="flex items-start space-x-3 p-2.5 rounded-lg border border-slate-100 hover:bg-slate-50 cursor-pointer transition">
-                            <input type="checkbox" class="module-checkbox mt-1 h-4 w-4 text-blue-900 rounded border-slate-300 focus:ring-blue-800" 
-                                value="CADASTRAMENTO DE PEÇAS ORIUNDAS DA DESMONTAGEM;" onchange="updatePreview()">
-                            <span class="text-sm text-slate-700">CADASTRAMENTO DE PEÇAS ORIUNDAS DA DESMONTAGEM</span>
-                        </label>
-
-                        <label class="flex items-start space-x-3 p-2.5 rounded-lg border border-slate-100 hover:bg-slate-50 cursor-pointer transition">
-                            <input type="checkbox" class="module-checkbox mt-1 h-4 w-4 text-blue-900 rounded border-slate-300 focus:ring-blue-800" 
-                                value="CADASTRAMENTO DE PEÇAS AVULSAS;" onchange="updatePreview()">
-                            <span class="text-sm text-slate-700">CADASTRAMENTO DE PEÇAS AVULSAS</span>
-                        </label>
-
-                        <label class="flex items-start space-x-3 p-2.5 rounded-lg border border-slate-100 hover:bg-slate-50 cursor-pointer transition">
-                            <input type="checkbox" class="module-checkbox mt-1 h-4 w-4 text-blue-900 rounded border-slate-300 focus:ring-blue-800" 
-                                value="MOVIMENTAÇÃO E SAÍDA DE PEÇAS DEVIDAMENTE CADASTRADAS;" onchange="updatePreview()">
-                            <span class="text-sm text-slate-700">MOVIMENTAÇÃO E SAÍDA DE PEÇAS DEVIDAMENTE CADASTRADAS</span>
-                        </label>
-
-                        <label class="flex items-start space-x-3 p-2.5 rounded-lg border border-slate-100 hover:bg-slate-50 cursor-pointer transition">
-                            <input type="checkbox" class="module-checkbox mt-1 h-4 w-4 text-blue-900 rounded border-slate-300 focus:ring-blue-800" 
-                                value="PROCEDIMENTOS DE AVALIAÇÃO TÉCNICA DAS PEÇAS REUTILIZÁVEIS; e" onchange="updatePreview()">
-                            <span class="text-sm text-slate-700">PROCEDIMENTOS DE AVALIAÇÃO TÉCNICA DAS PEÇAS REUTILIZÁVEIS</span>
-                        </label>
-
-                        <label class="flex items-start space-x-3 p-2.5 rounded-lg border border-slate-100 hover:bg-slate-50 cursor-pointer transition">
-                            <input type="checkbox" class="module-checkbox mt-1 h-4 w-4 text-blue-900 rounded border-slate-300 focus:ring-blue-800" 
-                                value="ELABORAÇÃO E EMISSÃO DO LAUDO TÉCNICO DE DESMONTAGEM, EM CONFORMIDADE COM AS DISPOSIÇÕES DA LEI FEDERAL Nº 12.977/2014, DA RESOLUÇÃO CONTRAN Nº 611/2016 E DAS DEMAIS NORMAS COMPLEMENTARES VIGENTES." onchange="updatePreview()">
-                            <span class="text-sm text-slate-700">ELABORAÇÃO E EMISSÃO DO LAUDO TÉCNICO DE DESMONTAGEM, EM CONFORMIDADE COM AS DISPOSIÇÕES DA LEI FEDERAL Nº 12.977/2014, DA RESOLUÇÃO CONTRAN Nº 611/2016 E DAS DEMAIS NORMAS COMPLEMENTARES VIGENTES.</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Card 3: Identificação e Assinaturas -->
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-                    <div class="flex items-center space-x-2 border-b border-slate-100 pb-3 mb-4">
-                        <i data-lucide="pen-tool" class="w-5 h-5 text-blue-900"></i>
-                        <h2 class="font-bold text-slate-800 text-lg">IDENTIFICAÇÃO E ASSINATURAS</h2>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                        <!-- Agente 1 -->
-                        <div id="boxAgente1" class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col justify-between transition-all duration-300">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
-                                    AGENTE - DETRAN.RJ
-                                </label>
-                                <input type="text" id="inputAgente1" placeholder="0000000-0" maxlength="9" inputmode="numeric" 
-                                    class="w-full px-3 py-2 bg-white rounded-md border border-slate-300 text-sm mb-3 transition">
-                                
-                                <div class="h-20 bg-white border border-slate-200 rounded flex items-center justify-center p-1 mb-3">
-                                    <img id="previewSignAgente1" class="max-h-full max-w-full hidden object-contain" alt="Assinatura Agente 1">
-                                    
-                                </div>
-                            </div>
-
-                            <button type="button" onclick="openSignatureModal('Agente1', 'Agente 1 Detran.RJ')"
-                                class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
-                                <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                                <span>ASSINAR</span>
-                            </button>
-                        </div>
-
-                        <!-- Agente 2 -->
-                        <div id="boxAgente2" class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col justify-between transition-all duration-300">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
-                                    AGENTE - DETRAN.RJ
-                                </label>
-                                <input type="text" id="inputAgente2" placeholder="0000000-0" maxlength="9" inputmode="numeric" 
-                                    class="w-full px-3 py-2 bg-white rounded-md border border-slate-300 text-sm mb-3 transition">
-                                
-                                <div class="h-20 bg-white border border-slate-200 rounded flex items-center justify-center p-1 mb-3">
-                                    <img id="previewSignAgente2" class="max-h-full max-w-full hidden object-contain" alt="Assinatura Agente 2">
-                                    
-                                </div>
-                            </div>
-
-                            <button type="button" onclick="openSignatureModal('Agente2', 'Agente 2 Detran.RJ')"
-                                class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
-                                <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                                <span>ASSINAR</span>
-                            </button>
-                        </div>
-
-                        <!-- Representante Empresa -->
-                        <div id="boxRepresentante" class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col justify-between transition-all duration-300">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
-                                    REPRESENTANTE DA EMPRESA / ESTABELECIMENTO
-                                </label>
-                                <input type="text" id="inputRepresentante" placeholder="NOME DO REPRESENTANTE" 
-                                    class="w-full px-3 py-2 bg-white rounded-md border border-slate-300 text-sm mb-3 transition">
-                                
-                                <div class="h-20 bg-white border border-slate-200 rounded flex items-center justify-center p-1 mb-3">
-                                    <img id="previewSignRepresentante" class="max-h-full max-w-full hidden object-contain" alt="Assinatura Representante">
-                                    
-                                </div>
-                            </div>
-
-                            <button type="button" onclick="openSignatureModal('Representante', 'Representante da Empresa')"
-                                class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
-                                <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                                <span>ASSINAR</span>
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Botões de Ação -->
-                <div class="flex flex-col sm:flex-row gap-3 justify-end items-center bg-white p-4 rounded-xl shadow-sm border border-slate-200 no-print">
-                    <button type="button" onclick="confirmClearAllForm()" 
-                        class="w-full sm:w-auto px-4 py-2.5 bg-red-600 hover:bg-red-500 text-white font-bold rounded-lg text-sm border border-red-200 transition flex items-center justify-center space-x-2">
-                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        <span>LIMPAR PÁGINA</span>
-                    </button>
-
-                    <button type="button" onclick="generatePDF()" 
-                        class="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm shadow-md transition flex items-center justify-center space-x-2">
-                        <i data-lucide="file-check-2" class="w-4 h-4"></i>
-                        <span>GERAR PDF</span>
-                    </button>
-                </div>
-
+        <!-- Card 1: Informações Gerais -->
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-6">
+            <div class="flex items-center space-x-2 border-b border-slate-100 pb-3 mb-4">
+                <i data-lucide="building-2" class="w-5 h-5 text-blue-900"></i>
+                <h2 class="font-bold text-slate-800 text-lg">INFORMAÇÕES</h2>
             </div>
 
-            <!-- DOCUMENT PREVIEW CONTAINER -->
-            <div id="previewAnchor" class="mt-10 mb-12">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-bold text-slate-800 flex items-center space-x-2">
-                        <i data-lucide="file-text" class="w-5 h-5 text-blue-900"></i>
-                        <span>DOCUMENTO FINAL - TERMO DE TREINAMENTO</span>
-                    </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
+                        Nome/Razão Social da Empresa / estabelecimento Credenciada
+                    </label>
+                    <input type="text" id="inputRazaoSocial" placeholder="EX: AUTO PEÇAS E DESMONTADORA RIO LTDA" 
+                        class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm transition">
                 </div>
 
-                <div class="preview-container bg-slate-200 p-2 sm:p-6 rounded-xl shadow-inner border border-slate-300">
-                    
-                    <!-- DOCUMENTO OFICIAL A4 -->
-                    <div id="pdfContent" class="pdf-document mx-auto bg-white shadow-xl border border-slate-200 max-w-4xl" style="width: 100%;">
-                        
-                        <!-- Header Oficial com Brasão do Estado do RJ Centralizado -->
-                        <div style="text-align: center; margin-bottom: 12px; border-bottom: 2px solid #000; padding-bottom: 8px;">
-                            <div class="cab-pdf-logo-wrap">
-                                <img id="pdfLogo" class="cab-pdf-logo" alt="Brasão Estado do Rio de Janeiro">
-                            </div>
-                            <h1 class="cab-pdf-t1">Governo do Estado do Rio de Janeiro</h1>
-                            <h2 class="cab-pdf-t2">Departamento de Trânsito do Estado do Rio de Janeiro - DETRAN.RJ</h2>
-                            <h3 class="cab-pdf-t3">Diretoria Geral das Atividades de Desmontagem</h3>
-                            <h3 class="cab-pdf-t3">DIVISÃO DE FISCALIZAÇÃO</h3>
-                            <h1 style="font-weight: bold; font-size: 12.5px; margin: 10px 0 0 0; text-transform: uppercase; text-decoration: underline;">TERMO DE ATESTADO DE TREINAMENTO OPERACIONAL DO SISTEMA DESMONTE.RJ</h1>
-                        </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
+                        CNPJ
+                    </label>
+                    <input type="text" inputmode="numeric" autocomplete="off" id="inputCNPJ" placeholder="00.000.000/0001-00" maxlength="18"
+                        class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm transition">
+                </div>
 
-                        <!-- Parágrafo 1 -->
-                        <p>
-                            Aos <strong id="docDia" style="border-bottom: 1px dotted #000; padding: 0 4px;">__</strong> dias do mês de 
-                            <strong id="docMes" style="border-bottom: 1px dotted #000; padding: 0 6px; text-transform: uppercase;">__________________</strong> do ano de 
-                            <strong id="docAno" class="js-ano">2026</strong>, a Divisão de Controle, Normas e Programas da Diretoria Geral das Atividades de Desmontagem do DETRAN.RJ, por intermédio de seus agentes, vem por meio do presente atestar que a empresa 
-                            <strong id="docRazaoSocial" style="border-bottom: 1px dotted #000; padding: 0 6px; text-transform: uppercase;">__________________________________________________</strong>, inscrita no CNPJ sob o nº 
-                            <strong id="docCNPJ" style="border-bottom: 1px dotted #000; padding: 0 4px;">__.___.___/____-__</strong>, regularmente credenciada para o exercício das atividades de desmontagem de veículos automotores, recebeu treinamento técnico-operacional in loco referente ao Sistema Desmonte.RJ.
-                        </p>
-
-                        <!-- Módulos Dinâmicos -->
-                        <p style="margin-bottom: 4px;">
-                            Durante o referido treinamento, foram ministradas instruções detalhadas acerca dos seguintes módulos e procedimentos do sistema:
-                        </p>
-                        
-                        <ul id="docModulesList" style="list-style-type: disc; padding-left: 24px; margin-bottom: 8px; font-size: 11.5px; color: #000; line-height: 1.25;">
-                            <!-- Inserido dinamicamente via JS -->
-                        </ul>
-
-                        <!-- Parágrafos 2 e 3 -->
-                        <p>
-                            Declara-se, ainda, que o treinamento realizado é considerado suficiente e satisfatório para a plena operação do Sistema Desmonte.RJ, reputando-se o representante da empresa participante do treinamento como devidamente apto e habilitado a executar todas as funcionalidades e procedimentos operacionais exigidos pelo sistema.
-                        </p>
-
-                        <p>
-                            Ressalta-se, por fim, que enquanto não houver manifestação formal da empresa solicitando novo treinamento ou reciclagem técnica, o presente ato permanecerá válido e eficaz para fins de cumprimento das obrigações operacionais impostas aos estabelecimentos credenciados.
-                        </p>
-
-                        <p style="margin-bottom: 12px;">
-                            E, para que produza os efeitos legais e administrativos cabíveis, lavra-se o presente termo, que vai devidamente assinado pelos agentes do Detran.RJ e pelo Representante da Empresa.
-                        </p>
-
-                        <!-- Local e Data -->
-                        <div style="margin-top: 10px; margin-bottom: 20px; text-align: right; font-size: 12px; font-weight: bold;">
-                            Rio de Janeiro, <span id="docDataDia">__</span> de <span id="docDataMes" style="text-transform: uppercase;">____________</span> de <span id="docDataAno" class="js-ano">2026</span>.
-                        </div>
-
-                        <!-- Bloco de Assinaturas compactado -->
-                        <div style="margin-top: 25px; display: table; width: 100%; table-layout: fixed;">
-                            <div style="display: table-cell; text-align: center; vertical-align: bottom; width: 33%; padding: 0 4px;">
-                                <div style="height: 40px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 2px;">
-                                    <img id="imgSignAgente1" style="max-height: 40px; max-width: 100%; display: none;" alt="Assinatura Agente 1">
-                                </div>
-                                <div style="border-top: 1px solid #000; padding-top: 2px;">
-                                    <span id="docNomeAgente1" style="font-weight: bold; font-size: 10px; text-transform: uppercase; display: block;">AGENTE DETRAN.RJ</span>
-                                    <span style="font-size: 9.5px; color: #333; display: block;">AGENTE - DETRAN.RJ</span>
-                                </div>
-                            </div>
-
-                            <div style="display: table-cell; text-align: center; vertical-align: bottom; width: 33%; padding: 0 4px;">
-                                <div style="height: 40px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 2px;">
-                                    <img id="imgSignAgente2" style="max-height: 40px; max-width: 100%; display: none;" alt="Assinatura Agente 2">
-                                </div>
-                                <div style="border-top: 1px solid #000; padding-top: 2px;">
-                                    <span id="docNomeAgente2" style="font-weight: bold; font-size: 10px; text-transform: uppercase; display: block;">AGENTE DETRAN.RJ</span>
-                                    <span style="font-size: 9.5px; color: #333; display: block;">AGENTE - DETRAN.RJ</span>
-                                </div>
-                            </div>
-
-                            <div style="display: table-cell; text-align: center; vertical-align: bottom; width: 33%; padding: 0 4px;">
-                                <div style="height: 40px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 2px;">
-                                    <img id="imgSignRepresentante" style="max-height: 40px; max-width: 100%; display: none;" alt="Assinatura Representante">
-                                </div>
-                                <div style="border-top: 1px solid #000; padding-top: 2px;">
-                                    <span id="docNomeRepresentante" style="font-weight: bold; font-size: 10px; text-transform: uppercase; display: block;">REPRESENTANTE EMPRESA</span>
-                                    <span style="font-size: 9.5px; color: #333; display: block;">REPRESENTANTE DA EMPRESA</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
+                        Data de Emissão do Termo
+                    </label>
+                    <input type="date" id="inputDataTermo" 
+                        class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm transition">
                 </div>
             </div>
-        </main>
-
-        <!-- SEÇÃO DE HISTÓRICO DE PDFS GERADOS (PADRÃO SUCATA) -->
-        <div class="card no-print max-w-4xl mx-auto mt-6" id="secao-historico-pdf">
-          <div class="pdf-history-header">
-            <div class="section-title" style="margin-bottom: 0;">
-              <span>📄 PDF'S GERADOS - SUPORTE TÉCNICO</span>
-            </div>
-            <div class="pdf-search-wrapper" style="margin-top: 8px;">
-              <span class="pdf-search-icon">🔍</span>
-              <input type="text" id="busca-pdf" oninput="renderizarGridPDFs()" placeholder="BUSCAR PDF POR EMPRESA, CNPJ OU DATA...">
-            </div>
-          </div>
-          <div class="pdf-grid" id="grid-pdfs-container">
-            <!-- Os cards de PDF serão inseridos aqui via JavaScript -->
-          </div>
         </div>
 
-    </div>
+        <!-- Card 2: Módulos do Treinamento -->
+        <div id="cardModulesContainer" class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 transition-all duration-300 mb-6">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="check-square" class="w-5 h-5 text-blue-900"></i>
+                    <h2 class="font-bold text-slate-800 text-lg">MÓDULOS E PROCEDIMENTOS MINISTRADOS</h2>
+                </div>
+                <button type="button" onclick="toggleSelectAllModules()" class="text-xs text-blue-800 hover:underline font-semibold">
+                    MARCAR / DESMARCAR TODOS
+                </button>
+            </div>
+
+            <p class="text-xs text-slate-500 mb-3">SELECIONE AO MENOS 01 (UM) MÓDULO MINISTRADO NO TREINAMENTO IN LOCO:</p>
+
+            <div class="space-y-2.5" id="modulesCheckboxGroup">
+                <label class="flex items-start space-x-3 p-2.5 rounded-lg border border-slate-100 hover:bg-slate-50 cursor-pointer transition">
+                    <input type="checkbox" class="module-checkbox mt-1 h-4 w-4 text-blue-900 rounded border-slate-300 focus:ring-blue-800" 
+                        value="ENTRADA DE SUCATA PROVENIENTE DE VEÍCULOS BAIXADOS;" onchange="updatePreview()">
+                    <span class="text-sm text-slate-700">ENTRADA DE SUCATA PROVENIENTE DE VEÍCULOS BAIXADOS</span>
+                </label>
+
+                <label class="flex items-start space-x-3 p-2.5 rounded-lg border border-slate-100 hover:bg-slate-50 cursor-pointer transition">
+                    <input type="checkbox" class="module-checkbox mt-1 h-4 w-4 text-blue-900 rounded border-slate-300 focus:ring-blue-800" 
+                        value="CADASTRAMENTO DE PEÇAS ORIUNDAS DA DESMONTAGEM;" onchange="updatePreview()">
+                    <span class="text-sm text-slate-700">CADASTRAMENTO DE PEÇAS ORIUNDAS DA DESMONTAGEM</span>
+                </label>
+
+                <label class="flex items-start space-x-3 p-2.5 rounded-lg border border-slate-100 hover:bg-slate-50 cursor-pointer transition">
+                    <input type="checkbox" class="module-checkbox mt-1 h-4 w-4 text-blue-900 rounded border-slate-300 focus:ring-blue-800" 
+                        value="CADASTRAMENTO DE PEÇAS AVULSAS;" onchange="updatePreview()">
+                    <span class="text-sm text-slate-700">CADASTRAMENTO DE PEÇAS AVULSAS</span>
+                </label>
+
+                <label class="flex items-start space-x-3 p-2.5 rounded-lg border border-slate-100 hover:bg-slate-50 cursor-pointer transition">
+                    <input type="checkbox" class="module-checkbox mt-1 h-4 w-4 text-blue-900 rounded border-slate-300 focus:ring-blue-800" 
+                        value="MOVIMENTAÇÃO E SAÍDA DE PEÇAS DEVIDAMENTE CADASTRADAS;" onchange="updatePreview()">
+                    <span class="text-sm text-slate-700">MOVIMENTAÇÃO E SAÍDA DE PEÇAS DEVIDAMENTE CADASTRADAS</span>
+                </label>
+
+                <label class="flex items-start space-x-3 p-2.5 rounded-lg border border-slate-100 hover:bg-slate-50 cursor-pointer transition">
+                    <input type="checkbox" class="module-checkbox mt-1 h-4 w-4 text-blue-900 rounded border-slate-300 focus:ring-blue-800" 
+                        value="PROCEDIMENTOS DE AVALIAÇÃO TÉCNICA DAS PEÇAS REUTILIZÁVEIS; e" onchange="updatePreview()">
+                    <span class="text-sm text-slate-700">PROCEDIMENTOS DE AVALIAÇÃO TÉCNICA DAS PEÇAS REUTILIZÁVEIS</span>
+                </label>
+
+                <label class="flex items-start space-x-3 p-2.5 rounded-lg border border-slate-100 hover:bg-slate-50 cursor-pointer transition">
+                    <input type="checkbox" class="module-checkbox mt-1 h-4 w-4 text-blue-900 rounded border-slate-300 focus:ring-blue-800" 
+                        value="ELABORAÇÃO E EMISSÃO DO LAUDO TÉCNICO DE DESMONTAGEM, EM CONFORMIDADE COM AS DISPOSIÇÕES DA LEI FEDERAL Nº 12.977/2014, DA RESOLUÇÃO CONTRAN Nº 611/2016 E DAS DEMAIS NORMAS COMPLEMENTARES VIGENTES." onchange="updatePreview()">
+                    <span class="text-sm text-slate-700">ELABORAÇÃO E EMISSÃO DO LAUDO TÉCNICO DE DESMONTAGEM, EM CONFORMIDADE COM AS DISPOSIÇÕES DA LEI FEDERAL Nº 12.977/2014, DA RESOLUÇÃO CONTRAN Nº 611/2016 E DAS DEMAIS NORMAS COMPLEMENTARES VIGENTES.</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Card 3: Identificação e Assinaturas -->
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-6">
+            <div class="flex items-center space-x-2 border-b border-slate-100 pb-3 mb-4">
+                <i data-lucide="pen-tool" class="w-5 h-5 text-blue-900"></i>
+                <h2 class="font-bold text-slate-800 text-lg">IDENTIFICAÇÃO E ASSINATURAS</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Agente 1 -->
+                <div id="boxAgente1" class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
+                            AGENTE - DETRAN.RJ
+                        </label>
+                        <input type="text" id="inputAgente1" placeholder="0000000-0" maxlength="9" inputmode="numeric" 
+                            class="w-full px-3 py-2 bg-white rounded-md border border-slate-300 text-sm mb-3 transition">
+                        
+                        <div class="h-20 bg-white border border-slate-200 rounded flex items-center justify-center p-1 mb-3">
+                            <img id="previewSignAgente1" class="max-h-full max-w-full hidden object-contain" alt="Assinatura Agente 1">
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="openSignatureModal('Agente1', 'Agente 1 Detran.RJ')"
+                        class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
+                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                        <span>ASSINAR</span>
+                    </button>
+                </div>
+
+                <!-- Agente 2 -->
+                <div id="boxAgente2" class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
+                            AGENTE - DETRAN.RJ
+                        </label>
+                        <input type="text" id="inputAgente2" placeholder="0000000-0" maxlength="9" inputmode="numeric" 
+                            class="w-full px-3 py-2 bg-white rounded-md border border-slate-300 text-sm mb-3 transition">
+                        
+                        <div class="h-20 bg-white border border-slate-200 rounded flex items-center justify-center p-1 mb-3">
+                            <img id="previewSignAgente2" class="max-h-full max-w-full hidden object-contain" alt="Assinatura Agente 2">
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="openSignatureModal('Agente2', 'Agente 2 Detran.RJ')"
+                        class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
+                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                        <span>ASSINAR</span>
+                    </button>
+                </div>
+
+                <!-- Representante Empresa -->
+                <div id="boxRepresentante" class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
+                            REPRESENTANTE DA EMPRESA / ESTABELECIMENTO
+                        </label>
+                        <input type="text" id="inputRepresentante" placeholder="NOME DO REPRESENTANTE" 
+                            class="w-full px-3 py-2 bg-white rounded-md border border-slate-300 text-sm mb-3 transition">
+                        
+                        <div class="h-20 bg-white border border-slate-200 rounded flex items-center justify-center p-1 mb-3">
+                            <img id="previewSignRepresentante" class="max-h-full max-w-full hidden object-contain" alt="Assinatura Representante">
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="openSignatureModal('Representante', 'Representante da Empresa')"
+                        class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold text-xs rounded shadow transition flex items-center justify-center space-x-1">
+                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                        <span>ASSINAR</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="flex flex-col sm:flex-row gap-3 justify-end items-center bg-white p-4 rounded-xl shadow-sm border border-slate-200 no-print">
+            <button type="button" onclick="confirmClearAllForm()" 
+                class="w-full sm:w-auto px-4 py-2.5 bg-red-600 hover:bg-red-500 text-white font-bold rounded-lg text-sm border border-red-200 transition flex items-center justify-center space-x-2">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                <span>LIMPAR PÁGINA</span>
+            </button>
+
+            <button type="button" onclick="generatePDF()" 
+                class="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm shadow-md transition flex items-center justify-center space-x-2">
+                <i data-lucide="file-check-2" class="w-4 h-4"></i>
+                <span>GERAR PDF</span>
+            </button>
+        </div>
+
+        <!-- DOCUMENT PREVIEW CONTAINER -->
+        <div id="previewAnchor" class="mt-10 mb-12">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold text-slate-800 flex items-center space-x-2">
+                    <i data-lucide="file-text" class="w-5 h-5 text-blue-900"></i>
+                    <span>DOCUMENTO FINAL - TERMO DE TREINAMENTO</span>
+                </h3>
+            </div>
+
+            <div class="preview-container bg-slate-200 p-2 sm:p-6 rounded-xl shadow-inner border border-slate-300">
+                
+                <!-- DOCUMENTO OFICIAL A4 -->
+                <div id="pdfContent" class="pdf-document mx-auto bg-white shadow-xl border border-slate-200 max-w-4xl" style="width: 100%;">
+                    
+                    <!-- Header Oficial com Brasão do Estado do RJ Centralizado -->
+                    <div style="text-align: center; margin-bottom: 12px; border-bottom: 2px solid #000; padding-bottom: 8px;">
+                        <div class="cab-pdf-logo-wrap">
+                            <img id="pdfLogo" src="brasao.png" class="cab-pdf-logo" alt="Brasão Estado do Rio de Janeiro">
+                        </div>
+                        <h1 class="cab-pdf-t1">Governo do Estado do Rio de Janeiro</h1>
+                        <h2 class="cab-pdf-t2">Departamento de Trânsito do Estado do Rio de Janeiro - DETRAN.RJ</h2>
+                        <h3 class="cab-pdf-t3">Diretoria Geral das Atividades de Desmontagem</h3>
+                        <h3 class="cab-pdf-t3">DIVISÃO DE FISCALIZAÇÃO</h3>
+                        <h1 style="font-weight: bold; font-size: 12.5px; margin: 10px 0 0 0; text-transform: uppercase; text-decoration: underline;">TERMO DE ATESTADO DE TREINAMENTO OPERACIONAL DO SISTEMA DESMONTE.RJ</h1>
+                    </div>
+
+                    <!-- Parágrafo 1 -->
+                    <p>
+                        Aos <strong id="docDia" style="border-bottom: 1px dotted #000; padding: 0 4px;">__</strong> dias do mês de 
+                        <strong id="docMes" style="border-bottom: 1px dotted #000; padding: 0 6px; text-transform: uppercase;">__________________</strong> do ano de 
+                        <strong id="docAno" class="js-ano">2026</strong>, a Divisão de Controle, Normas e Programas da Diretoria Geral das Atividades de Desmontagem do DETRAN.RJ, por intermédio de seus agentes, vem por meio do presente atestar que a empresa 
+                        <strong id="docRazaoSocial" style="border-bottom: 1px dotted #000; padding: 0 6px; text-transform: uppercase;">__________________________________________________</strong>, inscrita no CNPJ sob o nº 
+                        <strong id="docCNPJ" style="border-bottom: 1px dotted #000; padding: 0 4px;">__.___.___/____-__</strong>, regularmente credenciada para o exercício das atividades de desmontagem de veículos automotores, recebeu treinamento técnico-operacional in loco referente ao Sistema Desmonte.RJ.
+                    </p>
+
+                    <!-- Módulos Dinâmicos -->
+                    <p style="margin-bottom: 4px;">
+                        Durante o referido treinamento, foram ministradas instruções detalhadas acerca dos seguintes módulos e procedimentos do sistema:
+                    </p>
+                    
+                    <ul id="docModulesList" style="list-style-type: disc; padding-left: 24px; margin-bottom: 8px; font-size: 11.5px; color: #000; line-height: 1.25;">
+                        <!-- Inserido dinamicamente via JS -->
+                    </ul>
+
+                    <!-- Parágrafos 2 e 3 -->
+                    <p>
+                        Declara-se, ainda, que o treinamento realizado é considerado suficiente e satisfatório para a plena operação do Sistema Desmonte.RJ, reputando-se o representante da empresa participante do treinamento como devidamente apto e habilitado a executar todas as funcionalidades e procedimentos operacionais exigidos pelo sistema.
+                    </p>
+
+                    <p>
+                        Ressalta-se, por fim, que enquanto não houver manifestação formal da empresa solicitando novo treinamento ou reciclagem técnica, o presente ato permanecerá válido e eficaz para fins de cumprimento das obrigações operacionais impostas aos estabelecimentos credenciados.
+                    </p>
+
+                    <p style="margin-bottom: 12px;">
+                        E, para que produza os efeitos legais e administrativos cabíveis, lavra-se o presente termo, que vai devidamente assinado pelos agentes do Detran.RJ e pelo Representante da Empresa.
+                    </p>
+
+                    <!-- Local e Data -->
+                    <div style="margin-top: 10px; margin-bottom: 20px; text-align: right; font-size: 12px; font-weight: bold;">
+                        Rio de Janeiro, <span id="docDataDia">__</span> de <span id="docDataMes" style="text-transform: uppercase;">____________</span> de <span id="docDataAno" class="js-ano">2026</span>.
+                    </div>
+
+                    <!-- Bloco de Assinaturas compactado -->
+                    <div style="margin-top: 25px; display: table; width: 100%; table-layout: fixed;">
+                        <div style="display: table-cell; text-align: center; vertical-align: bottom; width: 33%; padding: 0 4px;">
+                            <div style="height: 40px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 2px;">
+                                <img id="imgSignAgente1" style="max-height: 40px; max-width: 100%; display: none;" alt="Assinatura Agente 1">
+                            </div>
+                            <div style="border-top: 1px solid #000; padding-top: 2px;">
+                                <span id="docNomeAgente1" style="font-weight: bold; font-size: 10px; text-transform: uppercase; display: block;">AGENTE DETRAN.RJ</span>
+                                <span style="font-size: 9.5px; color: #333; display: block;">AGENTE - DETRAN.RJ</span>
+                            </div>
+                        </div>
+
+                        <div style="display: table-cell; text-align: center; vertical-align: bottom; width: 33%; padding: 0 4px;">
+                            <div style="height: 40px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 2px;">
+                                <img id="imgSignAgente2" style="max-height: 40px; max-width: 100%; display: none;" alt="Assinatura Agente 2">
+                            </div>
+                            <div style="border-top: 1px solid #000; padding-top: 2px;">
+                                <span id="docNomeAgente2" style="font-weight: bold; font-size: 10px; text-transform: uppercase; display: block;">AGENTE DETRAN.RJ</span>
+                                <span style="font-size: 9.5px; color: #333; display: block;">AGENTE - DETRAN.RJ</span>
+                            </div>
+                        </div>
+
+                        <div style="display: table-cell; text-align: center; vertical-align: bottom; width: 33%; padding: 0 4px;">
+                            <div style="height: 40px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 2px;">
+                                <img id="imgSignRepresentante" style="max-height: 40px; max-width: 100%; display: none;" alt="Assinatura Representante">
+                            </div>
+                            <div style="border-top: 1px solid #000; padding-top: 2px;">
+                                <span id="docNomeRepresentante" style="font-weight: bold; font-size: 10px; text-transform: uppercase; display: block;">REPRESENTANTE EMPRESA</span>
+                                <span style="font-size: 9.5px; color: #333; display: block;">REPRESENTANTE DA EMPRESA</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- SEÇÃO DE HISTÓRICO DE PDFS GERADOS -->
+        <div class="card no-print max-w-4xl mx-auto mt-6" id="secao-historico-pdf">
+            <div class="pdf-history-header">
+                <div class="section-title" style="margin-bottom: 0;">
+                    <span>📄 PDF'S GERADOS - SUPORTE TÉCNICO</span>
+                </div>
+                <div class="pdf-search-wrapper" style="margin-top: 8px;">
+                    <span class="pdf-search-icon">🔍</span>
+                    <input type="text" id="busca-pdf" oninput="renderizarGridPDFs()" placeholder="BUSCAR PDF POR EMPRESA, CNPJ OU DATA...">
+                </div>
+            </div>
+            <div class="pdf-grid" id="grid-pdfs-container">
+                <!-- Os cards de PDF serão inseridos aqui via JavaScript -->
+            </div>
+        </div>
+
+    </main>
 
     <!-- MODAL DE ASSINATURA -->
     <div id="signatureModal" class="fixed inset-0 bg-slate-900/70 z-50 hidden items-center justify-center p-4">
@@ -585,8 +580,11 @@
         </div>
     </div>
 
-    <script type="text/armazem">
-        lucide.createIcons();
+    <script>
+        // Inicialização de ícones Lucide
+        if (window.lucide) {
+            lucide.createIcons();
+        }
 
         const LOGO_DGAD_SUPORTE = "suporte.jpg"; 
         const BRASAO_RJ_BASE64 = "brasao.png";
@@ -605,9 +603,25 @@
             Representante: ''
         };
 
+        // Objeto de fallback caso o módulo Armazem não esteja disponível
+        const storageProxy = {
+            getItem: (key) => {
+                if (window.Armazem && window.Armazem.ls) return window.Armazem.ls.getItem(key);
+                return localStorage.getItem(key);
+            },
+            setItem: (key, val) => {
+                if (window.Armazem && window.Armazem.ls) return window.Armazem.ls.setItem(key, val);
+                return localStorage.setItem(key, val);
+            },
+            removeItem: (key) => {
+                if (window.Armazem && window.Armazem.ls) return window.Armazem.ls.removeItem(key);
+                return localStorage.removeItem(key);
+            }
+        };
+
         function ajustarEscalaCabecalhoPdf() {
             const el = document.getElementById('pdfContent');
-            if (el && el.offsetWidth) el.style.setProperty('--mm', (el.offsetWidth / 200) + 'px'); // 200 mm = A4 (210) - margens de 5 mm
+            if (el && el.offsetWidth) el.style.setProperty('--mm', (el.offsetWidth / 200) + 'px');
         }
         window.addEventListener('resize', ajustarEscalaCabecalhoPdf);
 
@@ -617,7 +631,7 @@
             if (logoEl) logoEl.src = LOGO_DGAD_SUPORTE;
             
             const pdfLogoEl = document.getElementById('pdfLogo');
-            if (pdfLogoEl) pdfLogoEl.src = BRASAO_RJ_BASE64;
+            if (pdfLogoEl && !pdfLogoEl.src) pdfLogoEl.src = BRASAO_RJ_BASE64;
 
             loadSavedData();
             updatePreview();
@@ -639,12 +653,12 @@
             };
 
             try {
-                Armazem.ls.setItem(STORAGE_KEY, JSON.stringify(formData));
+                storageProxy.setItem(STORAGE_KEY, JSON.stringify(formData));
             } catch (_) {}
         }
 
         function loadSavedData() {
-            const saved = Armazem.ls.getItem(STORAGE_KEY);
+            const saved = storageProxy.getItem(STORAGE_KEY);
             if (!saved) return;
 
             try {
@@ -673,7 +687,7 @@
                     });
                 }
             } catch (e) {
-                console.error("Erro ao carregar dados do LocalStorage", e);
+                console.error("Erro ao carregar dados do Storage", e);
             }
         }
 
@@ -688,7 +702,6 @@
             window.scrollTo({ top: Math.max(0, meio), behavior: 'smooth' });
             if (!aoTerminar) return;
 
-            // aguarda a rolagem suave terminar para só então executar a ação (colocar o cursor)
             let ultimo = window.pageYOffset, estavel = 0, quadros = 0;
             const acompanhar = () => {
                 quadros++;
@@ -707,7 +720,6 @@
             try { if (el.select && el.tagName !== 'SELECT') el.select(); } catch (_) {}
         }
 
-        // Chamada SOMENTE depois que o alerta fechou: rola o campo para o meio da tela e então coloca o cursor
         function irParaCampoAposAlerta(alvo, campo) {
             setTimeout(() => {
                 rolarCampoParaCentro(alvo, () => focarNoCampo(campo));
@@ -979,12 +991,16 @@
 
         function renderSignatureUI(roleKey, dataURL) {
             const previewImg = document.getElementById(`previewSign${roleKey}`);
-            const placeholder = document.getElementById(`placeholderSign${roleKey}`);
-            if (previewImg) { previewImg.src = dataURL; previewImg.classList.remove('hidden'); }
-            if (placeholder) placeholder.classList.add('hidden');
+            if (previewImg) { 
+                previewImg.src = dataURL; 
+                previewImg.classList.remove('hidden'); 
+            }
 
             const docImg = document.getElementById(`imgSign${roleKey}`);
-            if (docImg) { docImg.src = dataURL; docImg.style.display = 'block'; }
+            if (docImg) { 
+                docImg.src = dataURL; 
+                docImg.style.display = 'block'; 
+            }
         }
 
         function saveSignature() {
@@ -999,13 +1015,12 @@
 
         function rolarParaTopoAposLimpar() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            // correção de segurança caso a rolagem suave seja interrompida pela mudança de layout
             setTimeout(() => {
                 if (window.pageYOffset > 2) window.scrollTo({ top: 0, behavior: 'auto' });
             }, 1200);
         }
 
-                function confirmClearAllForm() {
+        function confirmClearAllForm() {
             Swal.fire({
                 title: 'TEM CERTEZA?',
                 html: "<span class='text-amber-500 font-bold'>ATENÇÃO:  </span> ISTO IRÁ <span class='text-red-500 font-bold'> 'APAGAR' TODOS OS CAMPOS PREENCHIDOS NA PÁGINA </span>!",
@@ -1044,21 +1059,15 @@
             signatures = { Agente1: '', Agente2: '', Representante: '' };
             ['Agente1', 'Agente2', 'Representante'].forEach(role => {
                 const previewImg = document.getElementById(`previewSign${role}`);
-                const placeholder = document.getElementById(`placeholderSign${role}`);
                 if (previewImg) { previewImg.src = ''; previewImg.classList.add('hidden'); }
-                if (placeholder) placeholder.classList.remove('hidden');
 
                 const docImg = document.getElementById(`imgSign${role}`);
                 if (docImg) { docImg.src = ''; docImg.style.display = 'none'; }
             });
 
-            Armazem.ls.removeItem(STORAGE_KEY);
+            storageProxy.removeItem(STORAGE_KEY);
             clearErrors();
             updatePreview();
-        }
-
-        function scrollToPreview() {
-            document.getElementById('previewAnchor').scrollIntoView({ behavior: 'smooth' });
         }
 
         async function generatePDF() {
@@ -1076,7 +1085,7 @@
 
             Swal.fire({
                 title: 'GERANDO PDF...',
-            html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> AGUARDE A CRIAÇÃO E SALVAMENTO DO ARQUIVO.',
+                html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> AGUARDE A CRIAÇÃO E SALVAMENTO DO ARQUIVO.',
                 allowOutsideClick: false,
                 didOpen: () => { Swal.showLoading(); }
             });
@@ -1116,21 +1125,19 @@
 
                 Swal.close();
 
-                const tituloSucesso = foiCompartilhado ? 'PDF GERADO!' : 'PDF GERADO!';
-const textoSucesso = '<span class="text-amber-500 font-bold text-justify">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF´S GERADOS.<br><br>
-               <b>PARA BAIXAR NO SEU APARELHO,</b> UTILIZE O BOTÃO "⬇️" NO HISTÓRICO DE PDF´S.`;
+                const tituloSucesso = foiCompartilhado ? 'PDF GERADO E COMPARTILHADO!' : 'PDF GERADO!';
+                const textoSucesso = `<span class="text-amber-500 font-bold text-justify">ATENÇÃO:</span> O ARQUIVO FOI ADICIONADO AO HISTÓRICO DE PDF'S GERADOS.<br><br><b>PARA BAIXAR NO SEU APARELHO,</b> UTILIZE O BOTÃO "⬇️" NO HISTÓRICO DE PDF'S.`;
 
-Swal.fire({
-    icon: 'success',
-    title: tituloSucesso,
-    html: textoSucesso,
-    confirmButtonColor: '#000000'
-}).then(() => {
-    // executeClearAllForm();
-    setTimeout(() => {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    }, 100);
-});
+                Swal.fire({
+                    icon: 'success',
+                    title: tituloSucesso,
+                    html: textoSucesso,
+                    confirmButtonColor: '#000000'
+                }).then(() => {
+                    setTimeout(() => {
+                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    }, 100);
+                });
 
             } catch (error) {
                 console.error(error);
@@ -1153,13 +1160,13 @@ Swal.fire({
         }
 
         function salvarPDFHistorico(o) {
-            let h = JSON.parse(Armazem.ls.getItem('historico_pdfs_suporte')) || [];
+            let h = JSON.parse(storageProxy.getItem('historico_pdfs_suporte') || '[]');
             h.unshift(o);
             
             let salvou = false;
             while (!salvou && h.length > 0) {
                 try {
-                    Armazem.ls.setItem('historico_pdfs_suporte', JSON.stringify(h));
+                    storageProxy.setItem('historico_pdfs_suporte', JSON.stringify(h));
                     salvou = true;
                 } catch (e) {
                     if (h.length > 1) {
@@ -1178,7 +1185,7 @@ Swal.fire({
             if (!container) return;
 
             const termoBusca = (document.getElementById('busca-pdf')?.value || '').toLowerCase().trim();
-            let historico = JSON.parse(Armazem.ls.getItem('historico_pdfs_suporte')) || [];
+            let historico = JSON.parse(storageProxy.getItem('historico_pdfs_suporte') || '[]');
 
             historico.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
@@ -1224,9 +1231,11 @@ Swal.fire({
         }
 
         async function abrirPDF(id) {
-            const h = JSON.parse(Armazem.ls.getItem('historico_pdfs_suporte')) || [];
+            const h = JSON.parse(storageProxy.getItem('historico_pdfs_suporte') || '[]');
             const p = h.find(i => String(i.id) === String(id));
-            await Armazem.completar(p);
+            if (window.Armazem && window.Armazem.completar) {
+                await window.Armazem.completar(p);
+            }
             if (!p || !p.dataUri) return;
 
             let url;
@@ -1254,23 +1263,23 @@ Swal.fire({
             }
         }
 
-                function avisarDownloadEAtualizar() {
+        function avisarDownload() {
             Swal.fire({
                 icon: 'success',
                 title: 'DOWNLOAD INICIADO!',
-                html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O PDF ESTÁ SENDO BAIXADO. A PÁGINA SERÁ ATUALIZADA.',
-                timer: 1500,
+                html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> O PDF ESTÁ SENDO BAIXADO.',
+                timer: 2000,
                 timerProgressBar: true,
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                allowEscapeKey: false
-            }).then(() => { window.location.reload(); });
+                showConfirmButton: false
+            });
         }
 
         async function baixarPDFHistorico(id) {
-            const h = JSON.parse(Armazem.ls.getItem('historico_pdfs_suporte')) || [];
+            const h = JSON.parse(storageProxy.getItem('historico_pdfs_suporte') || '[]');
             const p = h.find(i => String(i.id) === String(id));
-            await Armazem.completar(p);
+            if (window.Armazem && window.Armazem.completar) {
+                await window.Armazem.completar(p);
+            }
             if (!p || !p.dataUri) return;
 
             try {
@@ -1280,7 +1289,7 @@ Swal.fire({
                 a.download = p.nome || 'termo-treinamento.pdf';
                 document.body.appendChild(a);
                 a.click();
-                avisarDownloadEAtualizar();
+                avisarDownload();
                 document.body.removeChild(a);
                 setTimeout(() => URL.revokeObjectURL(url), 4000);
             } catch (e) {
@@ -1297,7 +1306,7 @@ Swal.fire({
         function excluirPDF(id) {
             Swal.fire({
                 title: 'EXCLUIR PDF?',
-                html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> ESTA AÇÃO <span class="text-red-500 font-bold">NÃO PODERÁ SER DESFEITA </span>.',
+                html: '<span class="text-amber-500 font-bold">ATENÇÃO:</span> ESTA AÇÃO <span class="text-red-500 font-bold">NÃO PODERÁ SER DESFEITA</span>.',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -1306,10 +1315,10 @@ Swal.fire({
                 cancelButtonText: 'CANCELAR'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let h = JSON.parse(Armazem.ls.getItem('historico_pdfs_suporte')) || [];
+                    let h = JSON.parse(storageProxy.getItem('historico_pdfs_suporte') || '[]');
                     h = h.filter(i => String(i.id) !== String(id));
                     try {
-                        Armazem.ls.setItem('historico_pdfs_suporte', JSON.stringify(h));
+                        storageProxy.setItem('historico_pdfs_suporte', JSON.stringify(h));
                     } catch (_) {}
                     renderizarGridPDFs();
                     Swal.fire({
@@ -1342,14 +1351,5 @@ Swal.fire({
             return false;
         }
     </script>
-<script>
-(function () {
-    if (window.Armazem) return;
-    var d = document.createElement('div');
-    d.setAttribute('style', 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:#fff;color:#b91c1c;font:700 16px sans-serif;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;text-transform:uppercase');
-    d.textContent = 'ARQUIVO "armazem.js" NÃO ENCONTRADO. COPIE armazem.js, nuvem.js E firebase-config.js PARA A MESMA PASTA DESTA PÁGINA.';
-    document.body.appendChild(d);
-})();
-</script>
 </body>
 </html>
